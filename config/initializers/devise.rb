@@ -85,6 +85,8 @@ Devise.setup do |config|
   # a value less than 10 in other environments.
   config.stretches = Rails.env.test? ? 1 : 10
 
+  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_SECRET']
+
   # Setup a pepper to generate the encrypted password.
   # config.pepper = "9ff984959d593a208887cd7e62a1eec8f0318351c4a4056438c09954c72f02bbae9ac59cc21e6f9b85b0ab6e73dcc6a8790e5e277bdca5ceff56f9aa7a08c4ae"
 

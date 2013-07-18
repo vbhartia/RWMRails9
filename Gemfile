@@ -5,9 +5,8 @@ gem 'rails', '3.2.6'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
-
 gem 'devise'
+gem 'omniauth-facebook'
 gem 'simple_form'
 
 # Gems used only for assets and not required
@@ -29,6 +28,14 @@ gem 'fastimage'
 require 'rubygems'
 gem 'ruby-readability'
 require 'open-uri'
+
+group :production do
+  gem 'pg'
+end
+
+group :development do
+  gem 'sqlite3'
+end
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

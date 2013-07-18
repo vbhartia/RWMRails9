@@ -1,0 +1,40 @@
+<h1>Listing articles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Created By</th>
+      <th>Title</th>
+      <th>URL</th>
+      <th>Image URL</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @articles.each do |article| %>
+      <tr>
+         
+        <td>        
+          <a href="/articles/show/<%= article.id %>" />
+            Link to article
+          </a>
+        </td>
+
+        <td><%= article.user.username %></td>
+        <td><%= article.headline %></td>
+        <td><%= article.original_url %></td>
+        <td><%= article.image_url %></td>
+
+
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>

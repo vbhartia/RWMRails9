@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Read With Me</title>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+
+
+  <%= csrf_meta_tags %>
+
+
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a href="#" class="brand"> Read With Me</a>
+          <% if user_signed_in? %>
+            <ul class="nav">
+
+              <a href="/articles">
+                My Articles
+              </a>
+              <a href="/groups">
+                My Groups
+              </a>
+
+              <a href="/dash">
+                My Home
+              </a>
+
+
+            </ul>
+          <% end %>
+        <ul class="nav pull-right">
+          <% if user_signed_in? %>
+            <li><%= link_to current_user.firstname + ' ' + current_user.lastname, edit_user_registration_path %></li>
+            <li><%= link_to "Log Out", destroy_user_session_path, method: :delete %><li>
+          <% else %>
+            <li><%= link_to "Register", new_user_registration_path %></li>
+            <li><%= link_to "Log in", new_user_session_path %></li>
+            <li><%= link_to "Sign in with Facebook", "/auth/facebook", id: "sign_in" %></li>
+          <% end %>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <%= yield %>
+  </div>
+
+</body>
+</html>

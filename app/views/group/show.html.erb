@@ -1,0 +1,108 @@
+
+ 
+<h1><%= @group.name %></h1>
+
+
+
+<div class="row">
+  <div class="span8">
+    <ul id="myTab" class="nav nav-tabs">
+        <li class="active">
+          <a href="#articles" data-toggle="tab">Articles</a>
+        </li> 
+      </ul>
+
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade in active" id="articles">
+
+          <br/>
+
+          <% @group.articles.all.each do |article| %>
+            
+            <%= link_to('/articles/show/' + article.id.to_s) do %>
+              View Article
+            <% end %>
+
+            <%= article.headline %>
+            <%= image_tag(article.image_url, size: "100x100" ) %>
+            <%= link_to(article.original_url) do %>
+              Original URL 
+            <% end %>
+
+            <br/>
+          <% end %> 
+        </div>
+      </div>
+
+  </div>
+
+  <div class="span4">
+      <% @group.users.each do |user| %>
+        <%= user.firstname %> <%= user.lastname %> <br/>
+      <% end %>
+
+      <br/>
+
+      Group Description
+
+      <br/>
+
+      <% if user_signed_in? %>
+        <a href="#" id="invite_fb_friends">Invite your friends</a>
+        <div id="fb-root">
+          <script src="http://connect.facebook.net/en_US/all.js"></script>
+          <script>
+              $(function()
+              {
+                $("a#invite_fb_friends").click(function(event) 
+                {
+                  FB.init(
+                  {
+                    appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
+                    cookie:false,
+                    status:true
+                  });
+                  /*
+                  FB.ui(
+                  {
+                    method: 'apprequests',
+                    message: 'This is a test message.'
+                  },
+
+                    function(response) 
+                    {
+                      alert('in reponse')
+                      if (response) {
+                        alert(response.to[0]);
+                      } else {
+                        alert('Post was not published.');
+                      }
+                    }
+
+                  );
+                  
+                  event.preventDefault();
+                  return false;
+                  */
+
+                  FB.ui({
+  method: 'feed',
+  link: 'https://developers.facebook.com/docs/reference/dialogs/',
+  picture: 'http://fbrell.com/f8.jpg',
+  name: 'Facebook Dialogs',
+  caption: 'Reference Documentation',
+  description: 'Using Dialogs to interact with people.'
+}, function(response){});
+
+
+                });
+             });
+          </script>
+      </div>
+
+
+      <% end %>
+
+  </div>
+
+</div>

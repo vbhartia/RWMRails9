@@ -1,0 +1,86 @@
+test
+
+<div class="row">
+	<!--Span9 = Group news feed column   Span3 = group actions-->
+	<div class="span9 news_feed">
+		GROUPS AND NEWS ARTICLES
+
+		<% current_user.groups.each do |user_group| %>
+			<div class ="row">
+				<!--span7 Group articles   span2 group members-->
+				<div class='span7 news_feed_group_view'>					
+					<a href = '\groups\show\<%=user_group.id%>'>
+						<%= user_group.name %>
+					</a>
+
+						<% user_group.articles.each do |article| %>
+							<div class='row news_feed_object'>
+								<!--span5 Individual articles in each group  span2=conversation preview on each article-->
+								<div class='span5'>
+									<ul class="media-list">
+										<div class="media">
+										  <a class="pull-left" href="\articles\show\<%= article.id %>">
+
+										    <img class="media-object" data-src="holder.js/64x64" src="<%= article.image_url %>" height="64" width="64">
+										 
+										  </a>
+										  <div class="media-body">
+										    <h4 class="media-heading">
+										    	<a href="\articles\show\<%= article.id %>">
+										    		<%= article.headline %>
+										    	</a>
+									    	</h4>
+									      </div>
+								      	</div>
+								    </ul>  
+						        </div>
+					        
+								<!--conversation -->
+						        <div class='span2 news_feed_article_conversation'>
+			        				Conversation
+			        				<br/>
+								 	<% if article.comments.present? %>
+									 	<% if article.comments.present? %>
+											<% article.comments.reverse.select { |comment| comment.comment_type == 'header' }[1..4].each do |comment| %>
+												<%= comment.user.firstname %>: 
+												<%= comment.content %>
+												<br/>
+
+											<% end %>
+										<% end %>
+									<% end %>
+						        </div>
+					        </div>
+
+				        <% end %>
+
+		        </div>
+				<!-- Group Members -->
+				<div class="span2">
+					Group Members
+					<br/>
+
+					<% user_group.users.each do |users| %>
+						<%= users.firstname %>
+						<%= users.lastname %>
+						<br/>
+
+					<% end %>
+
+				</div>
+	        </div>
+        <% end %>
+	</div>
+
+	<div class="span2">
+		Group Actions
+			- invite to a group
+			- create a new group
+	</div>
+	
+
+</div>
+		
+
+
+    

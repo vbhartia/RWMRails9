@@ -1,0 +1,60 @@
+
+<div class="row">
+  <div class="span8">
+
+    <% if @article.group.present? %>
+      <li>
+        Group: <%= @article.group.name %> 
+      </li>
+    <% end %>
+  
+    <h1> <%= @article.headline %> </h1>
+
+    Article Poster:
+        <%= User.find(@article.user_id).firstname %>
+        <%= User.find(@article.user_id).lastname %>
+
+    <br/>
+    <a href="<%= @article.original_url %>">Original Article URL
+    </a>
+  </div>
+</div>
+
+
+    <!-- Comments -->
+    <br/>
+    <br/>
+    Group Discussion:
+
+    <div class="row">
+      <div class="span8">
+        <%= form_for :comment, url: "/comment/new_comment" do |f| %>
+
+          <%= f.hidden_field :article_id, :value => @article.id %>
+          <%= f.hidden_field :type, :value => 'header' %>
+          <%= f.text_field :content %>
+          <%= f.button :submit %>
+        <% end %>
+      
+
+        <div class="comment_section">
+
+          <% @article.comments.reverse.each do |comment| %>
+            <%= User.find(comment.user_id).firstname %>: 
+            <%= comment.content %>
+            <br/>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+<br/>
+
+  <div class="row">
+    <div class="span8">
+
+      <%= @article.content.html_safe %>
+    </div>  
+  </div>
+
+

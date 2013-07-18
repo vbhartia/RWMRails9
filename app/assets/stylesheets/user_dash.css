@@ -1,0 +1,18 @@
+.news_feed {
+	height: 90%;
+	overflow: scroll;
+}
+
+.news_feed_group_view {
+	height: 200px;
+	overflow: scroll;
+}
+
+.news_feed_object {
+	height: 65px;
+}
+
+.news_feed_article_conversation {
+	height: 100%;
+	overflow: scroll;
+}

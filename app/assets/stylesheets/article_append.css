@@ -1,0 +1,5 @@
+.comment_section {
+  height: 150px;
+  background-color: gray;
+  overflow: scroll;
+}

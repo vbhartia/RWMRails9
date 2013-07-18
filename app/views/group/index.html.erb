@@ -1,0 +1,33 @@
+test
+
+<table>
+  <thead>
+    <tr>
+      <th>Created By</th>
+      <th>Title</th>
+      <th>URL</th>
+      <th>Image URL</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @groups.each do |group| %>
+      <tr>
+        <td>        
+          <a href="/groups/show/<%= group.id %>" />
+            Link to Group
+          </a>
+        </td>
+
+        <td><%= group.name %></td>
+        <% group.users.all.each do |user| %>
+        <td> <%= user.firstname %> <%= user.lastname %>  </td>
+              <% end %>
+        
+      </tr>
+    <% end %>
+  </tbody>
+</table>

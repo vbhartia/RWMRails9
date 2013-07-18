@@ -1,0 +1,17 @@
+<h1>home page </h1>
+
+<p>Welcome Home Page!</p>
+
+<!--
+<a href = "javascript:(function(){RWM_Script=document.createElement('SCRIPT');RWM_Script.src='http://thawing-thicket-8101.herokuapp.com/rwm_reader.js?x=+(Math.random())';document.getElementsByTagName('head')[0].appendChild(RWM_Script);})();" >
+
+Read With Me Bookmarklet
+
+</a>
+<!-->
+
+  <a href = "javascript:(function(){RWM_Script=document.createElement('SCRIPT');RWM_Script.src='<%= ENV['domain'] %>/rwm_reader.js?x=+(Math.random())';document.getElementsByTagName('head')[0].appendChild(RWM_Script);})();" >
+
+Read With Me Bookmarklet
+  
+</a>

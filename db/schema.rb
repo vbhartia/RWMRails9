@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130719071320) do
+ActiveRecord::Schema.define(:version => 20130719190947) do
 
   create_table "articles", :force => true do |t|
     t.string   "headline"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(:version => 20130719071320) do
     t.text     "description"
     t.string   "author"
     t.string   "site_name"
+    t.boolean  "public"
   end
 
   add_index "articles", ["group_id"], :name => "index_articles_on_group_id"
@@ -65,12 +66,12 @@ ActiveRecord::Schema.define(:version => 20130719071320) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
-    t.string   "username"
-    t.string   "firstname"
-    t.string   "lastname"
     t.string   "uid"
     t.string   "oauth_token"
     t.string   "provider"
+    t.string   "username"
+    t.string   "firstname"
+    t.string   "lastname"
     t.string   "profile_image_url"
   end
 

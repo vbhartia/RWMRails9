@@ -35,6 +35,8 @@ class ArticleController < ApplicationController
       article_scrapped.image_url = readability_output.images[0]
     end
 
+    article_scrapped.public = true
+
     article_scrapped.save
 
 

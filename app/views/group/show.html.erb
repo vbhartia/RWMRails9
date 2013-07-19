@@ -46,63 +46,49 @@
       Group Description
 
       <br/>
-
-      <% if user_signed_in? %>
         <a href="#" id="invite_fb_friends">Invite your friends</a>
         <div id="fb-root">
-          <script src="http://connect.facebook.net/en_US/all.js"></script>
-          <script>
-              $(function()
-              {
-                $("a#invite_fb_friends").click(function(event) 
-                {
-                  FB.init(
-                  {
-                    appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
-                    cookie:false,
-                    status:true
-                  });
-                  /*
-                  FB.ui(
-                  {
-                    method: 'apprequests',
-                    message: 'This is a test message.'
-                  },
-
-                    function(response) 
-                    {
-                      alert('in reponse')
-                      if (response) {
-                        alert(response.to[0]);
-                      } else {
-                        alert('Post was not published.');
-                      }
-                    }
-
-                  );
-                  
-                  event.preventDefault();
-                  return false;
-                  */
-
-                  FB.ui({
-  method: 'feed',
-  link: 'https://developers.facebook.com/docs/reference/dialogs/',
-  picture: 'http://fbrell.com/f8.jpg',
-  name: 'Facebook Dialogs',
-  caption: 'Reference Documentation',
-  description: 'Using Dialogs to interact with people.'
-}, function(response){});
-
-
-                });
-             });
-          </script>
-      </div>
-
-
-      <% end %>
-
+        </div>
   </div>
 
 </div>
+
+
+<script>
+    $(function()
+    {
+      $("a#invite_fb_friends").click(function(event) 
+      {
+        FB.init(
+        {
+          appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
+          cookie:false,
+          status:true
+        });
+        
+        FB.ui(
+        {
+          method: 'apprequests',
+          message: 'This is a test message.',
+          data: '10'
+        },
+
+          function(response) 
+          {
+            alert('in reponse')
+            if (response) {
+              alert(response.to[0]);
+            } else {
+              alert('Post was not published.');
+            }
+          }
+
+        );
+        
+        event.preventDefault();
+        return false;
+        
+
+     });
+   });
+</script>

@@ -16,9 +16,34 @@ document.head.appendChild(js);
 //var domain = "http://murmuring-anchorage-6586.herokuapp.com"
 var domain = "http://0.0.0.0:3000"
 
+var scraper_url = domain + "/screen_scraper.js?x=" + (Math.random())
+var final_article
+
 setTimeout(function()
 {
-  create_container()
+  $.getScript(scraper_url, function()
+  {
+
+    if(window.location == "http://rwm-stage.herokuapp.com/")
+    {
+
+      alert("Please add this URL to your bookmarks, and use it to read news articles")
+
+    }
+    else if(document.domain == 'rwm-stage.herokuapp.com')
+    {
+
+      alert("You are already using Read With Me")
+
+    }
+    
+    else
+    {
+
+      final_article = Get_Article_Content()
+      create_container()
+    }
+  })
 },
 500);
 
@@ -45,7 +70,7 @@ function create_container()
   RWM_container += "<div id='container_RWM_reader_id' class='container_RWM_reader_class'>"
 
     RWM_container += "<div class='page_text_RWM_Viewer' style='float:left text-align:left'>"
-        RWM_container += "Return to afrticle"
+        RWM_container += "Return to article"
     RWM_container += "</div>"
 
   RWM_container += "</div>"
@@ -110,8 +135,7 @@ function create_iFrame()
   // Post a message to the iFrame
 
   var timesRun = 0;
-
-/*
+ 
   var interval = setInterval(function()
   {
       timesRun += 1;
@@ -129,7 +153,7 @@ function create_iFrame()
           domain)    
   },
   500)
-*/
+
 }
 
 }

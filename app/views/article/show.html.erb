@@ -32,10 +32,7 @@
   <br/>
 
   <div class="row">
-    <div class="span8">
-
-      <%= @article.content.html_safe %>
-    </div>  
+    <%= render :partial => "article/shared/article_content" %>
   </div>
 
 

@@ -1,4 +1,8 @@
-Test
 
-<%= @article.content.html_safe %>
-     
+<br/>
+
+<div class="row">
+    <%= render :partial => "article/shared/comment_view" %>
+	<%= render :partial => "article/shared/article_content" %>
+</div>
+    

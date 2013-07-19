@@ -1,12 +1,12 @@
 <!-- comment submit -->  
-        <%= form_for :comment, url: "/comment/new_comment", :html => { :class => 'inline' } do |f| %>
+    <%= form_for :comment, url: "/comment/new_comment", :html => { :class => 'inline' } do |f| %>
 
-          <%= f.hidden_field :article_id, :value => @article.id %>
-          <%= f.hidden_field :type, :value => 'header' %>
-          
-	  		<%= image_tag(current_user.profile_image_url, height: '32', width: '32') %>
+      <%= f.hidden_field :article_id, :value => @article.id %>
+      <%= f.hidden_field :type, :value => 'header' %>
+      
+  		<%= image_tag(current_user.profile_image_url, height: '32', width: '32') %>
 
-          	<%= f.text_field :content %>
-          	<%= f.button :submit %>
-      	  
-        <% end %>
+      	<%= f.text_field :content %>
+      	<%= f.button :submit %>
+  	  
+    <% end %>

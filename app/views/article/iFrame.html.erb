@@ -1,12 +1,27 @@
-<h1>iFrame</h1>
-
-<div class='row'>
+<!--iframe -->
+<br/>
+<div id='contents' class='row'>
   <div class='span8'>
-    <div id = 'article_content_id'>
-      Loading!
+
+    <h2 id = 'article_headline'>
+    </h2>
+
+    <img id = 'article_image'/>
+  
+    <p id = 'article_author'>
+    </p>    
+
+    <p id = 'article_source'>
+    </p>
+
+    <div id = 'article_content'>
     </div>
+  
+
   </div>
   <div class='span4'>
+
+    <div id="share_to">
 
       <ul id="myTab" class="nav nav-tabs">
         <li class="active">
@@ -20,110 +35,83 @@
       <div id="myTabContent" class="tab-content">
         <div class="tab-pane fade in active" id="groups">
 
-          Share to an existing Group:
-          <br/>
+            <p> Article will only be visbile to group members, and future group members. </p>
 
-          <%= form_for :group, url: (ENV['domain'] + "/groups/assign_to_group") do |f| %>
+            Share to an existing Group:
+            <br/>
 
-            <%= f.collection_select(:group_id, current_user.groups, :id, :name )%>
-            <%= f.hidden_field :article_id %>
+            <%= form_for :group, :remote=>true, :html => { :id => "group_assign" }, url: (ENV['domain'] + "/groups/assign_to_group") do |f| %>
 
-            <%= f.button :submit %>
-          <% end %>
+              <%= f.collection_select(:group_id, current_user.groups, :id, :name )%>
+              <%= f.hidden_field :article_id %>
 
-          Share to a new Group:
-          <br/>
-          <%= simple_form_for :group, url: (ENV['domain'] + "/groups/create") do |f| %>
-
-            <p>
-              <%= f.input :name %><br>
-            </p>
-            
-            <p>
               <%= f.button :submit %>
-            </p>
-          <% end %>
+            <% end %>
 
+            Share to a new Group:
+            <br/>
+            <p>
+            <%= form_for :group, :remote=>true, :html => { :id => "group_create" }, url: (ENV['domain'] + "/groups/create") do |f| %>
+
+                <%= f.text_field :name %><br/>
+
+                <%= f.hidden_field :article_id2 %>
+
+                <%= f.button :submit %>
+              </p>
+            <% end %>
         </div>
-
 
         <div class="tab-pane fade" id="facebook">
-          <p>Share article to my facebook wall</p>
-          <p>Share article to my friends facebook wall</p>
+          <p> Article will become public, anybody will be able to see your thoughts </p>
 
-          <a href="#" id="invite_fb_friends">Invite your friends</a>
+          <a href="#" id="Post_to_Wall">Post to my wall</a> <br/>
+
+
+          <a href="#" id="Message_to_Friend">Message to friend</a>
+
 
           <div id="fb-root">
-          <script src="http://connect.facebook.net/en_US/all.js"></script>
-          <script>
-              $(function()
-              {
-                $("a#invite_fb_friends").click(function(event) 
-                {
-                  FB.init(
-                  {
-                    appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
-                    cookie:false,
-                    status:true
-                  });
-                  
-                  FB.ui(
-                  {
-                    method: 'apprequests',
-                    message: 'This is a test message.'
-                  },
-
-                    function(response) 
-                    {
-                      alert('in reponse')
-                      if (response) {
-                        alert(response.to[0]);
-                      } else {
-                        alert('Post was not published.');
-                      }
-                    }
-
-                  );
-                  
-                  event.preventDefault();
-                  return false;
-                  
-
-                  /*
-
-                  FB.ui({
-                    method: 'feed',
-                    link: 'https://developers.facebook.com/docs/reference/dialogs/',
-                    picture: 'http://fbrell.com/f8.jpg',
-                    name: 'Facebook Dialogs',
-                    caption: 'Reference Documentation',
-                    description: 'Using Dialogs to interact with people.'
-                  }, function(response){});
-
-*/
-
-
-                });
-             });
-          </script>
-      </div>
-
-
-
-
+          </div>
         </div>
-        
-  </div>
 
+      </div>
+    </div>
+  </div>
 </div>
 
 
 <script>
+  var ArticleContent = new Object(); 
+  
+  var article  = new Object() 
+  article.url = ''
+  article.image_url = ''
+
+  var keep_listening = true;
+
+  function listener(event)
+  {
+      if(keep_listening)
+      {
+          ArticleContent = event.data
+          to_server()
+          keep_listening = false
+
+      }   
+  }
+
+  window.addEventListener("message", listener, false)
+
+  function to_server()
+  {
+
   request = $.ajax({
     //url: "http://thawing-thicket-8101.herokuapp.com/articles/add_new_article",
     url: "<%= ENV['domain'] %>/articles/add_new_article",
     type: "post",
-    data: { URL: document.referrer },
+    //data: { URL: document.referrer },
+    data: ArticleContent,
     error: function (xhr, ajaxOptions, thrownError) {
           alert(xhr.status);
           alert(thrownError);
@@ -131,12 +119,121 @@
         dataType: 'json',
     });
 
+
     // callback handler that will be called on success
     request.done(function (response, textStatus, jqXHR){
         // log a message to the console
-    $('#article_content_id').html(response.content)
+    
+    $('#contents').css('visibility', 'visible')
 
-    $('#group_article_id').val(response.id)  
+    $('#article_headline').html(response.headline)
+    $('#article_author').html(response.author)
+    $('#article_source').html(response.site_name)    
+
+    $('#article_image').attr("src", response.image_url)
+    
+
+    $('#article_content').html(response.content)
+
+
+
+    article.url = '<%= ENV['domain'] %>' + '/articles/public/' + response.id
+    article.image_url = response.image_url
+
+    $('#group_article_id').val(response.id)
+    $('#group_article_id2').val(response.id)  
 
     });
+    }
+
+    $('#group_create').bind('ajax:complete', function(evt, data, status, xhr)
+      {
+        alert('succes')
+        $('#share_to').html("Successfuly Shared to Group, click here to go to group")
+      });
+
+    $('#group_assign').bind('ajax:complete', function(evt, data, status, xhr){
+
+      $('#share_to').html("Successfuly Shared to Group, click here to go to group")
+
+      });
+
+
+ $(function()
+    {
+      $("a#Post_to_Wall").click(function(event) 
+      {
+        
+        alert(article.url)
+
+        FB.init(
+        {
+          appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
+          cookie:false,
+          status:true
+        });
+        
+        FB.ui(
+        {
+          method: 'feed',
+          link: article.url,
+          picture: article.image_url,
+          name: 'Facebook Dialogs',
+          caption: article.url,
+          description: 'What\'s the big deal'
+        },   
+
+        function(response) 
+        {
+          if (response && response.post_id) 
+          {
+            alert('Post was published.');
+            $('#share_to').html("Successfuly Posted to Facebook")
+          } 
+          else 
+          {
+            alert('Post was not published.');
+          }
+        });
+      });
+    }
+  )
+
+ $(function()
+    {
+      $("a#Message_to_Friend").click(function(event) 
+      {
+        
+        FB.init(
+        {
+          appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
+          cookie:false,
+          status:true
+        });
+
+        alert(article.url)
+
+        FB.ui(
+        {
+          method: 'send',
+          link: article.url,
+        },
+        function(response) 
+        {
+          if (response && response.post_id) 
+          {
+            alert('Post was published.');
+            $('#share_to').html("Message was successfully sent to friend")
+          } 
+          else 
+          {
+            alert('Post was not published.');
+          }
+        }
+        );
+      })
+    }
+  )
+
+
 </script>

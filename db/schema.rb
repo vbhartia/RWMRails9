@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130718224321) do
+ActiveRecord::Schema.define(:version => 20130719071320) do
 
   create_table "articles", :force => true do |t|
     t.string   "headline"
@@ -22,6 +22,9 @@ ActiveRecord::Schema.define(:version => 20130718224321) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.integer  "group_id"
+    t.text     "description"
+    t.string   "author"
+    t.string   "site_name"
   end
 
   add_index "articles", ["group_id"], :name => "index_articles_on_group_id"

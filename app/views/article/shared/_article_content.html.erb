@@ -1,0 +1,12 @@
+<!--_article_content.html.erb -->
+
+    <div class="span8">
+      <%= @article.headline %>
+	  <%= @article.image_url %>
+      <%= @article.site_name %>
+      <%= @article.author %>
+
+
+
+      <%= @article.content.html_safe %>
+    </div>  

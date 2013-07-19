@@ -10,7 +10,21 @@ class GroupController < ApplicationController
     group = Group.create()
     group.name = params[:group]['name']
     group.users << current_user
+    group.articles << Article.find(params[:group]['article_id2'])
     group.save
+
+    puts '**************************'
+    puts params[:group]['article_id2']
+
+    flash[:notice] = "Successfully created product."
+
+    #respond_to do |format|
+    #  format.json { render json: 'success' }
+
+    respond_to do |format|
+      format.json { head :ok }
+    end
+
 
   end
 

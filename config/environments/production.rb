@@ -68,7 +68,7 @@ Rwm9::Application.configure do
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
   ENV['FACEBOOK_APP_ID'] = "1388882854659824";
   ENV['FACEBOOK_SECRET'] = "c1daa6ac740a5696c382d1ce32c8bb7f";
-  ENV['domain'] = "http://murmuring-anchorage-6586.herokuapp.com/";
+  ENV['domain'] = "http://nameless-cliffs-2498.herokuapp.com";
 
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 end

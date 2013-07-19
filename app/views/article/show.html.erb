@@ -21,34 +21,15 @@
 </div>
 
 
+
+    <br/>
+    <br/>
+
     <!-- Comments -->
-    <br/>
-    <br/>
-    Group Discussion:
+    
+    <%= render :partial => "article/shared/comment_view" %>
 
-    <div class="row">
-      <div class="span8">
-        <%= form_for :comment, url: "/comment/new_comment" do |f| %>
-
-          <%= f.hidden_field :article_id, :value => @article.id %>
-          <%= f.hidden_field :type, :value => 'header' %>
-          <%= f.text_field :content %>
-          <%= f.button :submit %>
-        <% end %>
-      
-
-        <div class="comment_section">
-
-          <% @article.comments.reverse.each do |comment| %>
-            <%= User.find(comment.user_id).firstname %>: 
-            <%= comment.content %>
-            <br/>
-          <% end %>
-        </div>
-      </div>
-    </div>
-
-<br/>
+  <br/>
 
   <div class="row">
     <div class="span8">

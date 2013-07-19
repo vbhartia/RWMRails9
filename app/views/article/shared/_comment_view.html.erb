@@ -1,0 +1,39 @@
+<!-- comment_view.html.erb -->
+<!-- Group Discussion: -->
+
+    <div class="row">
+      <div class="span8">
+    	
+    	<%= render :partial => "article/shared/comment_submit" %>
+      
+
+        <div class="comment_section">
+
+          <% @article.comments.reverse.each do |comment| %>
+            
+            <div class = 'media'>
+
+		  		<%= image_tag(comment.user.profile_image_url, height: '32', width: '32', :class => 'pull-left media-object') %>
+
+		  		<div class="media-body">
+
+		            <%= comment.user.firstname %>:
+	    	        	<br/> 
+	            	<%= comment.content %>
+
+			  		<div class="pull-right">
+			  			Place holder - time
+
+		  			</div>
+
+
+	        	</div>
+        	</div>
+
+            
+
+            <br/>
+          <% end %>
+        </div>
+      </div>
+    </div>

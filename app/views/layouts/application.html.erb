@@ -34,7 +34,9 @@
           <% end %>
         <ul class="nav pull-right">
           <% if user_signed_in? %>
+            <li><%= image_tag(current_user.profile_image_url) %></li>
             <li><%= link_to current_user.firstname + ' ' + current_user.lastname, edit_user_registration_path %></li>
+
             <li><%= link_to "Log Out", destroy_user_session_path, method: :delete %><li>
           <% else %>
             <li><%= link_to "Register", new_user_registration_path %></li>

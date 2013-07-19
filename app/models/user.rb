@@ -20,11 +20,11 @@ class User < ActiveRecord::Base
       user.provider = auth.provider
       user.uid = auth.uid
       user.oauth_token = auth.credentials.token
-      user.username ='Linda'
-      user.firstname = auth.info.name
-      user.lastname = '1234'
-      user.email =auth.info.email
-      user.password = 'abcdef'
+      user.username =auth.info.nickname
+      user.firstname = auth.info.first_name
+      user.lastname = auth.info.last_name
+      user.email = auth.info.email
+      user.profile_image_url = auth.info.image
 
       user.save!
     end

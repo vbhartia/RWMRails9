@@ -1,5 +1,7 @@
 Rwm9::Application.routes.draw do
 
+  resources :activities
+
   devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}, controllers: {omniauth_callbacks: "omniauth_callbacks"}
 
   root :to => "static_pages#home_page"
@@ -23,19 +25,6 @@ Rwm9::Application.routes.draw do
 
   #Handle Public posts
   get 'articles/public/:id' => 'article#public_show'
-
-
-
-  #*********** Group Handler *********#
-  get 'groups' => 'group#index'
-
-  post 'groups/assign_to_group' => 'group#assign_to_group'
-
-  post 'groups/create' => 'group#create'
-
-  get 'groups/show/:id' => 'group#show'
-
-  get 'groups/new' => 'group#new'
 
   #*********** Comment Handler *********#
 

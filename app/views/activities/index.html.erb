@@ -1,0 +1,10 @@
+<h1>Activities</h1>
+
+<%= @activities %>
+
+<% @activities.each do |activity| %>
+  <%= div_for activity do %>
+    <%= activity.user.firstname %>, <%= activity.user %>
+    <%= render "activities/comment/create", activity: activity %>
+  <% end %>
+<% end %>

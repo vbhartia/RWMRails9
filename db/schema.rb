@@ -11,7 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130719190947) do
+ActiveRecord::Schema.define(:version => 20130722203317) do
+
+  create_table "activities", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "action"
+    t.integer  "trackable_id"
+    t.string   "trackable_type"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "activities", ["trackable_id"], :name => "index_activities_on_trackable_id"
+  add_index "activities", ["user_id"], :name => "index_activities_on_user_id"
 
   create_table "articles", :force => true do |t|
     t.string   "headline"
@@ -21,14 +33,11 @@ ActiveRecord::Schema.define(:version => 20130719190947) do
     t.integer  "user_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
-    t.integer  "group_id"
     t.text     "description"
     t.string   "author"
     t.string   "site_name"
-    t.boolean  "public"
   end
 
-  add_index "articles", ["group_id"], :name => "index_articles_on_group_id"
   add_index "articles", ["user_id"], :name => "index_articles_on_user_id"
 
   create_table "comments", :force => true do |t|
@@ -38,19 +47,6 @@ ActiveRecord::Schema.define(:version => 20130719190947) do
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
     t.string   "comment_type"
-  end
-
-  create_table "groups", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "memberships", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "group_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

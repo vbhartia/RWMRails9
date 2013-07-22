@@ -17,8 +17,8 @@ class ArticleController < ApplicationController
     source = open(params[:url]).read
     readability_output = Readability::Document.new(source, :tags => %w[div p img a], :attributes => %w[src href], :remove_empty_nodes => false)
   
-
-    puts readability_output.images
+    puts '*******************************************************'
+    puts readability_output
 
     article_scrapped = Article.new()
     article_scrapped.user = current_user
@@ -38,8 +38,7 @@ class ArticleController < ApplicationController
     article_scrapped.public = true
 
     article_scrapped.save
-
-
+    track_activity article_scrapped
     respond_to do |format|
       format.json { render json: article_scrapped }
     end

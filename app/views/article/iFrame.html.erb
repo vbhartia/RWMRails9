@@ -33,34 +33,7 @@
       </ul>
 
       <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade in active" id="groups">
 
-            <p> Article will only be visbile to group members, and future group members. </p>
-
-            Share to an existing Group:
-            <br/>
-
-            <%= form_for :group, :remote=>true, :html => { :id => "group_assign" }, url: (ENV['domain'] + "/groups/assign_to_group") do |f| %>
-
-              <%= f.collection_select(:group_id, current_user.groups, :id, :name )%>
-              <%= f.hidden_field :article_id %>
-
-              <%= f.button :submit %>
-            <% end %>
-
-            Share to a new Group:
-            <br/>
-            <p>
-            <%= form_for :group, :remote=>true, :html => { :id => "group_create" }, url: (ENV['domain'] + "/groups/create") do |f| %>
-
-                <%= f.text_field :name %><br/>
-
-                <%= f.hidden_field :article_id2 %>
-
-                <%= f.button :submit %>
-              </p>
-            <% end %>
-        </div>
 
         <div class="tab-pane fade" id="facebook">
           <p> Article will become public, anybody will be able to see your thoughts </p>

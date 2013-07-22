@@ -5,4 +5,5 @@ class Article < ActiveRecord::Base
   has_many :comments
 
   attr_accessible :headline, :content, :imageURL, :originalURL, :user_id
+
 end

@@ -1,20 +1,29 @@
 class CommentController < ApplicationController
   def add_new_comment
+    puts '*********************************'
+    puts params[:content]
+    puts params[:comment_ids]
+    
+    
     comment = Comment.create()
     
-    comment.content = params[:comment]['content']
-    comment.comment_type = params[:comment]['type']
+    comment.content = params[:content]
+    comment.comment_type = 'in_line'
 
     current_user.comments << comment
-    Article.find(params[:comment]['article_id']).comments << comment
+    Article.find(params[:article_id]).comments << comment
   
     comment.save
 
     #redirect_to article_url(params[:comment]['article_id'])
 
-    puts ("articles/show/" + (params[:comment]['article_id']))
+    puts ("articles/show/" + (params[:article_id]))
 
-    redirect_to ("/articles/show/" + (params[:comment]['article_id']))
+    #redirect_to ("/articles/show/" + (params[:comment]['article_id']))
+
+    respond_to do |format|
+        format.json { render :json => comment }
+    end
 
   end
 

@@ -1,7 +1,8 @@
 <!--iframe -->
 <br/>
 <div id='contents' class='row'>
-  <div class='span8'>
+  <div class='span8 well well-small'>
+
 
     <h2 id = 'article_headline'>
     </h2>
@@ -13,50 +14,27 @@
 
     <p id = 'article_source'>
     </p>
+  </div>  
+
+  <div class='span8'>
 
     <div id = 'article_content'>
     </div>
-  
 
   </div>
+
   <div class='span4'>
+      Comment section
 
-    <div id="share_to">
-
-      <ul id="myTab" class="nav nav-tabs">
-        <li class="active">
-          <a href="#groups" data-toggle="tab">Groups</a>
-        </li>
-        <li>
-          <a href="#facebook" data-toggle="tab">Facebook</a>
-        </li> 
-      </ul>
-
-      <div id="myTabContent" class="tab-content">
-
-
-        <div class="tab-pane fade" id="facebook">
-          <p> Article will become public, anybody will be able to see your thoughts </p>
-
-          <a href="#" id="Post_to_Wall">Post to my wall</a> <br/>
-
-
-          <a href="#" id="Message_to_Friend">Message to friend</a>
-
-
-          <div id="fb-root">
-          </div>
-        </div>
-
-      </div>
-    </div>
   </div>
 </div>
 
-
 <script>
+  // from scraping tool
   var ArticleContent = new Object(); 
-  
+  var all_comments = new Object();
+  var comment_indv = new Object();
+
   var article  = new Object() 
   article.url = ''
   article.image_url = ''
@@ -81,7 +59,7 @@
 
   request = $.ajax({
     //url: "http://thawing-thicket-8101.herokuapp.com/articles/add_new_article",
-    url: "<%= ENV['domain'] %>/articles/add_new_article",
+    url: "/articles/add_new_article",
     type: "post",
     //data: { URL: document.referrer },
     data: ArticleContent,
@@ -112,101 +90,178 @@
 
     article.url = '<%= ENV['domain'] %>' + '/articles/public/' + response.id
     article.image_url = response.image_url
+    article.id = response.id
 
     $('#group_article_id').val(response.id)
-    $('#group_article_id2').val(response.id)  
+    $('#group_article_id2').val(response.id) 
+
+    enable_commenting() 
 
     });
-    }
+  }
 
-    $('#group_create').bind('ajax:complete', function(evt, data, status, xhr)
-      {
-        alert('succes')
-        $('#share_to').html("Successfuly Shared to Group, click here to go to group")
-      });
+  // Enabling commenting
 
-    $('#group_assign').bind('ajax:complete', function(evt, data, status, xhr){
+var ids = new Array();
+var new_comment = new Object();
 
-      $('#share_to').html("Successfuly Shared to Group, click here to go to group")
+function enable_commenting()
+{
 
-      });
+/********************************************* Input Comments ***************/
+   // get user selection
+  
 
+  $('span').mouseup(function(event)
+  {       
+      ids = new Array();
 
- $(function()
-    {
-      $("a#Post_to_Wall").click(function(event) 
-      {
-        
-        alert(article.url)
-
-        FB.init(
-        {
-          appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
-          cookie:false,
-          status:true
-        });
-        
-        FB.ui(
-        {
-          method: 'feed',
-          link: article.url,
-          picture: article.image_url,
-          name: 'Facebook Dialogs',
-          caption: article.url,
-          description: 'What\'s the big deal'
-        },   
-
-        function(response) 
-        {
-          if (response && response.post_id) 
-          {
-            alert('Post was published.');
-            $('#share_to').html("Successfuly Posted to Facebook")
+      if (window.getSelection) 
+      { // non-IE
+          userSelection = window.getSelection();
+          rangeObject = userSelection.getRangeAt(0);
+          if (rangeObject.startContainer == rangeObject.endContainer) 
+          {   
+              ids = rangeObject.startContainer.parentNode.id
           } 
           else 
-          {
-            alert('Post was not published.');
+          {   
+              ids = getAllBetween(
+                  rangeObject.startContainer.parentNode,
+                  rangeObject.endContainer.parentNode)
+          
           }
-        });
-      });
-    }
-  )
-
- $(function()
-    {
-      $("a#Message_to_Friend").click(function(event) 
-      {
-        
-        FB.init(
-        {
-          appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
-          cookie:false,
-          status:true
-        });
-
-        alert(article.url)
-
-        FB.ui(
-        {
-          method: 'send',
-          link: article.url,
-        },
-        function(response) 
-        {
-          if (response && response.post_id) 
+      } 
+      else if (document.selection) 
+      { // IE lesser
+          userSelection = document.selection.createRange();
+          
+          if (userSelection.htmlText.toLowerCase().indexOf('span') >= 0) 
           {
-            alert('Post was published.');
-            $('#share_to').html("Message was successfully sent to friend")
+              $(userSelection.htmlText).filter('span').each(function(index, span) 
+              {
+                  ids.push(span.id);
+              });
+          } else 
+          {
+              ids = userSelection.parentElement().id;
+          }
+      }
+
+      CreateComment()
+  });
+
+  var getAllBetween = function (firstEl,lastEl) 
+  {
+      var firstElement = $(firstEl); // First Element
+      var lastElement = $(lastEl); // Last Element
+      var collection = new Array(); // Collection of Elements
+      collection.push(firstElement.attr('id')); // Add First Element to Collection
+      $(firstEl).nextAll().each(function()
+      { // Traverse all siblings
+          var siblingID  = $(this).attr('id'); // Get Sibling ID
+          if (siblingID != $(lastElement).attr('id')) 
+          { // If Sib is not LastElement
+              collection.push($(this).attr('id')); // Add Sibling to Collection
           } 
           else 
-          {
-            alert('Post was not published.');
+          { // Else, if Sib is LastElement
+              collection.push(lastElement.attr('id')); // Add Last Element to Collection
+              return false; // Break Loop
           }
-        }
-        );
-      })
+      });         
+      return collection; // Return Collection
+  }
+
+  function CreateComment()
+  {
+    
+    $('span').unbind()
+
+    //Color background
+
+    for(x in ids)
+    {
+      $(('#' + ids[x])).css('background', 'yellow')
     }
-  )
+    
+    var p = $('#' + ids[ids.length -1]);
+    var offset = p.offset();
+
+    $('#' + ids[ids.length -1]).append(
+      '<div class = \'comment_input\'> \
+      <form name= "ccomment" action="html_form_action.asp" method="post"> \
+      <textarea id="comment_input_field" rows="3" style="margin: 0px; width: 206px; height: 60px;"></textarea> \
+      <button onclick="comment_submit()" class=\'btn btn-primary\' type=\'button\'>Add Comment</button> \
+      <button onclick="comment_cancel()" class=\'btn btn-info\' type=\'button\'>Cancel</button> \
+      </div>'
+      );
+
+    //$('.comment_input').offset({ top: offset.top, left: (offset.left + 60)})
+
+    $('#' + ids[ids.length -1]).css('background', 'red')
+
+
+    /*
+    function comment_submit()
+    {
+      alert('in new commetn')
+      new_comment.content = $('#comment_input_field').val()
+      comment_submit2()
+    }
+
+    */
+
+  }
+
+}
+
+function comment_cancel()
+{
+  $('.comment_input').remove()
+
+  for(x in ids)
+  {
+      $(('#' + ids[x])).css('background', 'white')
+  }
+
+  enable_commenting()
+
+}
+
+function comment_submit()
+{
+  alert('in submit')
+  json_response = new Object()
+  json_response.content = $('#comment_input_field').val()
+  json_response.article_id = article.id
+  json_response.comment_span_ids = JSON.stringify(ids)
+  
+  $.post("/comment/new_comment", json_response);
+
+  enable_commenting()
+  $('.comment_input').remove()
+
+  comment_indv.ids = ids
+  comment_indv.content = $('#comment_input_field').val()
+  comment_present()
+}
+
+function comment_present()
+{
+  for (var x in comment_indv.ids)
+  {
+    //alert(x)
+    $("#" + comment_indv.ids[x]).css("border","1px solid black");
+    $("#" + comment_indv.ids[x]).mouseover(
+      function()
+      { 
+        alert('on comment') 
+      });
+  };
+
+
+}
 
 
 </script>

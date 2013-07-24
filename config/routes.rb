@@ -18,13 +18,10 @@ Rwm9::Application.routes.draw do
   get 'articles/iFrame' => 'article#iFrame'
 
   #Render show
-  get 'articles/show/:id' => 'article#show', as: 'article_url'
+  get 'articles/show/:id' => 'article#show', as: 'article'
 
   #add article
   post 'articles/add_new_article' => 'article#add_new_article'
-
-  #Handle Public posts
-  get 'articles/public/:id' => 'article#public_show'
 
   #*********** Comment Handler *********#
 

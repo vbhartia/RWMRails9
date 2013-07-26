@@ -14,3 +14,33 @@
 	background-color: gray;
 	z-index:200;
 }
+
+.comment_show {
+	position: absolute;
+	border-radius: 5px;
+	height:150px;
+	width:225px;
+	background-color: rgba(255,255,255,0.9);
+	z-index:200;
+	visibility: hidden;
+	border: 1px solid black
+}
+
+.overall_comment_input {
+	border-radius: 5px;
+	background-color: gray;
+	
+}
+
+.overall_comments_display {
+	height: 100px;
+	overflow: auto;
+
+}
+
+.article_header {
+	height: 270px;
+	overflow: auto;
+	background-color: yellow;
+}
+

@@ -1,38 +1,54 @@
+<%= render :layout => "article/shared/article_interact" do %>
 
-<div class="row">
-  <div class="span8">
+  article.id = <%= @article.id %>
 
-    <% if @article.group.present? %>
-      <li>
-        Group: <%= @article.group.name %> 
-      </li>
-    <% end %>
-  
-    <h1> <%= @article.headline %> </h1>
+  get_article_from_server()
 
-    Article Poster:
-        <%= User.find(@article.user_id).firstname %>
-        <%= User.find(@article.user_id).lastname %>
+  function get_article_from_server()
+  {
 
-    <br/>
-    <a href="<%= @article.original_url %>">Original Article URL
-    </a>
-  </div>
-</div>
+    request = $.ajax({
+      //url: "http://thawing-thicket-8101.herokuapp.com/articles/add_new_article",
+      url: "/articles/get_article",
+      type: "get",
+      //data: { URL: document.referrer },
+      data: article,
+      error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+          },
+          dataType: 'json',
+      });
+
+    // callback handler that will be called on success
+    request.done(function (response, textStatus, jqXHR)
+    {
+      // log a message to the console
+      $('#contents').css('visibility', 'visible')
+
+      $('#article_headline').html(response.headline)
+      $('#article_author').html(response.author)
+      $('#article_source').html(response.site_name)    
+
+      $('#article_image').attr("src", response.image_url)
+      
+
+      $('#article_content').html(response.content)
+
+      article.content = response.content
+      article.site_name = response.site_name
+      article.author = response.author
+      article.headline = response.headline
+
+      article.url = '<%= ENV['domain'] %>' + '/articles/public/' + response.id
+      article.image_url = response.image_url
+      article.id = response.id
+
+      enable_commenting() 
+
+    });
+  }
 
 
 
-    <br/>
-    <br/>
-
-    <!-- Comments -->
-    
-    <%= render :partial => "article/shared/comment_view" %>
-
-  <br/>
-
-  <div class="row">
-    <%= render :partial => "article/shared/article_content" %>
-  </div>
-
-
+<% end %>

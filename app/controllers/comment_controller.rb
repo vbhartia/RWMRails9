@@ -8,7 +8,9 @@ class CommentController < ApplicationController
     comment = Comment.create()
     
     comment.content = params[:content]
-    comment.comment_type = 'in_line'
+    comment.comment_type = params[:comment_type]
+    comment.comment_location_ids = params[:comment_location_ids]
+
 
     current_user.comments << comment
     Article.find(params[:article_id]).comments << comment
@@ -26,5 +28,15 @@ class CommentController < ApplicationController
     end
 
   end
+
+  def get_article_comments
+
+    all_comments = Article.find(params[:article_id]).comments
+
+    respond_to do |format|
+        format.json { render :json => all_comments }
+    end
+
+  end 
 
 end

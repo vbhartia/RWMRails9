@@ -1,43 +1,8 @@
-<!--iframe -->
-<br/>
-<div id='contents' class='row'>
-  <div class='span8 well well-small'>
+<%= render :layout => "article/shared/article_interact" do %>
 
-
-    <h2 id = 'article_headline'>
-    </h2>
-
-    <img id = 'article_image'/>
-  
-    <p id = 'article_author'>
-    </p>    
-
-    <p id = 'article_source'>
-    </p>
-  </div>  
-
-  <div class='span8'>
-
-    <div id = 'article_content'>
-    </div>
-
-  </div>
-
-  <div class='span4'>
-      Comment section
-
-  </div>
-</div>
-
-<script>
   // from scraping tool
-  var ArticleContent = new Object(); 
-  var all_comments = new Object();
-  var comment_indv = new Object();
-
-  var article  = new Object() 
-  article.url = ''
-  article.image_url = ''
+  var article_from_screen_scraper = new Object(); 
+  var all_comments = new Array();
 
   var keep_listening = true;
 
@@ -45,7 +10,7 @@
   {
       if(keep_listening)
       {
-          ArticleContent = event.data
+          article_from_screen_scraper = event.data
           to_server()
           keep_listening = false
 
@@ -57,211 +22,46 @@
   function to_server()
   {
 
-  request = $.ajax({
-    //url: "http://thawing-thicket-8101.herokuapp.com/articles/add_new_article",
-    url: "/articles/add_new_article",
-    type: "post",
-    //data: { URL: document.referrer },
-    data: ArticleContent,
-    error: function (xhr, ajaxOptions, thrownError) {
-          alert(xhr.status);
-          alert(thrownError);
-        },
-        dataType: 'json',
-    });
-
+    request = $.ajax({
+      //url: "http://thawing-thicket-8101.herokuapp.com/articles/add_new_article",
+      url: "/articles/add_new_article",
+      type: "post",
+      //data: { URL: document.referrer },
+      data: article_from_screen_scraper,
+      error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+          },
+          dataType: 'json',
+      });
 
     // callback handler that will be called on success
-    request.done(function (response, textStatus, jqXHR){
-        // log a message to the console
-    
-    $('#contents').css('visibility', 'visible')
+    request.done(function (response, textStatus, jqXHR)
+    {
+      // log a message to the console
+      $('#contents').css('visibility', 'visible')
 
-    $('#article_headline').html(response.headline)
-    $('#article_author').html(response.author)
-    $('#article_source').html(response.site_name)    
+      $('#article_headline').html(response.headline)
+      $('#article_author').html(response.author)
+      $('#article_source').html(response.site_name)    
 
-    $('#article_image').attr("src", response.image_url)
-    
+      $('#article_image').attr("src", response.image_url)
+      
 
-    $('#article_content').html(response.content)
+      $('#article_content').html(response.content)
 
+      article.content = response.content
+      article.site_name = response.site_name
+      article.author = response.author
+      article.headline = response.headline
 
+      article.url = '<%= ENV['domain'] %>' + '/articles/public/' + response.id
+      article.image_url = response.image_url
+      article.id = response.id
 
-    article.url = '<%= ENV['domain'] %>' + '/articles/public/' + response.id
-    article.image_url = response.image_url
-    article.id = response.id
-
-    $('#group_article_id').val(response.id)
-    $('#group_article_id2').val(response.id) 
-
-    enable_commenting() 
+      enable_commenting() 
 
     });
   }
 
-  // Enabling commenting
-
-var ids = new Array();
-var new_comment = new Object();
-
-function enable_commenting()
-{
-
-/********************************************* Input Comments ***************/
-   // get user selection
-  
-
-  $('span').mouseup(function(event)
-  {       
-      ids = new Array();
-
-      if (window.getSelection) 
-      { // non-IE
-          userSelection = window.getSelection();
-          rangeObject = userSelection.getRangeAt(0);
-          if (rangeObject.startContainer == rangeObject.endContainer) 
-          {   
-              ids = rangeObject.startContainer.parentNode.id
-          } 
-          else 
-          {   
-              ids = getAllBetween(
-                  rangeObject.startContainer.parentNode,
-                  rangeObject.endContainer.parentNode)
-          
-          }
-      } 
-      else if (document.selection) 
-      { // IE lesser
-          userSelection = document.selection.createRange();
-          
-          if (userSelection.htmlText.toLowerCase().indexOf('span') >= 0) 
-          {
-              $(userSelection.htmlText).filter('span').each(function(index, span) 
-              {
-                  ids.push(span.id);
-              });
-          } else 
-          {
-              ids = userSelection.parentElement().id;
-          }
-      }
-
-      CreateComment()
-  });
-
-  var getAllBetween = function (firstEl,lastEl) 
-  {
-      var firstElement = $(firstEl); // First Element
-      var lastElement = $(lastEl); // Last Element
-      var collection = new Array(); // Collection of Elements
-      collection.push(firstElement.attr('id')); // Add First Element to Collection
-      $(firstEl).nextAll().each(function()
-      { // Traverse all siblings
-          var siblingID  = $(this).attr('id'); // Get Sibling ID
-          if (siblingID != $(lastElement).attr('id')) 
-          { // If Sib is not LastElement
-              collection.push($(this).attr('id')); // Add Sibling to Collection
-          } 
-          else 
-          { // Else, if Sib is LastElement
-              collection.push(lastElement.attr('id')); // Add Last Element to Collection
-              return false; // Break Loop
-          }
-      });         
-      return collection; // Return Collection
-  }
-
-  function CreateComment()
-  {
-    
-    $('span').unbind()
-
-    //Color background
-
-    for(x in ids)
-    {
-      $(('#' + ids[x])).css('background', 'yellow')
-    }
-    
-    var p = $('#' + ids[ids.length -1]);
-    var offset = p.offset();
-
-    $('#' + ids[ids.length -1]).append(
-      '<div class = \'comment_input\'> \
-      <form name= "ccomment" action="html_form_action.asp" method="post"> \
-      <textarea id="comment_input_field" rows="3" style="margin: 0px; width: 206px; height: 60px;"></textarea> \
-      <button onclick="comment_submit()" class=\'btn btn-primary\' type=\'button\'>Add Comment</button> \
-      <button onclick="comment_cancel()" class=\'btn btn-info\' type=\'button\'>Cancel</button> \
-      </div>'
-      );
-
-    //$('.comment_input').offset({ top: offset.top, left: (offset.left + 60)})
-
-    $('#' + ids[ids.length -1]).css('background', 'red')
-
-
-    /*
-    function comment_submit()
-    {
-      alert('in new commetn')
-      new_comment.content = $('#comment_input_field').val()
-      comment_submit2()
-    }
-
-    */
-
-  }
-
-}
-
-function comment_cancel()
-{
-  $('.comment_input').remove()
-
-  for(x in ids)
-  {
-      $(('#' + ids[x])).css('background', 'white')
-  }
-
-  enable_commenting()
-
-}
-
-function comment_submit()
-{
-  alert('in submit')
-  json_response = new Object()
-  json_response.content = $('#comment_input_field').val()
-  json_response.article_id = article.id
-  json_response.comment_span_ids = JSON.stringify(ids)
-  
-  $.post("/comment/new_comment", json_response);
-
-  enable_commenting()
-  $('.comment_input').remove()
-
-  comment_indv.ids = ids
-  comment_indv.content = $('#comment_input_field').val()
-  comment_present()
-}
-
-function comment_present()
-{
-  for (var x in comment_indv.ids)
-  {
-    //alert(x)
-    $("#" + comment_indv.ids[x]).css("border","1px solid black");
-    $("#" + comment_indv.ids[x]).mouseover(
-      function()
-      { 
-        alert('on comment') 
-      });
-  };
-
-
-}
-
-
-</script>
+<% end %>

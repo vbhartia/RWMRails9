@@ -1,5 +1,5 @@
 class ArticleController < ApplicationController
-  before_filter :authenticate_user!, :except => [:public_show]
+  before_filter :authenticate_user!, :except => [:show]
 
   def index
       @articles = current_user.articles.all
@@ -82,4 +82,14 @@ class ArticleController < ApplicationController
   def show
     @article = Article.find(params[:id])
   end
+
+  def get_article
+    article = Article.find(params[:id])
+
+    respond_to do |format|
+      format.json { render :json => article }
+    end
+
+  end
+
 end

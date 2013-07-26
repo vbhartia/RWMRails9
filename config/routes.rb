@@ -9,7 +9,7 @@ Rwm9::Application.routes.draw do
 
   #*********** User Homepage *********#
 
-  get 'dash' => 'user_dash#dash'
+  get 'user/info' => 'user#info'
 
   #*********** Article Handler *********#
   get 'articles' => 'article#index'
@@ -23,9 +23,13 @@ Rwm9::Application.routes.draw do
   #add article
   post 'articles/add_new_article' => 'article#add_new_article'
 
+  #get article
+  get 'articles/get_article' => 'article#get_article'
+
   #*********** Comment Handler *********#
 
   post 'comment/new_comment' => 'comment#add_new_comment'
+  get 'comment/get_article_comments' => 'comment#get_article_comments'
 
 
   #************* Session ************#

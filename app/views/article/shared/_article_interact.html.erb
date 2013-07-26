@@ -240,7 +240,7 @@
 
     all_comments.forEach(function(comment)
     {
-      get_request.user_id = <%= current_user.id %>
+      get_request.user_id = 1
 
       $.get(url, get_request).done(function(data) 
       {

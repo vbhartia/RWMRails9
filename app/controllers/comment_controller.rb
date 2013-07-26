@@ -1,4 +1,5 @@
 class CommentController < ApplicationController
+  before_filter :authenticate_user!, :except => [:get_article_comments]
   def add_new_comment
     puts '*********************************'
     puts params[:content]

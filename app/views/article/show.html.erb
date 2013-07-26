@@ -1,3 +1,14 @@
+<meta property="og:image" content="<%= @article.image_url %>" />
+<meta property="og:url" content="<%= @article.image_url %>" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="<%= @article.headline %>" />
+<meta property="og:description" content="<%= @article.description %>" />
+<meta property="og:site_name" content="<%= @article.site_name %>" />
+<meta property="fb:app_id" content="<%=ENV['FACEBOOK_APP_ID'] %>" />
+
+
+
+
 <%= render :layout => "article/shared/article_interact" do %>
 
   article.id = <%= @article.id %>
@@ -44,9 +55,36 @@
       article.image_url = response.image_url
       article.id = response.id
 
+      get_comments()
       enable_commenting() 
 
     });
+  }
+
+  function get_comments()
+  {
+    var get_request = new Object()
+    get_request.article_id = <%= @article.id %>
+
+    var url = '/comment/get_article_comments'
+
+    $.get(url, get_request).done(function(data) 
+      { 
+        all_comments = data
+
+        // turn ids into a JSON object
+        for(var x in all_comments)
+        {
+
+          all_comments[x].comment_location_ids = $.parseJSON(all_comments[x].comment_location_ids)
+        
+        }
+
+
+        get_users()
+        
+
+      })
   }
 
 

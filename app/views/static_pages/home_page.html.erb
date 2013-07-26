@@ -1,17 +1,87 @@
-<h1>home page </h1>
-
-<p>Welcome Home Page!</p>
-
-<!--
-<a href = "javascript:(function(){RWM_Script=document.createElement('SCRIPT');RWM_Script.src='http://thawing-thicket-8101.herokuapp.com/rwm_reader.js?x=+(Math.random())';document.getElementsByTagName('head')[0].appendChild(RWM_Script);})();" >
-
-Read With Me Bookmarklet
-
+<a href = "javascript:(function(){RWM_Script=document.createElement('SCRIPT');RWM_Script.src='<%= ENV['domain'] %>/rwm_reader.js?x=+(Math.random())';document.getElementsByTagName('head')[0].appendChild(RWM_Script);})();" > 
+	Read With Me Bookmarklet 
 </a>
-<!-->
 
-  <a href = "javascript:(function(){RWM_Script=document.createElement('SCRIPT');RWM_Script.src='<%= ENV['domain'] %>/rwm_reader.js?x=+(Math.random())';document.getElementsByTagName('head')[0].appendChild(RWM_Script);})();" >
+<div class='row homepage_hero border'>
+	<center>
+		<h2>
+			Read With Me makes discussing and sharing news with friends a seamless experience. 
+		</h2>
 
-Read With Me Bookmarklet
-  
-</a>
+
+		<br/>
+		<br/>
+
+		<button class="btn btn-large btn-success" onClick="window.location='<%= user_omniauth_authorize_path(:facebook)  %>'" type="button">
+			Sign Up Today!
+		</button>
+
+	</center>
+</div>
+
+<div class='row homepage_feature_list'>
+	<div class='span5 border'>
+		<center>
+			<h3>
+				Here's what we can offer you:
+			</h3>
+			<br/>
+			<br/>
+		</center>
+
+		<div class="row border">
+  			<a class="pull-left" href="#">
+    			<img class="media-object homepage_image_icon" src="assets/discuss-icon.png">
+  			</a>
+			<div class="media-body">
+ 				<h4 class="media-heading">
+					In-Article Discussions
+				</h4>
+				Have clear discussions with your friends
+			</div>
+		</div>
+
+		<div class="row border">
+  			<a class="pull-left" href="#">
+    			<img class="media-object homepage_image_icon" src="assets/tools-icon.png">
+  			</a>
+			<div class="media-body">
+ 				<h4 class="media-heading">
+					One-click share
+				</h4>
+					Directly from your
+			</div>
+		</div>
+
+		<div class="row border">
+  			<a class="pull-left" href="#">
+    			<img class="media-object homepage_image_icon" src="assets/archive-icon.png">
+  			</a>
+			<div class="media-body">
+ 				<h4 class="media-heading">
+ 					Archieved Articles and Discussions				
+ 				</h4>
+					Personal Dashboard
+			</div>
+		</div>
+
+
+	</div> 
+
+	
+	<div class='span5 border'>
+		<center>
+			<h3>
+				Read With Me in action
+			</h3>
+			<br/>
+			<br/>
+		</center>
+
+		<iframe width="420" height="315" src="//www.youtube.com/embed/nJrFvUExMuw" frameborder="0" allowfullscreen></iframe>
+	</div> 
+</div>
+
+
+<%= render :partial =>"static_pages/shared/footer" %>
+

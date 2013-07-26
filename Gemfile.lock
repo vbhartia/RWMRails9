@@ -52,6 +52,9 @@ GEM
     guess_html_encoding (0.0.9)
     hashie (2.0.5)
     hike (1.2.3)
+    httparty (0.11.0)
+      multi_json (~> 1.0)
+      multi_xml (>= 0.5.2)
     httpauth (0.2.0)
     i18n (0.6.4)
     journey (1.0.4)
@@ -68,6 +71,7 @@ GEM
     mime-types (1.23)
     mini_portile (0.5.1)
     multi_json (1.7.7)
+    multi_xml (0.5.4)
     multipart-post (1.2.0)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
@@ -150,6 +154,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   devise
   fastimage
+  httparty
   jquery-rails
   omniauth-facebook
   pg

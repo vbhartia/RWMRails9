@@ -1,0 +1,65 @@
+
+<div class='row secondary_hero border'>
+	<center>
+		<h2>
+			One last step! Add this bookmark tool to your browser
+		</h2>
+
+		<h4>
+			The Read With Me reader provides a clean, ad-free reading experience, enabling discussion right within news articles and sharing to your friends. 
+		</h4>
+
+		<br/>
+		<br/>
+
+		<a href = "javascript:(function(){RWM_Script=document.createElement('SCRIPT');RWM_Script.src='<%= ENV['domain'] %>/rwm_reader.js?x=+(Math.random())';document.getElementsByTagName('head')[0].appendChild(RWM_Script);})();" > 
+			
+			Add to Read With Me
+			
+		</a>
+
+	</center>
+</div>
+
+<div class='row homepage_feature_list'>
+	<div class='span5 border'>
+		<center>
+			<h3>
+				Some tips to get started:
+			</h3>
+			<br/>
+			<br/>
+		</center>
+
+		<div class="row border">
+  			1. Ensure your bookmark bar is visible
+		</div>
+
+		<div class="row border">
+			2. Drag the "add to Read With Me" to your bookmark bar
+		</div>
+
+		<div class="row border">
+			3. Navigate to any news article and simply click on "Read With Me" to start a discussion and share the article with your friends
+		</div>
+
+
+	</div> 
+
+	
+	<div class='span5 border'>
+		<center>
+			<h3>
+				Quick demo of how it works
+			</h3>
+			<br/>
+			<br/>
+		</center>
+
+		<iframe width="420" height="315" src="//www.youtube.com/embed/nJrFvUExMuw" frameborder="0" allowfullscreen></iframe>
+	</div> 
+</div>
+
+
+<%= render :partial =>"static_pages/shared/footer" %>
+

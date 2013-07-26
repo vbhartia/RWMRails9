@@ -7,23 +7,38 @@ class ArticleController < ApplicationController
 
   #Goes to iFrame view
   def iFrame
+    puts '*******************************************************'
+
+    response = HTTParty.get('http://www.readability.com/api/content/v1/parser?url=http://www.businessweek.com/articles/2013-07-25/jeff-bezos-doesnt-care-what-you-think-about-amazons-quarterly-earnings&token=933fe96da256bd87c9497a08fad03cbd111eee1e')
+
+    puts response.body
+
+    parsed_json = ActiveSupport::JSON.decode(response.body)
+    puts parsed_json['title']
   end
 
   #Post response
   def add_new_article
-    puts '*******************************************************'
-    puts params[:url]
-
+    
     source = open(params[:url]).read
     readability_output = Readability::Document.new(source, :tags => %w[div p img a], :attributes => %w[src href], :remove_empty_nodes => false)
+    
 
+    #readability_url = 'http://www.readability.com/api/content/v1/parser?url=' + (params[:url]) + '&token=933fe96da256bd87c9497a08fad03cbd111eee1e'
 
-    #puts '*******************************************************'
+    #response = HTTParty.get(readability_url)
+
+    #puts response.body
+
+    #parsed_json = ActiveSupport::JSON.decode(response.body)
+    
+    #readability_output = parsed_json['content']
+
     #puts readability_output
 
 
-    #puts '*******************************************************'
     doc_split = readability_output.content.split(' ')
+    #doc_split = readability_output.split(' ')
 
 
     span_count = 0
@@ -35,15 +50,15 @@ class ArticleController < ApplicationController
     doc_split.each do |res| 
       if res.include?('<img') || res.include?('<a')
         html_flag = true
-        puts 'flag set to true'
-        puts res
+        #puts 'flag set to true'
+        #puts res
         doc_with_commenting = doc_with_commenting + res + ' '
       else 
         if html_flag
-          puts 'in html block'
+          #puts 'in html block'
           if res.include?('">')
-            puts 'detected end'
-            puts res
+            #puts 'detected end'
+            #puts res
             html_flag = false
             doc_with_commenting = doc_with_commenting + res + ' '
           end
@@ -66,11 +81,11 @@ class ArticleController < ApplicationController
     article_scrapped.site_name = params[:site_name]
     article_scrapped.author = params[:author]
     
-    if readability_output.images[0].empty?
+    #if readability_output.images[0].empty?
       article_scrapped.image_url = params[:image_url]
-    else
-      article_scrapped.image_url = readability_output.images[0]
-    end
+    #else
+      #article_scrapped.image_url = readability_output.images[0]
+    #end
 
     article_scrapped.save
     track_activity article_scrapped

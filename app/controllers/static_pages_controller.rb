@@ -8,4 +8,7 @@ class StaticPagesController < ApplicationController
   def contact_us
   end
 
+  def bookmarklet
+  end
+
 end

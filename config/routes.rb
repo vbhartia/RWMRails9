@@ -6,6 +6,9 @@ Rwm9::Application.routes.draw do
 
   root :to => "static_pages#home_page"
 
+  get 'bookmarklet' => "static_pages#bookmarklet"
+
+
 
   #*********** User Homepage *********#
 

@@ -1,3 +1,42 @@
 // Place all the styles related to the static_pages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$home_page_well_color:rgb(217,217,217);
+
+
+.homepage_hero
+{
+	height:200px;
+	background-color:$home_page_well_color;
+}
+
+.secondary_hero
+{
+	height:150px;
+	background-color:$home_page_well_color;	
+}
+
+.homepage_feature_list
+{
+	text-align:center;
+
+}
+
+.homepage_image_icon
+{
+	height:64px;
+	width:64px;
+}
+
+#footer{
+    background-color:$home_page_well_color;
+    bottom: 0;
+    height: 100px;
+    left: 0;
+    position: absolute;
+    right: 0;
+}
+
+
+

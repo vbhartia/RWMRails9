@@ -1,11 +1,15 @@
-<meta property="og:image" content="<%= @article.image_url %>" />
-<meta property="og:url" content="<%= @article.image_url %>" />
-<meta property="og:type" content="article" />
-<meta property="og:title" content="<%= @article.headline %>" />
-<meta property="og:description" content="<%= @article.description %>" />
-<meta property="og:site_name" content="<%= @article.site_name %>" />
-<meta property="fb:app_id" content="<%=ENV['FACEBOOK_APP_ID'] %>" />
 
+<% content_for :head do -%>
+
+  <meta property="og:image" content="<%= @article.image_url %>" />
+  <meta property="og:url" content="<%= @article.image_url %>" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="<%= @article.headline %>" />
+  <meta property="og:description" content="<%= @article.description %>" />
+  <meta property="og:site_name" content="<%= @article.site_name %>" />
+  <meta property="fb:app_id" content="<%=ENV['FACEBOOK_APP_ID'] %>" />
+
+<% end -%>
 
 
 

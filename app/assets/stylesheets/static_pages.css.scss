@@ -23,6 +23,12 @@ $home_page_well_color:rgb(217,217,217);
 
 }
 
+.homepage_image_footer_icon
+{
+	height:32px;
+	width:32px;
+}
+
 .homepage_image_icon
 {
 	height:64px;
@@ -38,5 +44,30 @@ $home_page_well_color:rgb(217,217,217);
     right: 0;
 }
 
+#footer h3{
+	color:	blue
+}
+
+
+.homepage_footer_left
+{
+	text-align:left;
+}
+
+.homepage_footer_center
+{
+	text-align:center;
+}
+
+.homepage_footer_right
+{
+	width:230px;
+	text-align:right;
+}
+
+.content {
+   margin: 0 auto;
+   width: 1340px;
+}
 
 

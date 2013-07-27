@@ -6,8 +6,13 @@ Rwm9::Application.routes.draw do
 
   root :to => "static_pages#home_page"
 
-  get 'bookmarklet' => "static_pages#bookmarklet"
+  #********** Static Pages ************#
 
+  get 'bookmarklet' => "static_pages#bookmarklet", as: 'bookmarklet'
+  get 'about' => "static_pages#about", as: 'about'
+  get 'talent' => "static_pages#talent", as: 'talent'
+  get 'contact' => "static_pages#contact", as: 'contact'
+  get 'privacy' => "static_pages#privacy", as: 'privacy'
 
 
   #*********** User Homepage *********#

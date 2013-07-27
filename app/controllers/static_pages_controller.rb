@@ -2,10 +2,13 @@ class StaticPagesController < ApplicationController
   def home_page
   end
 
-  def about_us
+  def about
   end
 
-  def contact_us
+  def contact
+  end
+
+  def talent
   end
 
   def bookmarklet

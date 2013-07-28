@@ -4,43 +4,117 @@
   overflow: scroll;
 }
 
-/* For iframe  */
-
-.comment_input {
-	position: absolute;
-	border-radius: 5px;
-	height:150px;
-	width:225px;
-	background-color: gray;
-	z-index:200;
-}
-
-.comment_show {
-	position: absolute;
-	border-radius: 5px;
-	height:150px;
-	width:225px;
-	background-color: rgba(255,255,255,0.9);
-	z-index:200;
-	visibility: hidden;
-	border: 1px solid black
-}
-
-.overall_comment_input {
-	border-radius: 5px;
-	background-color: gray;
-	
-}
-
-.overall_comments_display {
-	height: 100px;
-	overflow: auto;
-
-}
 
 .article_header {
-	height: 270px;
-	overflow: auto;
+	height: 100%;
 	background-color: yellow;
 }
 
+
+.overall_comment_input {
+	border-radius: 5px;
+	background-color: white;
+	margin-left: 15px;
+}
+
+.overall_comments_display {
+	height: 100%;
+	overflow: auto;
+	margin-left: 15px;
+	margin-bottom: 5px;
+}
+
+
+
+
+
+
+/*Comment Elements */
+
+/* new comment input dialog */
+.comment_in_line_input {
+	position: absolute;
+	border-radius: 5px;
+	height:150px;
+	width:225px;
+	background-color: gray;
+	z-index:200;
+}
+
+/*overall container for new comment */
+.comment_inline_comment_container {
+	position: absolute;
+	border-radius: 5px;
+	height:200px;
+	width:300px;
+	background-color: rgba(255,255,255,0.9);
+	z-index:200;
+	visibility: hidden;
+	border: 1px solid black;
+	padding: 5px;
+}
+
+/*actual container for in_line_comments */
+.comment_inline_view_comments {
+	height:160px;
+	width:300px;
+	overflow: auto;
+	margin: 2px;	
+}
+
+
+.comment_element {
+	background-color: white;
+	padding: 2px;
+	margin: 2px;
+	border-radius: 2px;
+	border: 1px solid black;
+	height: 75px;
+	overflow: hidden;
+}
+
+.profile_image_in_comment {
+	float:left;
+	padding:5px;
+	height:40px;
+	width:40px;
+}
+
+.comment_text {
+	background-color: white;
+	border-radius: 2px;
+	padding-right: 0px;
+	height:50px;
+	width:100%;
+	overflow: auto;
+}
+
+.comment_time {
+	font-size:small;
+	float: right;
+	color: grey;
+	z-index:10;
+}
+
+.comment_table {
+	width: calc(100% - 60px);
+
+}
+
+
+
+/* misc */
+.add_margin {
+	margin:2px;
+}
+
+.subtract_margin {
+	margin-right:-200px;
+}
+
+#overall_comments_section.span5 {
+	width: 440px;
+	padding-bottom:5px;
+	padding-right:5px;
+	padding-left:5px;
+}

@@ -11,6 +11,7 @@ class CommentController < ApplicationController
     comment.content = params[:content]
     comment.comment_type = params[:comment_type]
     comment.comment_location_ids = params[:comment_location_ids]
+    comment.group_comment_id = params[:group_comment_id]
 
 
     current_user.comments << comment

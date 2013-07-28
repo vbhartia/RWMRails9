@@ -2,7 +2,7 @@
 <!--_article_interact -->
 <br/>
 <div id='contents' class='row article_header'>
-  <div class='span8'>
+  <div class='span7'>
 
     <h2 id = 'article_headline'>
     </h2>
@@ -16,35 +16,44 @@
     </p>
   </div>
   
-  <div id='overall_comments' class='span3'>
-    Overall Comments
+  <!-- Overall Comment section at the top --> 
 
+  <div id='overall_comments_section' class='span5 border'>
     
+    <!-- Comment Container -->
+
+    <br/>
+
+    Overall Discussion
+
+    <div id='first_overall_comment' class='border'>
+    </div>
+
     <div id='all_comments_container' class='border overall_comments_display'>
     </div>
     
     <div id='overall_comment_input' class='border overall_comment_input'>
-      <textarea id="overall_comment_input_field" rows="3" style="margin: 0px; width: 206px; height: 60px;"></textarea>
+      <textarea id="overall_comment_input_field" rows="1" style="margin: 0px; width: 280px; height: 20px;"></textarea>
   
       <button onclick="comment_overall_submit()" class='btn btn-primary' type='button'>Add Comment</button>
-
     </div>
-
-
   </div>
-
 </div>
+
+
+
+<!-- Actual Article Content --> 
 
 <div class='row'>
 
-  <div class='span8'>
+  <div class='span7'>
 
     <div id = 'article_content'>
     </div>
 
   </div>
 
-  <div class='span4'>
+  <div class='span5'>
       Comment section
     <div id = 'comment_section'>
     </div>
@@ -71,6 +80,11 @@
   var all_comments = new Array()
   var new_comment = '';
   var enable_selection = true;
+
+  // keep track of unique groups
+  var group_comment_id = 0;
+
+  var reveal_comments_boolean = true
 
   // get user highlight
   function enable_commenting()
@@ -157,25 +171,14 @@
       // Insert comment dialogue
       create_comment_input_html()
 
-      $('.comment_input').css({'left': offset.left})
+      $('.comment_in_line_input').css({'left': offset.left})
     }
   }
 
-  function comment_inline_cancel()
-  {
-    $('.comment_input').remove()
-
-    for(x in ids)
-    {
-        $(('#' + ids[x])).css('background', 'white')
-    }
-
-    enable_selection = true
-  }
+  // ************ Comment Submissions ***********
 
   function comment_inline_submit()
   {
-    enable_selection = true
 
     new_comment = new Object()
     new_comment.content = $('#comment_inline_input_field').val()
@@ -184,13 +187,18 @@
     new_comment.comment_location_ids = JSON.stringify(ids)
     new_comment.comment_type = 'in_line'
 
+    group_comment_id++
+
+    new_comment.group_comment_id = group_comment_id
+
+
     comment_submit(new_comment) 
     //all_comments.push(new_comment)
-    $('.comment_input').remove()
+    $('.comment_in_line_input').remove()
 
+    enable_selection = true
   }
 
-  
   function comment_overall_submit()
   {
 
@@ -203,30 +211,77 @@
     comment_submit(comment_to_submit)
     content_to_add = comment_to_submit.content + '<br/>'
 
-    $('#all_comments_container').prepend(content_to_add)
+    //$('#all_comments_container').prepend(content_to_add)
 
     $('#overall_comment_input_field').val('')
-
   }
-  
+
+  function comment_inline_reply_submit(comment_group)
+  {
+    
+    var comment_to_submit = new Object()
+    comment_to_submit.content = $('#inline_comment_input_' + comment_group).val()
+    comment_to_submit.comment_type = 'in_line'
+    comment_to_submit.article_id = article.id
+    comment_to_submit.group_comment_id = comment_group
+
+    comment_submit(comment_to_submit)
+
+    enable_selection = true
+  }
+ 
+  // adds the comment to the server
   function comment_submit(comment)
   {
     
     post_request = new Object()
     post_request = comment
 
-    $.post("/comment/new_comment", post_request).done(function(data){
+    console.log(comment)
 
-      data.comment_location_ids = $.parseJSON(data.comment_location_ids)
+    $.post("/comment/new_comment", post_request).done(function(data)
+    {
+
+      //data.comment_location_ids = $.parseJSON(data.comment_location_ids)
  
-      console.log(data)
-      all_comments.push(data)
-      $('#all_comments_container').html('')
-      get_users()
-      console.log(all_comments)
+  //    console.log(data)
+//      all_comments.push(data)
 
-    }
-    )
+      get_comments()
+
+    })
+  }
+
+  // ************ Get Comments and Render them ***********
+  
+  function get_comments()
+  {
+    var get_request = new Object()
+    get_request.article_id = article.id
+
+    var url = '/comment/get_article_comments'
+
+    $.get(url, get_request).done(function(data) 
+      { 
+        all_comments = data
+
+
+        // turn ids into a JSON object
+        for(var x in all_comments)
+        {
+
+          all_comments[x].comment_location_ids = $.parseJSON(all_comments[x].comment_location_ids)
+
+          if (all_comments[x].comment_type != 'overall_comment')
+          { 
+            group_comment_id = all_comments[x].group_comment_id
+          }
+        
+        }
+
+        get_users()
+        
+      })
   }
 
   function get_users()
@@ -258,112 +313,196 @@
   {
     var iterate = 0
 
+    var first_overall_comment_boolean = true;
+
+    $('#all_comments_container').html('')
+
     all_comments.forEach(function(comment)
     {
+
       if (comment.comment_type == 'in_line')
       {
-        create_in_line_comment_html(comment, iterate)
+        create_in_line_comment_html(comment)
         bind_in_line_comments_to_hover(comment, iterate)
 
       }
 
       if (comment.comment_type == 'overall_comment')
       {
-        create_overall_comments(comment)
+        if (first_overall_comment_boolean)
+        {
+          first_overall_comment_boolean = false;
+          create_first_overall_comments(comment)
+        }
+        else
+        {
+
+          create_overall_comments(comment)
+        }
       }
 
       iterate++
     })
+
+    collapse_long_threads()
+    scroll_to_bottom_of_in_line()
+
+  }
+
+  function scroll_to_bottom_of_in_line()
+  {
+    
+    $('.comment_inline_view_comments').each(function()
+    {
+      $(this).scrollTop(3000)
+    })
+
+  }
+
+
+  function collapse_long_threads()
+  {
+
+    var num_children = $(".overall_comments_display").children().length
+
+    if(num_children > 2 && reveal_comments_boolean)
+    {
+      $(".overall_comments_display").children().not(':gt(' + (num_children - 3) + ')').css('display', 'none')
+
+      var reveal_collapse = '<a onclick="reveal_comments()"> Show All Comments </a>'
+
+      $(".overall_comments_display").prepend(reveal_collapse)
+
+    }
+
+  }
+
+  function reveal_comments()
+  {
+
+    var num_children = $(".overall_comments_display").children().length
+
+    if (reveal_comments_boolean == true)
+    {
+      $(".overall_comments_display").children().css('display', '')
+     
+      reveal_comments_boolean = false
+
+      $(".overall_comments_display").children('a').text('Hide Comments')
+    }
+
+    else
+    {
+      $(".overall_comments_display").children().not('a').not(':gt(' + (num_children - 4) + ')').css('display', 'none')
+
+      reveal_comments_boolean = true
+
+      $(".overall_comments_display").children('a').text('Show All Comments')   
+    } 
+  }
+
+
+
+  function create_first_overall_comments(comment_element)
+  {
+    
+    var comment_to_add = create_comment_element_html(comment_element)
+
+    $('#first_overall_comment').html(comment_to_add)
+
   }
 
   function create_overall_comments(comment_element)
   {
-    var comment_to_add = ''
-    comment_to_add += '<div>'
-
-    comment_to_add += '<img src=\''
-
-    comment_to_add += comment_element.user_info.profile_image_url
-
-    comment_to_add += '\'/>'
-
-    comment_to_add += comment_element.content
     
-    comment_to_add += '</div>'
-    comment_to_add += '<br/>'
+    var comment_to_add = create_comment_element_html(comment_element)
 
-    $('#all_comments_container').prepend(comment_to_add)
+    $('#all_comments_container').append(comment_to_add)
 
   }
 
-  function create_in_line_comment_html(comment_element, comment_num)
+  function create_in_line_comment_html(comment_element)
   {
     comment_show_html = ''
+    console.log(comment_element.comment_location_ids)
     
-    $('#' + comment_element.comment_location_ids[0]).children().remove()
-
-    comment_show_html += $('#' + comment_element.comment_location_ids[0]).text()
-
-    comment_show_html += '<div id=\'comment_' + comment_num + '\'' 
-    comment_show_html += ' class=\'comment_show\'>'
-    comment_show_html += '</div>'
-
-    $('#' + comment_element.comment_location_ids[0]).html(comment_show_html)
-
-    // Place Content
-    comment_content_html = ''
-    comment_content_html += '<div' 
-    comment_content_html += ' class=\'indv_comment_show\'>'
-    
-    comment_content_html += '<img src=\'' 
-
-    comment_content_html += comment_element.user_info.profile_image_url
-
-    comment_content_html += '\'>'
-
-    comment_content_html += comment_element.content
-
-    comment_content_html += '</div>'
-
-
-    $('#comment_' + comment_num).html(comment_content_html)
-
-    //Paint the span
-    for(x in comment_element.comment_location_ids)
+    if (comment_element.comment_location_ids != null)
     {
-      $('#' + comment_element.comment_location_ids[x]).css('background', 'yellow')
-      $('#' + comment_element.comment_location_ids[x]).css('text-decoration', 'underline')
+      // Create a new comment group
 
+      $('#' + comment_element.comment_location_ids[0]).children().remove()
+
+      comment_show_html += $('#' + comment_element.comment_location_ids[0]).text()
+
+      // Overall comment dialogue box
+      comment_show_html += '<div id=\'comment_' + comment_element.group_comment_id + '\' ' 
+      comment_show_html += 'class=\'comment_inline_comment_container\'>'
+
+        // Container for comments
+        comment_show_html += '<div' 
+        comment_show_html += ' class=\'comment_inline_view_comments\'>'
+        comment_show_html += '</div>'
+
+        // inline comment reply submit
+      comment_show_html += add_reply_button_to_in_line_comment_group(comment_element)
+
+      comment_show_html += '</div>'
+
+      $('#' + comment_element.comment_location_ids[0]).html(comment_show_html)
+
+      // Place Comment Content
+      var comment_to_add = create_comment_element_html(comment_element)
+
+      $('#comment_' + comment_element.group_comment_id + ' div.comment_inline_view_comments').prepend(comment_to_add)
+
+      //Paint the span
+      for(x in comment_element.comment_location_ids)
+      {
+        $('#' + comment_element.comment_location_ids[x]).css('background', 'yellow')
+        $('#' + comment_element.comment_location_ids[x]).css('text-decoration', 'underline')
+      }
+    }
+    
+    // add to group of comments
+    else 
+    {
+      var comment_to_add = create_comment_element_html(comment_element)
+
+      $('#comment_' + comment_element.group_comment_id + ' div.comment_inline_view_comments').append(comment_to_add)
     }
   }
 
-  function bind_in_line_comments_to_hover(comment_element, comment_num)
+  function bind_in_line_comments_to_hover(comment_element)
   {
 
-    var marker = comment_num
-    //Position the comment
-    $('#comment_' + marker).css({'left': $('#' + comment_element.comment_location_ids[0]).offset().left
-        })
-    
-    // bind all elements
-
-    for(var x in comment_element.comment_location_ids)
+    if (comment_element.comment_location_ids != null)
     {
+      var marker = comment_element.group_comment_id
+      //Position the comment
+      $('#comment_' + marker).css({'left': $('#' + comment_element.comment_location_ids[0]).offset().left
+          })
+      
+      // bind all elements
 
-      $('#' + comment_element.comment_location_ids[x]).on(
-      {mouseenter: function()
-        { 
-          var first_item = comment_element
-          $('#comment_' + marker).css({
-            'visibility': 'visible'})
-            
-        },
-        mouseleave: function()
-        {
-          var marker = comment_num
-            $('#comment_' + marker).css('visibility', 'hidden')
-        }
-      })
+      for(var x in comment_element.comment_location_ids)
+      {
+
+        $('#' + comment_element.comment_location_ids[x]).on(
+        {mouseenter: function()
+          { 
+            var first_item = comment_element
+            $('#comment_' + marker).css({
+              'visibility': 'visible'})
+              
+          },
+          mouseleave: function()
+          {
+            var marker = comment_element.group_comment_id
+              $('#comment_' + marker).css('visibility', 'hidden')
+
+          }
+        })
+      }
     }
   }
 
@@ -371,7 +510,7 @@
   {
 
     $('#' + ids[ids.length -1]).append(
-    '<div class = \'comment_input\'> \
+    '<div class = \'comment_in_line_input\'> \
     <textarea id="comment_inline_input_field" rows="3" style="margin: 0px; width: 206px; height: 60px;"></textarea> \
     <button onclick="comment_inline_submit()" class=\'btn btn-primary\' type=\'button\'>Add Comment</button> \
     <button onclick="comment_inline_cancel()" class=\'btn btn-info\' type=\'button\'>Cancel</button> \
@@ -379,6 +518,94 @@
     );
   }
 
+  // Creates the individual comments for overall and inline
+  function create_comment_element_html(comment_element)
+  {
+    console.log(all_comments)
+
+    var comment_to_add = ''
+    
+    comment_to_add += '<div class="comment_element">'
+
+      comment_to_add += '<img class=\'profile_image_in_comment\' src=\''
+
+        comment_to_add += comment_element.user_info.profile_image_url
+      comment_to_add += '\'/>'
+
+
+      comment_to_add += '<table class="comment_table">'
+        comment_to_add += '<tr>'
+          comment_to_add += '<td>'
+            comment_to_add += '<strong>'
+
+            comment_to_add += comment_element.user_info.firstname
+
+            comment_to_add += '</strong>'
+            comment_to_add += ' says:'
+
+
+              comment_to_add += '<div class="comment_time">'
+
+              comment_to_add += $.timeago(comment_element.created_at)
+
+              comment_to_add += '</div>'       
+
+          comment_to_add += '</td>'
+        comment_to_add += '</tr>'
+
+        comment_to_add += '<tr>'
+          comment_to_add += '<td >'
+            comment_to_add += '<div class=\'comment_text\'>'
+
+              comment_to_add += comment_element.content
+
+            comment_to_add += '</div>'
+          comment_to_add += '</td>'
+        comment_to_add += '</tr>'
+      comment_to_add += '</table>'
+
+    comment_to_add += '</div>'
+
+    return comment_to_add
+  }
+
+  function comment_inline_cancel()
+  {
+    $('.comment_in_line_input').remove()
+
+    for(x in ids)
+    {
+        $(('#' + ids[x])).css('background', 'white')
+    }
+
+    enable_selection = true
+  }
+  
+  function add_reply_button_to_in_line_comment_group(comment_element)
+  {
+
+    var reply_section = ''
+
+    reply_section += '<div class="add_padding" >'
+
+      reply_section += '<textarea id="inline_comment_input_' + comment_element.group_comment_id + '"'
+
+      reply_section += ' class="in_line_comment_text_field add_margin" '
+
+      reply_section += 'rows="1" style="margin: 0px;">'
+
+      reply_section += '</textarea>'
+      reply_section += '<button onclick="comment_inline_reply_submit('
+
+      reply_section += comment_element.group_comment_id
+
+      reply_section += ')" class="btn btn-primary add_margin" type="button">Reply</button>'
+    
+    reply_section += '</div>'
+
+    return reply_section
+
+  }
 
 
 </script>

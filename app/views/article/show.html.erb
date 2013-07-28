@@ -44,6 +44,10 @@
       $('#article_source').html(response.site_name)    
 
       $('#article_image').attr("src", response.image_url)
+
+      $('#article_image').css("width", 300);
+
+      $('#article_image').css("height", 300);
       
 
       $('#article_content').html(response.content)
@@ -63,36 +67,33 @@
     });
   }
 
-  function get_comments()
-  {
-    var get_request = new Object()
-    get_request.article_id = <%= @article.id %>
 
-    var url = '/comment/get_article_comments'
+  //setInterval(get_comments(),3000);
 
-    $.get(url, get_request).done(function(data) 
-      { 
-        all_comments = data
 
-        // turn ids into a JSON object
-        for(var x in all_comments)
-        {
+  $('#article_image').each(function() {
+        var maxWidth = 100; // Max width for the image
+        var maxHeight = 100;    // Max height for the image
+        var ratio = 0;  // Used for aspect ratio
+        var width = $(this).width();    // Current image width
+        var height = $(this).height();  // Current image height
 
-          all_comments[x].comment_location_ids = $.parseJSON(all_comments[x].comment_location_ids)
-        
+        // Check if the current width is larger than the max
+        if(width > maxWidth){
+            ratio = maxWidth / width;   // get ratio for scaling image
+            $(this).css("width", maxWidth); // Set new width
+            $(this).css("height", height * ratio);  // Scale height based on ratio
+            height = height * ratio;    // Reset height to match scaled image
+            width = width * ratio;    // Reset width to match scaled image
         }
 
-        get_users()
-        
-      })
-  }
-
-
-  setInterval(get_comments(),3000);
-
-  
-
-
-
+        // Check if current height is larger than max
+        if(height > maxHeight){
+            ratio = maxHeight / height; // get ratio for scaling image
+            $(this).css("height", maxHeight);   // Set new height
+            $(this).css("width", width * ratio);    // Scale width based on ratio
+            width = width * ratio;    // Reset width to match scaled image
+        }
+    });
 
 <% end %>

@@ -1,13 +1,7 @@
-.comment_section {
-  height: 150px;
-  background-color: gray;
-  overflow: scroll;
-}
-
-
-.article_header {
-	height: 100%;
-	background-color: yellow;
+.overall_comments_section_class {
+  background-color: rgba(230,230,230,0.9);
+  padding:5px;
+  border-radius: 5px;
 }
 
 
@@ -15,6 +9,8 @@
 	border-radius: 5px;
 	background-color: white;
 	margin-left: 15px;
+	padding-top:15px;
+	height: 50px;
 }
 
 .overall_comments_display {
@@ -23,10 +19,6 @@
 	margin-left: 15px;
 	margin-bottom: 5px;
 }
-
-
-
-
 
 
 /*Comment Elements */
@@ -47,7 +39,7 @@
 	border-radius: 5px;
 	height:200px;
 	width:300px;
-	background-color: rgba(255,255,255,0.9);
+	background-color: rgba(230,230,230,0.9);
 	z-index:200;
 	visibility: hidden;
 	border: 1px solid black;
@@ -68,7 +60,6 @@
 	padding: 2px;
 	margin: 2px;
 	border-radius: 2px;
-	border: 1px solid black;
 	height: 75px;
 	overflow: hidden;
 }
@@ -81,12 +72,14 @@
 }
 
 .comment_text {
-	background-color: white;
+	background-color: rgba(240,240,240,0.9);
 	border-radius: 2px;
 	padding-right: 0px;
-	height:50px;
+	height:45px;
 	width:100%;
 	overflow: auto;
+	padding:2px;
+	padding-left:5px;
 }
 
 .comment_time {
@@ -98,7 +91,6 @@
 
 .comment_table {
 	width: calc(100% - 60px);
-
 }
 
 
@@ -106,6 +98,10 @@
 /* misc */
 .add_margin {
 	margin:2px;
+}
+
+.add_margin_left {
+	margin-left:10px;
 }
 
 .subtract_margin {
@@ -117,4 +113,30 @@
 	padding-bottom:5px;
 	padding-right:5px;
 	padding-left:5px;
+}
+
+.float_right {
+	float: right;
+
+}
+
+.float_left {
+	float: left;
+
+}
+
+.add_padding_to_center_login {
+	padding:7px;
+}
+
+
+.first_comment_place_holder_class {
+	display:table-cell; 
+	vertical-align:middle;
+	width: 100%;
+	background-color: white;
+	padding: 2px;
+	margin: 2px;
+	height: 75px;
+
 }

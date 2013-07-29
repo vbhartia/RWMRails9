@@ -1,7 +1,7 @@
 
 <!--_article_interact -->
 <br/>
-<div id='contents' class='row article_header'>
+<div id='contents' class='row'>
   <div class='span7'>
 
     <h2 id = 'article_headline'>
@@ -14,72 +14,82 @@
 
     <p id = 'article_source'>
     </p>
-  </div>
-  
-  <!-- Overall Comment section at the top --> 
-
-  <div id='overall_comments_section' class='span5 border'>
-    
-    <!-- Comment Container -->
-
-    <br/>
-
-    Overall Discussion
-
-    <div id='first_overall_comment' class='border'>
-    </div>
-
-    <div id='all_comments_container' class='border overall_comments_display'>
-    </div>
-    
-    <div id='overall_comment_input' class='border overall_comment_input'>
-      <textarea id="overall_comment_input_field" rows="1" style="margin: 0px; width: 280px; height: 20px;"></textarea>
-  
-      <button onclick="comment_overall_submit()" class='btn btn-primary' type='button'>Add Comment</button>
-    </div>
-  </div>
-</div>
-
-
-
-<!-- Actual Article Content --> 
-
-<div class='row'>
-
-  <div class='span7'>
 
     <div id = 'article_content'>
     </div>
 
   </div>
+  
+  <!-- Overall Comment section at the top --> 
 
-  <div class='span5'>
-      Comment section
-    <div id = 'comment_section'>
+  <div id='overall_comments_section' class='overall_comments_section_class span5'>
+    
+    <!-- Comment Container -->
+
+    <div id='first_overall_comment' class=' '>
+      <center>      
+        <div class='comment_element'>
+          <div class=' first_comment_place_holder_class'>
+            <strong>
+               Start a discussion with your friends about this article!
+            </strong>    
+          </div>
+        </div>
+      </center>    
+    </div>
+
+    <div id='all_comments_container' class=' overall_comments_display'>
+    </div>
+    
+    <div id='overall_comment_input_area' class=' overall_comment_input'>
+      <center>
+
+        <% if user_signed_in? %>
+          <textarea id="overall_comment_input_field" rows="2" style="margin: 0px; width: 280px; height: 38px;"></textarea>
+      
+          <button onclick="comment_overall_submit()" class='btn btn-primary' type='button'>Add Comment</button>
+        
+
+        <% else %>
+          <div class="add_padding_to_center_login">
+            Please <%= link_to "sign up or login ", user_omniauth_authorize_path(:facebook)  %> to add to this discussion
+          </div>
+          
+
+        <% end %>
+
+      </center>   
     </div>
 
   </div>
+
+
 </div>
 
 <script>
-//Get article contents first
-
-  //global variables
-  // article = full article contents
 
   var article  = new Object() 
   article.url = ''
   article.image_url = ''
 
+  <% if user_signed_in? %>
+    var user_signed_in_status = true
+    var enable_selection = true 
+
+  <% else %>
+    var user_signed_in_status = false
+    var enable_selection = false 
+
+  <% end %>
+
   <%= yield %>
   // Finished getting article from the server
 
   // Enabling commenting
-
   var ids = new Array();
   var all_comments = new Array()
   var new_comment = '';
-  var enable_selection = true;
+
 
   // keep track of unique groups
   var group_comment_id = 0;
@@ -181,7 +191,8 @@
   {
 
     new_comment = new Object()
-    new_comment.content = $('#comment_inline_input_field').val()
+    new_comment.content = $('#comment_inline_input_field').val().linkify()
+
     new_comment.article_id = article.id
 
     new_comment.comment_location_ids = JSON.stringify(ids)
@@ -203,15 +214,13 @@
   {
 
     var comment_to_submit = new Object()
-    comment_to_submit.content = $('#overall_comment_input_field').val()
+    comment_to_submit.content = $('#overall_comment_input_field').val().linkify()
     comment_to_submit.comment_type = 'overall_comment'
     comment_to_submit.article_id = article.id
 
     //add function
     comment_submit(comment_to_submit)
-    content_to_add = comment_to_submit.content + '<br/>'
 
-    //$('#all_comments_container').prepend(content_to_add)
 
     $('#overall_comment_input_field').val('')
   }
@@ -220,7 +229,7 @@
   {
     
     var comment_to_submit = new Object()
-    comment_to_submit.content = $('#inline_comment_input_' + comment_group).val()
+    comment_to_submit.content = $('#inline_comment_input_' + comment_group).val().linkify()
     comment_to_submit.comment_type = 'in_line'
     comment_to_submit.article_id = article.id
     comment_to_submit.group_comment_id = comment_group
@@ -276,11 +285,8 @@
           { 
             group_comment_id = all_comments[x].group_comment_id
           }
-        
         }
-
         get_users()
-        
       })
   }
 
@@ -315,7 +321,7 @@
 
     var first_overall_comment_boolean = true;
 
-    $('#all_comments_container').html('')
+    $('#all_comments_container').children().remove()
 
     all_comments.forEach(function(comment)
     {
@@ -346,8 +352,28 @@
 
     collapse_long_threads()
     scroll_to_bottom_of_in_line()
+    deactiva_selection_when_inline_shown()
 
   }
+
+  function deactiva_selection_when_inline_shown()
+  {
+
+    $('.comment_inline_comment_container').on(
+        {mouseenter: function()
+          { 
+            enable_selection = false;  
+          },
+          mouseleave: function()
+          {
+            if (user_signed_in_status)
+            {
+              enable_selection = true;
+            }
+          }
+        })
+  }
+
 
   function scroll_to_bottom_of_in_line()
   {
@@ -356,9 +382,7 @@
     {
       $(this).scrollTop(3000)
     })
-
   }
-
 
   function collapse_long_threads()
   {
@@ -444,7 +468,15 @@
         comment_show_html += '</div>'
 
         // inline comment reply submit
-      comment_show_html += add_reply_button_to_in_line_comment_group(comment_element)
+      
+      <% if user_signed_in? %>
+        
+        comment_show_html += add_reply_button_to_in_line_comment_group(comment_element)
+
+      <% else %>
+        comment_show_html += add_please_sign_up_to_inline()
+      
+      <% end %>
 
       comment_show_html += '</div>'
 
@@ -508,20 +540,32 @@
 
   function create_comment_input_html()
   {
+    var inline_comment_input_dialogue_html = ''
+    
+    inline_comment_input_dialogue_html += '<div' 
+    inline_comment_input_dialogue_html += ' class = \'comment_in_line_input\'>'
+      
+      inline_comment_input_dialogue_html += '<textarea id="comment_inline_input_field" rows="3" style="margin: 0px; width: 206px; height: 60px;">'
+      inline_comment_input_dialogue_html += '</textarea>'
+    
+      inline_comment_input_dialogue_html += '<button onclick="comment_inline_submit()" class=\'btn btn-primary\' type=\'button\'>'
+    
+      inline_comment_input_dialogue_html += 'Add Comment'
+      
+      inline_comment_input_dialogue_html += '</button>'
 
-    $('#' + ids[ids.length -1]).append(
-    '<div class = \'comment_in_line_input\'> \
-    <textarea id="comment_inline_input_field" rows="3" style="margin: 0px; width: 206px; height: 60px;"></textarea> \
-    <button onclick="comment_inline_submit()" class=\'btn btn-primary\' type=\'button\'>Add Comment</button> \
-    <button onclick="comment_inline_cancel()" class=\'btn btn-info\' type=\'button\'>Cancel</button> \
-    </div>'
-    );
+      inline_comment_input_dialogue_html += '<button onclick="comment_inline_cancel()"' 
+      inline_comment_input_dialogue_html += 'class=\'btn btn-info\' type=\'button\'>'
+      inline_comment_input_dialogue_html += 'Cancel</button>'
+    
+    inline_comment_input_dialogue_html += '</div>'
+    
+    $('#' + ids[ids.length -1]).append(inline_comment_input_dialogue_html);
   }
 
   // Creates the individual comments for overall and inline
   function create_comment_element_html(comment_element)
   {
-    console.log(all_comments)
 
     var comment_to_add = ''
     
@@ -599,13 +643,27 @@
 
       reply_section += comment_element.group_comment_id
 
-      reply_section += ')" class="btn btn-primary add_margin" type="button">Reply</button>'
+      reply_section += ')" class="btn btn-primary add_margin_left" type="button">Reply</button>'
     
     reply_section += '</div>'
 
     return reply_section
-
   }
 
+  function add_please_sign_up_to_inline()
+  {
+    var html_to_add = ''
+
+    html_to_add += '<center>'
+
+    html_to_add += 'Please ' 
+    html_to_add += '<%= link_to "sign up or login ", user_omniauth_authorize_path(:facebook)  %>'  
+
+    html_to_add += ' to reply'
+
+    html_to_add += '</center>'
+
+    return html_to_add
+  }
 
 </script>

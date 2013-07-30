@@ -1,3 +1,4 @@
+<div id="fb-root"></div>
 
 <!--_article_interact -->
 <br/>
@@ -20,19 +21,22 @@
 
     <div id = 'article_content'>
     </div>
-
   </div>
   
   <!-- Overall Comment section at the top --> 
 
-  <div class='overall_comments_section_class span4'>
+  <div class='right_section_container span4'>
     
     <!-- Comment Container -->
+    <center>
+      Overall Discussion   
+    </center>
 
     <div id='first_overall_comment' class=' '>
-      <center>      
+      <center>
+   
         <div class='comment_element'>
-          <div class=' first_comment_place_holder_class'>
+          <div class='first_comment_place_holder_class'>
             <strong>
                Start a discussion about this article!
             </strong>    
@@ -63,11 +67,71 @@
 
       </center>   
     </div>
+  </div> 
 
+  <!-- Share container -->
+  <div class='right_section_container span4'>
+    <center>
+      Share your thoughts with your friends!
+    </center>
+
+    <br/>
+    <!-- Facebook share -->
+    <div class='comment_element'>
+      <a onClick='facebook_wall_post()'>
+        <strong> Start a discussion with your facebook friends</strong>
+      </a>
+    </div>
+
+    <br/>
+
+    <div class='comment_element'>
+      <a onClick='email_article()'>
+        <strong> Email the article to your friends</strong>
+      </a>
+    </div>
+
+    <br/>
+
+    <div class='comment_element'>
+      <strong> URL to Article</strong>
+     
+      <textarea id="article_url_to_share" rows="1" style="margin: 0px; width: 250px; height: 20px;"></textarea>
+
+    </div>
+    
+    <br/>
   </div>
 
+  <!-- Original Document Information container -->
+  <div class='right_section_container span4'>
+    <center>
+      Original Article Information
+    </center>  
 
+    <div class="comment_element">
+      Article Appears in:
+      <div id='original_article_news_source'>
+      </div>
+
+      Article Author
+      <div id='article_author'>
+      </div>
+
+      Article URL
+      <textarea id="url_to_original_article" rows="1" style="margin: 0px; width: 250px; height: 20px;"></textarea>
+
+      Article Publish Date
+      <div id='Original Publish Date'>
+      </div>
+
+    </div>
+  </div>
 </div>
+
+<div class='add_spacer_to_move_content_up span12'>
+</div>
+
 
 <script>
 
@@ -92,6 +156,22 @@
   var ids = new Array();
   var all_comments = new Array()
   var new_comment = '';
+
+
+  function finished_loading()
+  {
+    
+    console.log(article)
+    //Original Article Info
+    
+      // Original Article URL
+      $('#url_to_original_article').val(article.original_url)
+
+
+    //Sharing URLs
+    $('#article_url_to_share').val(article.url)
+
+  }
 
 
   // keep track of unique groups
@@ -339,6 +419,8 @@
   
   function render_comments()
   {
+    $("#button").click()
+
     var iterate = 0
 
     var first_overall_comment_boolean = true;
@@ -683,6 +765,56 @@
     html_to_add += '</center>'
 
     return html_to_add
+  }
+
+  function facebook_wall_post()
+  {
+    
+    FB.init(
+    {
+      appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
+      cookie:false,
+      status:true
+    });
+     
+    FB.ui(
+    {
+      method: 'feed',
+      link: 'http://nameless-cliffs-2498.herokuapp.com/articles/show/15',
+      picture: 'http://fbrell.com/f8.jpg',
+      name: article.headline,
+      caption: 'Test',
+      description: 'Using Dialogs to interact with people.'
+    }, 
+    function(response)
+    {
+      console.log(response)
+
+    });
+  }
+
+  function email_article()
+  {
+    
+    alert(article.url)
+    /*setup mailto functionality 
+    var mailToUrl = ""
+
+    mailToUrl += "mailto:?to="
+
+    // Subject Text
+    mailToUrl += "&subject="
+    mailToUrl += "My thoughts on \"" + ArticleContent.headline + "\""
+
+    // Body Text
+    mailToUrl += "&body="
+    mailToUrl += "What do you think of this? - %0d" + "%09" + ArticleContent.headline
+    mailToUrl += "- ( " + article_url + " )"
+
+    // Closing Text
+    mailToUrl += "%0d" + "%0d" + "%0d"
+    mailToUrl += "Share your thoughts on Read With Me - " + domain
+    */
   }
 
 </script>

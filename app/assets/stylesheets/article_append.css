@@ -1,12 +1,14 @@
-.overall_comments_section_class {
-  background-color: rgba(230,230,230,0.9);
+
+.right_section_container {
+  background-color: rgba(230,230,230,1);
   padding:5px;
+  margin-left: -10px;
+  margin-right: -10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   border-radius: 5px;
   float: right;
-  margin-left: -20px;
-  margin-right: -20px;
 }
-
 
 .overall_comment_input {
 	border-radius: 5px;
@@ -149,4 +151,8 @@
                 url('http://i.stack.imgur.com/FhHRx.gif') 
                 50% 50% 
                 no-repeat;
+}
+
+.add_spacer_to_move_content_up {
+	height: 300px ;
 }

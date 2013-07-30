@@ -9,12 +9,12 @@ class ArticleController < ApplicationController
   def iFrame
     puts '*******************************************************'
 
-    response = HTTParty.get('http://www.readability.com/api/content/v1/parser?url=http://www.businessweek.com/articles/2013-07-25/jeff-bezos-doesnt-care-what-you-think-about-amazons-quarterly-earnings&token=933fe96da256bd87c9497a08fad03cbd111eee1e')
+    #response = HTTParty.get('http://www.readability.com/api/content/v1/parser?url=http://www.businessweek.com/articles/2013-07-25/jeff-bezos-doesnt-care-what-you-think-about-amazons-quarterly-earnings&token=933fe96da256bd87c9497a08fad03cbd111eee1e')
 
-    puts response.body
+    #puts response.body
 
-    parsed_json = ActiveSupport::JSON.decode(response.body)
-    puts parsed_json['title']
+    #parsed_json = ActiveSupport::JSON.decode(response.body)
+    #puts parsed_json['title']
   end
 
   #Post response

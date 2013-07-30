@@ -59,7 +59,9 @@
       article.image_url = response.image_url
       article.id = response.id
 
-      enable_commenting() 
+      enable_commenting()
+
+      $('.spinner_modal').remove() 
 
     });
   }

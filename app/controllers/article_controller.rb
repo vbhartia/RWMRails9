@@ -22,20 +22,6 @@ class ArticleController < ApplicationController
     
     source = open(params[:url]).read
     readability_output = Readability::Document.new(source, :tags => %w[div p img a], :attributes => %w[src href], :remove_empty_nodes => false)
-    
-
-    #readability_url = 'http://www.readability.com/api/content/v1/parser?url=' + (params[:url]) + '&token=933fe96da256bd87c9497a08fad03cbd111eee1e'
-
-    #response = HTTParty.get(readability_url)
-
-    #puts response.body
-
-    #parsed_json = ActiveSupport::JSON.decode(response.body)
-    
-    #readability_output = parsed_json['content']
-
-    #puts readability_output
-
 
     doc_split = readability_output.content.split(' ')
     #doc_split = readability_output.split(' ')
@@ -64,7 +50,7 @@ class ArticleController < ApplicationController
           end
         else 
           span_count = span_count + 1
-          span_tag = '<span id=\'' + span_count.to_s + '\'>' + res + ' </span>'
+          span_tag = '<span id=\'' + span_count.to_s + '\' class="selectable" >' + res + ' </span>'
           doc_with_commenting = doc_with_commenting + span_tag
         end 
       end

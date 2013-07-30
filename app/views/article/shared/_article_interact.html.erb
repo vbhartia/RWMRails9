@@ -1,8 +1,11 @@
 
 <!--_article_interact -->
 <br/>
+
+<div class="spinner_modal"></div>
+
 <div id='contents' class='row'>
-  <div class='span7'>
+  <div class='span8 '>
 
     <h2 id = 'article_headline'>
     </h2>
@@ -22,7 +25,7 @@
   
   <!-- Overall Comment section at the top --> 
 
-  <div id='overall_comments_section' class='overall_comments_section_class span5'>
+  <div class='overall_comments_section_class span4'>
     
     <!-- Comment Container -->
 
@@ -31,7 +34,7 @@
         <div class='comment_element'>
           <div class=' first_comment_place_holder_class'>
             <strong>
-               Start a discussion with your friends about this article!
+               Start a discussion about this article!
             </strong>    
           </div>
         </div>
@@ -45,9 +48,9 @@
       <center>
 
         <% if user_signed_in? %>
-          <textarea id="overall_comment_input_field" rows="2" style="margin: 0px; width: 280px; height: 38px;"></textarea>
+          <textarea id="overall_comment_input_field" rows="2" style="margin: 0px; width: 200px; height: 38px;"></textarea>
       
-          <button onclick="comment_overall_submit()" class='btn btn-primary' type='button'>Add Comment</button>
+          <button onclick="comment_overall_submit()" class='btn btn-primary' type='button'>Add</button>
         
 
         <% else %>
@@ -100,7 +103,7 @@
   function enable_commenting()
   {
       
-    $('span').mouseup(function(event)
+    $('span.selectable').mouseup(function(event)
     {       
 
       if(enable_selection)
@@ -492,6 +495,9 @@
       {
         $('#' + comment_element.comment_location_ids[x]).css('background', 'yellow')
         $('#' + comment_element.comment_location_ids[x]).css('text-decoration', 'underline')
+
+        $('#' + comment_element.comment_location_ids[x]).removeClass("selectable")
+
       }
     }
     

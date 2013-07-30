@@ -35,9 +35,13 @@ class ArticleController < ApplicationController
 
     doc_split.each do |res| 
       if res.include?('<img') || res.include?('<a')
+        puts 'in img flag *****************************************'
         html_flag = true
         #puts 'flag set to true'
         #puts res
+        doc_with_commenting = doc_with_commenting + res + ' '
+      elsif res.include?('div>') || res.include?('p>')
+        puts 'in div tag *****************************************'
         doc_with_commenting = doc_with_commenting + res + ' '
       else 
         if html_flag
@@ -49,6 +53,8 @@ class ArticleController < ApplicationController
             doc_with_commenting = doc_with_commenting + res + ' '
           end
         else 
+          puts 'spanning the word'
+    
           span_count = span_count + 1
           span_tag = '<span id=\'' + span_count.to_s + '\' class="selectable" >' + res + ' </span>'
           doc_with_commenting = doc_with_commenting + span_tag

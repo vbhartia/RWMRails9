@@ -253,12 +253,6 @@
 
     $.post("/comment/new_comment", post_request).done(function(data)
     {
-
-      //data.comment_location_ids = $.parseJSON(data.comment_location_ids)
- 
-  //    console.log(data)
-//      all_comments.push(data)
-
       get_comments()
 
     })
@@ -356,7 +350,6 @@
     collapse_long_threads()
     scroll_to_bottom_of_in_line()
     deactiva_selection_when_inline_shown()
-
   }
 
   function deactiva_selection_when_inline_shown()
@@ -401,7 +394,6 @@
       $(".overall_comments_display").prepend(reveal_collapse)
 
     }
-
   }
 
   function reveal_comments()
@@ -428,15 +420,12 @@
     } 
   }
 
-
-
   function create_first_overall_comments(comment_element)
   {
     
     var comment_to_add = create_comment_element_html(comment_element)
 
     $('#first_overall_comment').html(comment_to_add)
-
   }
 
   function create_overall_comments(comment_element)
@@ -445,7 +434,6 @@
     var comment_to_add = create_comment_element_html(comment_element)
 
     $('#all_comments_container').append(comment_to_add)
-
   }
 
   function create_in_line_comment_html(comment_element)

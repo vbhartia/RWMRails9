@@ -102,90 +102,115 @@
   // get user highlight
   function enable_commenting()
   {
-      
+
     $('span.selectable').mouseup(function(event)
     {       
+      var selectable_class_present = true
 
       if(enable_selection)
       {
         ids = new Array();
 
-        if (window.getSelection) 
-        { // non-IE
-            userSelection = window.getSelection();
-            rangeObject = userSelection.getRangeAt(0);
-            if (rangeObject.startContainer == rangeObject.endContainer) 
-            {   
-                ids = rangeObject.startContainer.parentNode.id
-            } 
-            else 
-            {   
-                ids = getAllBetween(
-                    rangeObject.startContainer.parentNode,
-                    rangeObject.endContainer.parentNode)
-            
+        userSelection = window.getSelection();
+        rangeObject = userSelection.getRangeAt(0);
+        if (rangeObject.startContainer == rangeObject.endContainer) 
+        {   
+            ids[0] = rangeObject.startContainer.parentNode.id
+
+            if ($('#' + ids[0]).hasClass('selectable'))
+            {
+              selectable_class_present = true
             }
+            else
+            {
+              selectable_class_present = false
+            }
+
         } 
-        else if (document.selection) 
-        { // IE lesser
-            userSelection = document.selection.createRange();
+        else 
+        {   
+          ids = getAllBetween(
+              rangeObject.startContainer.parentNode,
+              rangeObject.endContainer.parentNode)
+
+          if (ids == 'overlap')
+          {
             
-            if (userSelection.htmlText.toLowerCase().indexOf('span') >= 0) 
-            {
-                $(userSelection.htmlText).filter('span').each(function(index, span) 
-                {
-                    ids.push(span.id);
-                });
-            } else 
-            {
-                ids = userSelection.parentElement().id;
-            }
+            selectable_class_present = false
+          }
+      
         }
-        create_inline_comment_input_dialogue()
-      }
-        
+         
+        if(selectable_class_present)
+        {
+          create_inline_comment_input_dialogue()
+        }
+        else
+        {
+          alert('Sorry, but you cannot add a comment to existing comment area')
+        }
+
+      }  
     });
+  }
 
-    var getAllBetween = function (firstEl,lastEl) 
-    {
-        var firstElement = $(firstEl); // First Element
-        var lastElement = $(lastEl); // Last Element
-        var collection = new Array(); // Collection of Elements
-        collection.push(firstElement.attr('id')); // Add First Element to Collection
-        $(firstEl).nextAll().each(function()
-        { // Traverse all siblings
-            var siblingID  = $(this).attr('id'); // Get Sibling ID
-            if (siblingID != $(lastElement).attr('id')) 
-            { // If Sib is not LastElement
-                collection.push($(this).attr('id')); // Add Sibling to Collection
-            } 
-            else 
-            { // Else, if Sib is LastElement
-                collection.push(lastElement.attr('id')); // Add Last Element to Collection
-                return false; // Break Loop
-            }
-        });         
-        return collection; // Return Collection
+  function getAllBetween(firstEl,lastEl) 
+  {
+    var selectable_class_present_in_multiple = true
+
+    var firstElement = $(firstEl); // First Element
+    var lastElement = $(lastEl); // Last Element
+    var collection = new Array(); // Collection of Elements
+    collection.push(firstElement.attr('id')); // Add First Element to Collection
+    $(firstEl).nextAll().each(function()
+    { // Traverse all siblings
+        if ($(this).hasClass('selectable') == false)
+        {
+          selectable_class_present_in_multiple = false
+        }
+
+        else
+        {
+          var siblingID  = $(this).attr('id'); // Get Sibling ID
+          if (siblingID != $(lastElement).attr('id')) 
+          { // If Sib is not LastElement
+              collection.push($(this).attr('id')); // Add Sibling to Collection
+          } 
+          else 
+          { // Else, if Sib is LastElement
+              collection.push(lastElement.attr('id')); // Add Last Element to Collection
+              return false; // Break Loop
+          }
+        }
+    });         
+    
+    if (selectable_class_present_in_multiple)
+    { 
+      return collection; // Return Collection
     }
-
-    function create_inline_comment_input_dialogue()
+    else
     {
-      enable_selection = false
-      
-      //Color background
-      for(x in ids)
-      {
-        $(('#' + ids[x])).css('background', 'yellow')
-      }
-      
-      var p = $('#' + ids[ids.length -1]);
-      var offset = p.offset();
-
-      // Insert comment dialogue
-      create_comment_input_html()
-
-      $('.comment_in_line_input').css({'left': offset.left})
+      return 'overlap'
     }
+  }
+
+  function create_inline_comment_input_dialogue()
+  {
+    enable_selection = false
+    
+    //Color background
+    for(x in ids)
+    {
+      $(('#' + ids[x])).css('background', 'yellow')
+    }
+    
+    var p = $('#' + ids[ids.length -1]);
+    var offset = p.offset();
+
+    // Insert comment dialogue
+    create_comment_input_html()
+
+    $('.comment_in_line_input').css({'left': offset.left})
   }
 
   // ************ Comment Submissions ***********

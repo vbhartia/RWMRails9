@@ -22,11 +22,34 @@
     <div id = 'article_content'>
     </div>
   </div>
-  
+ 
+   <!-- Original Document Information container -->
+  <div class='right_section_container span4'>
+    <center>
+      Original Article Information
+    </center>  
+
+    <div class="comment_element">
+      <div id='original_article_news_source'>
+      </div>
+
+      Article Author
+      <div id='article_author'>
+      </div>
+
+      Original Publish Date
+      <div id='Original Publish Date'>
+      </div>
+
+    </div>
+  </div>
+
+
+
   <!-- Overall Comment section at the top --> 
 
   <div class='right_section_container span4'>
-    
+
     <!-- Comment Container -->
     <center>
       Overall Discussion   
@@ -103,30 +126,6 @@
     <br/>
   </div>
 
-  <!-- Original Document Information container -->
-  <div class='right_section_container span4'>
-    <center>
-      Original Article Information
-    </center>  
-
-    <div class="comment_element">
-      Article Appears in:
-      <div id='original_article_news_source'>
-      </div>
-
-      Article Author
-      <div id='article_author'>
-      </div>
-
-      Article URL
-      <textarea id="url_to_original_article" rows="1" style="margin: 0px; width: 250px; height: 20px;"></textarea>
-
-      Article Publish Date
-      <div id='Original Publish Date'>
-      </div>
-
-    </div>
-  </div>
 </div>
 
 <div class='add_spacer_to_move_content_up span12'>
@@ -164,9 +163,8 @@
     console.log(article)
     //Original Article Info
     
-      // Original Article URL
-      $('#url_to_original_article').val(article.original_url)
-
+    // Original Article URL
+    $('#url_to_original_article').val(article.original_url)
 
     //Sharing URLs
     $('#article_url_to_share').val(article.url)
@@ -419,7 +417,6 @@
   
   function render_comments()
   {
-    $("#button").click()
 
     var iterate = 0
 

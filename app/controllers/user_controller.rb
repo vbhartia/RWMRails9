@@ -5,7 +5,7 @@ class UserController < ApplicationController
 	  puts params[:user_id]
 
 	  respond_to do |format|
-        format.json { render :json => output }
-      end
-    end
+	    format.json { render :json => output }
+	  end
+	end
 end

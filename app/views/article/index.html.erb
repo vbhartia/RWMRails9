@@ -1,40 +1,87 @@
-<h1>Listing articles</h1>
+<br/>
 
-<table>
+<h1>My Articles</h1>
+
+<br/>
+
+<table id="table_id">
   <thead>
     <tr>
-      <th>Created By</th>
-      <th>Title</th>
-      <th>URL</th>
-      <th>Image URL</th>
-      <th></th>
-      <th></th>
-      <th></th>
+      <th>Article Image</th>
+      <th>Headline</th>
+      <th>Description</th>
+      <th>Original Share Date</th>
+      <th>Original Article</th>
+
+
     </tr>
   </thead>
 
   <tbody>
     <% @articles.each do |article| %>
       <tr>
-         
+        
+        <!-- Image Thumbnail -->
+        <td>
+          <img src="<%= article.image_url %>">
+        </td>        
+
+        <!-- Article Headline -->
         <td>        
           <a href="/articles/show/<%= article.id %>" />
-            Link to article
+            <%= article.headline %>
           </a>
         </td>
 
-        <td><%= article.user.username %></td>
-        <td><%= article.headline %></td>
-        <td><%= article.original_url %></td>
-        <td><%= article.image_url %></td>
+        <!-- Article Description -->
+        <td>
+          <%= article.description %>
+        </td>
 
+        <!-- Shared Date -->
+        <td>
+          <%= article.created_at %>
+        </td>
 
-        <td></td>
-        <td></td>
-        <td></td>
+        <!-- Original Article -->
+        <td>
+          <a href="<%= article.original_url %>" target="_blank" >
+            <%= article.original_url %>
+          </a>
+        </td> 
+
       </tr>
     <% end %>
   </tbody>
 </table>
 
 <br>
+
+
+<script>
+
+  $(document).ready(function () 
+  {
+    $('#table_id').dataTable(
+      {
+        "bScrollAutoCss": false,
+        "sScrollY": "200px",
+        "aoColumnDefs": 
+        [
+          // Thumbnail
+          { "sWidth": "10%", "aTargets": [ 0 ] },
+
+          // Headline
+          { "sWidth": "30%", "aTargets": [ 1 ] },
+          
+          // Description
+          { "sWidth": "20%", "aTargets": [ 2 ] },
+
+          // Share Date
+          { "sWidth": "5%", "aTargets": [ 3 ] },
+
+        ]
+      });
+  });
+
+</script>

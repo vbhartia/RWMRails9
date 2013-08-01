@@ -1,0 +1,29 @@
+
+table#table_id tbody td th div tr {
+	height: 10px;
+	overflow: hidden;
+}
+
+
+.cell_description {
+	width: 250px;
+	height: 100px;
+	overflow: auto;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+.cell_headline {
+	width: 250px;
+	overflow: auto;
+	font-weight: bold;
+}
+
+.cell_image {
+	width: 100px;
+}
+
+.cell_actions {
+
+
+}

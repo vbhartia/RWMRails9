@@ -7,7 +7,8 @@
 <table id="table_id">
   <thead>
     <tr>
-      <th>Article Image</th>
+      <th>Share</th>
+      <th></th>
       <th>Headline</th>
       <th>Description</th>
       <th>Original Share Date</th>
@@ -15,38 +16,61 @@
 
 
     </tr>
-  </thead>
+  </thead>  
 
   <tbody>
     <% @articles.each do |article| %>
       <tr>
         
+        <!-- Share Actions -->
+        <td>
+          <div class="cell_actions">
+            Share to:
+              Facebook
+              Email
+            Delete Article
+          </div>
+
+
+        </td>
+
         <!-- Image Thumbnail -->
         <td>
-          <img src="<%= article.image_url %>">
+          <div class='cell_image'>
+            <img src="<%= article.image_url %>">
+          </div>
         </td>        
 
         <!-- Article Headline -->
         <td>        
-          <a href="/articles/show/<%= article.id %>" />
-            <%= article.headline %>
-          </a>
+          <div class='cell_headline'>
+         
+            <a href="/articles/show/<%= article.id %>" />
+              <%= article.headline %>
+            </a>
+          
+          </div>
+
         </td>
 
         <!-- Article Description -->
         <td>
-          <%= article.description %>
+          <div class='cell_description'>
+            <%= article.description %>
+          </div>
         </td>
 
         <!-- Shared Date -->
         <td>
-          <%= article.created_at %>
+          <div class='cell_sharedate'>
+            <%= article.created_at %>
+          </div>
         </td>
 
         <!-- Original Article -->
         <td>
           <a href="<%= article.original_url %>" target="_blank" >
-            <%= article.original_url %>
+            <%= article.site_name %>
           </a>
         </td> 
 
@@ -55,8 +79,11 @@
   </tbody>
 </table>
 
-<br>
+<br/>
+<br/>
+<br/>
 
+<%= render :partial =>"static_pages/shared/footer" %>
 
 <script>
 
@@ -64,24 +91,16 @@
   {
     $('#table_id').dataTable(
       {
-        "bScrollAutoCss": false,
-        "sScrollY": "200px",
-        "aoColumnDefs": 
-        [
-          // Thumbnail
-          { "sWidth": "10%", "aTargets": [ 0 ] },
-
-          // Headline
-          { "sWidth": "30%", "aTargets": [ 1 ] },
-          
-          // Description
-          { "sWidth": "20%", "aTargets": [ 2 ] },
-
-          // Share Date
-          { "sWidth": "5%", "aTargets": [ 3 ] },
-
-        ]
+        "bLengthChange": false,
+        "bAutoWidth": false,
+        "aoColumnDefs": [
+          { 'bSortable': false, 'aTargets': [ 0 ],
+            'bSortable': false, 'aTargets': [ 1 ],
+            'bSortable': false, 'aTargets': [ 2 ], 
+          }
+                        ]
       });
-  });
+
+  })
 
 </script>

@@ -16,8 +16,8 @@ class ApplicationController < ActionController::Base
 
 
   def after_sign_in_path_for(resource)
-  	session[:previous_url] || bookmarklet_path
-
+  	#session[:previous_url] || bookmarklet_path
+    myarticles_path
   end
 
 private 

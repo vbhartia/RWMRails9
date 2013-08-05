@@ -36,8 +36,8 @@ Rwm9::Application.configure do
   config.assets.debug = true
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
-  ENV['FACEBOOK_APP_ID'] = "1388882854659824";
-  ENV['FACEBOOK_SECRET'] = "c1daa6ac740a5696c382d1ce32c8bb7f";
+  ENV['FACEBOOK_APP_ID'] = "610886888941773";
+  ENV['FACEBOOK_SECRET'] = "07d9797c0dd362dca0a4b20ade7c0209";
   ENV['domain'] = "http://0.0.0.0:3000";
 
 

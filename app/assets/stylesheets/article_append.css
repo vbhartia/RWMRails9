@@ -1,4 +1,7 @@
 
+
+
+
 .right_section_container {
   background-color: rgba(230,230,230,1);
   padding:5px;
@@ -32,10 +35,18 @@
 .comment_in_line_input {
 	position: absolute;
 	border-radius: 5px;
-	height:150px;
-	width:225px;
-	background-color: gray;
+	height:140px;
+	width:240px;
+	background-color: rgba(230,230,230,0.9);
 	z-index:200;
+	border: 1px solid black;
+	padding: 5px;
+}
+
+/*container for text area */
+.comment_in_line_text_area {
+	height:80px;
+	margin-top: 3px;
 }
 
 /*overall container for new comment */
@@ -156,3 +167,11 @@
 .add_spacer_to_move_content_up {
 	height: 300px ;
 }
+
+.article_view_icon_class {
+	font-size: 58px; 
+	color: rgb(64, 191, 191); 
+	text-shadow: black 0px 0px 0px;
+}
+
+

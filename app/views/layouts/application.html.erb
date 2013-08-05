@@ -22,7 +22,7 @@
       <div class="container">
         <a href="<%= root_url %>" class="brand"> Read With Me</a>
           <% if user_signed_in? %>
-            <ul class="nav">
+            <ul class="nav padding-top">
 
               <a href="/articles">
                 My Articles
@@ -47,10 +47,32 @@
   </div>
 
   <div class="container">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    
+    <br/>
+    <br/>
+
+    <!-- Beta Notification -->
+  
+    <div class='beta_notifications'>
+      <center>
+        Thank you so much for trying Read With Me. We are still in beta, so we'd love to hear what you think. 
+        <a href = "mailto:?to=vbhartia@mba2014.hbs.edu&subject=Feedback on Read With Me">
+          Email us!
+        </a>
+      </center>
+
+    </div>
+
+    <% if notice %>
+      <p class="notice"><%= notice %></p>
+    <% end %>
+
+    <% if alert %>
+      <p class="alert"><%= alert %></p>  
+    <% end %>
 
     <%= yield %>
+    
   </div>
 
 </body>

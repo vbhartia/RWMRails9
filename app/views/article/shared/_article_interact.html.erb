@@ -19,32 +19,17 @@
     <p id = 'article_source'>
     </p>
 
+    <div id='original_article_news_source'>
+    </div>
+
+    Article Author
+    <div id='article_author'>
+    </div>
+
     <div id = 'article_content'>
     </div>
+  
   </div>
- 
-   <!-- Original Document Information container -->
-  <div class='right_section_container span4'>
-    <center>
-      Original Article Information
-    </center>  
-
-    <div class="comment_element">
-      <div id='original_article_news_source'>
-      </div>
-
-      Article Author
-      <div id='article_author'>
-      </div>
-
-      Original Publish Date
-      <div id='Original Publish Date'>
-      </div>
-
-    </div>
-  </div>
-
-
 
   <!-- Overall Comment section at the top --> 
 
@@ -52,8 +37,9 @@
 
     <!-- Comment Container -->
     <center>
-      Overall Discussion   
+      <strong>Discussion</strong>   
     </center>
+    <br/>
 
     <div id='first_overall_comment' class=' '>
       <center>
@@ -94,36 +80,41 @@
 
   <!-- Share container -->
   <div class='right_section_container span4'>
-    <center>
-      Share your thoughts with your friends!
-    </center>
 
-    <br/>
-    <!-- Facebook share -->
-    <div class='comment_element'>
-      <a onClick='facebook_wall_post()'>
-        <strong> Start a discussion with your facebook friends</strong>
-      </a>
-    </div>
-
-    <br/>
-
-    <div class='comment_element'>
-      <a onClick='email_article()'>
-        <strong> Email the article to your friends</strong>
-      </a>
-    </div>
-
-    <br/>
-
-    <div class='comment_element'>
-      <strong> URL to Article</strong>
-     
-      <textarea id="article_url_to_share" rows="1" style="margin: 0px; width: 250px; height: 20px;"></textarea>
-
+    <div class="center_full_width">
+      <span class="icon-share" title="Share this article and your comments"></span>
+        <strong>Start a discussion with this article</strong>
+      
     </div>
     
+    <br/>  
+
+    <center>
+      <div class='article_view_icon_class'>
+        <!-- Facebook share -->
+        <a onClick='facebook_wall_post()'>
+               
+            <span class="icon-facebook" title="Share on facebook"></span>
+        </a>
+
+        <a onClick='email_article()'>
+          <span class="icon-emailalt" title="Email this article to your friend"></span>
+        </a>
+
+      
+      </div>
+    </center>
+    
     <br/>
+
+    <strong> URL to Article</strong> <span title="Send this URL to start a discussion" class="icon-question-sign"></span>
+    
+    <br/>   
+    
+    <textarea id="article_url_to_share" rows="1" style="margin: 0px; width: 250px; height: 20px;"></textarea>   
+    
+    <br/>
+  
   </div>
 
 </div>
@@ -474,7 +465,6 @@
         })
   }
 
-
   function scroll_to_bottom_of_in_line()
   {
     
@@ -500,6 +490,7 @@
     }
   }
 
+  // For hiding more than 3 overall comments
   function reveal_comments()
   {
 
@@ -543,7 +534,6 @@
   function create_in_line_comment_html(comment_element)
   {
     comment_show_html = ''
-    console.log(comment_element.comment_location_ids)
     
     if (comment_element.comment_location_ids != null)
     {
@@ -643,17 +633,25 @@
     inline_comment_input_dialogue_html += '<div' 
     inline_comment_input_dialogue_html += ' class = \'comment_in_line_input\'>'
       
-      inline_comment_input_dialogue_html += '<textarea id="comment_inline_input_field" rows="3" style="margin: 0px; width: 206px; height: 60px;">'
-      inline_comment_input_dialogue_html += '</textarea>'
-    
-      inline_comment_input_dialogue_html += '<button onclick="comment_inline_submit()" class=\'btn btn-primary\' type=\'button\'>'
+      inline_comment_input_dialogue_html += 'Add a comment to the highlighted section'
+
+      inline_comment_input_dialogue_html += '<div' 
+      inline_comment_input_dialogue_html += ' class = \'comment_in_line_text_area\'>'
+   
+        inline_comment_input_dialogue_html += '<textarea id="comment_inline_input_field" rows="3" style="margin: 0px; width: 220px; height: 60px;">'
+        inline_comment_input_dialogue_html += '</textarea>'
+
+      inline_comment_input_dialogue_html += '</div>'
+      
+
+      inline_comment_input_dialogue_html += '<button onclick="comment_inline_submit()" class=\'btn btn-primary \' type=\'button\'>'
     
       inline_comment_input_dialogue_html += 'Add Comment'
       
       inline_comment_input_dialogue_html += '</button>'
 
       inline_comment_input_dialogue_html += '<button onclick="comment_inline_cancel()"' 
-      inline_comment_input_dialogue_html += 'class=\'btn btn-info\' type=\'button\'>'
+      inline_comment_input_dialogue_html += 'class=\'btn btn-info add_margin_left\' type=\'button\'>'
       inline_comment_input_dialogue_html += 'Cancel</button>'
     
     inline_comment_input_dialogue_html += '</div>'
@@ -777,7 +775,7 @@
     FB.ui(
     {
       method: 'feed',
-      link: 'http://nameless-cliffs-2498.herokuapp.com/articles/show/15',
+      link: article.url_to_original_article,
       picture: 'http://fbrell.com/f8.jpg',
       name: article.headline,
       caption: 'Test',
@@ -793,25 +791,25 @@
   function email_article()
   {
     
-    alert(article.url)
-    /*setup mailto functionality 
+    //setup mailto functionality 
     var mailToUrl = ""
 
     mailToUrl += "mailto:?to="
 
     // Subject Text
     mailToUrl += "&subject="
-    mailToUrl += "My thoughts on \"" + ArticleContent.headline + "\""
+    mailToUrl += "My thoughts on \"" + article.headline + "\""
 
     // Body Text
     mailToUrl += "&body="
-    mailToUrl += "What do you think of this? - %0d" + "%09" + ArticleContent.headline
-    mailToUrl += "- ( " + article_url + " )"
+    mailToUrl += "What do you think of this? - %0d" + "%09" + article.headline
+    mailToUrl += "- ( " + article.url + " )"
 
     // Closing Text
     mailToUrl += "%0d" + "%0d" + "%0d"
-    mailToUrl += "Share your thoughts on Read With Me - " + domain
-    */
+    mailToUrl += "Share your thoughts on Read With Me - " + '<%= ENV['domain'] %>'
+
+    window.open(mailToUrl)
   }
 
 </script>

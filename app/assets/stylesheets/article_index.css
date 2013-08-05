@@ -5,18 +5,11 @@ table#table_id tbody td th div tr {
 }
 
 
-.cell_description {
-	width: 250px;
-	height: 100px;
-	overflow: auto;
-	margin-bottom: 10px;
-	margin-top: 10px;
-}
 
 .cell_headline {
-	width: 250px;
 	overflow: auto;
 	font-weight: bold;
+	width: 100%
 }
 
 .cell_image {
@@ -25,5 +18,20 @@ table#table_id tbody td th div tr {
 
 .cell_actions {
 
+}
 
+.table_action_icons {
+	padding: 3px;
+}
+
+.index_article_icon {
+	font-size: 15px; 
+	color: rgb(0, 0, 0); 
+	text-shadow: black 0px 0px 0px;
+}
+
+.center_full_width {
+	width:100%;
+	text-align: center;
+	white-space:nowrap;
 }

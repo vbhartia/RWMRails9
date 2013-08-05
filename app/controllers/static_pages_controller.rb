@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
   def home_page
+    #flash.alert = "alert"
+    #flash.notice = "notice"
   end
 
   def about

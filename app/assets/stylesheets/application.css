@@ -11,6 +11,7 @@
  *= require_self
  *= require_tree .
  *= require dataTables/jquery.dataTables
+ *= require webhostinghub-glyphs
  */
 
 .border {
@@ -23,5 +24,4 @@
 #contents {
 	visibility: hidden;
 }
-
 

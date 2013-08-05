@@ -2,18 +2,30 @@
 
 <h1>My Articles</h1>
 
+
+  Archive of all your Read With Me articles. To add articles please use the <%= link_to "Read With Me Bookmark tool.", bookmarklet_path %>
+
+<br/>
 <br/>
 
 <table id="table_id">
   <thead>
     <tr>
-      <th>Share</th>
-      <th></th>
-      <th>Headline</th>
-      <th>Description</th>
-      <th>Original Share Date</th>
-      <th>Original Article</th>
+      <th>
+        <div class="index_article_icon">
+          
+          <span class="icon-share"></span>
+          Share
+        </div>
 
+      </th>
+
+
+      <th>Article Image</th>
+
+      <th>Headline</th>
+
+      <th>Share Date</th>
 
     </tr>
   </thead>  
@@ -25,10 +37,19 @@
         <!-- Share Actions -->
         <td>
           <div class="cell_actions">
-            Share to:
-              Facebook
-              Email
-            Delete Article
+            <div class="index_article_icon">
+              <center>
+
+                <span title="Post to your facebook wall" class="icon-facebook table_action_icons" onclick="facebook_share('<%= article.id %>', '<%= escape_javascript(article.headline) %>' )">
+                </span>
+
+                <span title="Email this article to your friends" class="icon-emailalt table_action_icons" onclick="email_share('<%= article.id %>', '<%= escape_javascript(article.headline) %>')">
+                </span>
+
+                <span title="Delete this article from my articles" class="icon-remove table_action_icons" onclick="delete_article(<%= article.id %>)"></span>
+              </center>
+            </div>
+
           </div>
 
 
@@ -53,26 +74,10 @@
 
         </td>
 
-        <!-- Article Description -->
         <td>
-          <div class='cell_description'>
-            <%= article.description %>
-          </div>
+          <%= time_ago_in_words(article.created_at) %> ago
         </td>
 
-        <!-- Shared Date -->
-        <td>
-          <div class='cell_sharedate'>
-            <%= article.created_at %>
-          </div>
-        </td>
-
-        <!-- Original Article -->
-        <td>
-          <a href="<%= article.original_url %>" target="_blank" >
-            <%= article.site_name %>
-          </a>
-        </td> 
 
       </tr>
     <% end %>
@@ -91,16 +96,76 @@
   {
     $('#table_id').dataTable(
       {
-        "bLengthChange": false,
-        "bAutoWidth": false,
         "aoColumnDefs": [
-          { 'bSortable': false, 'aTargets': [ 0 ],
-            'bSortable': false, 'aTargets': [ 1 ],
-            'bSortable': false, 'aTargets': [ 2 ], 
+
+
+          { "sWidth": "70px", 'bSortable': false, 'aTargets': [ 0 ],
+          },
+
+          { 'bSortable': false, 'aTargets': [ 1 ],
           }
-                        ]
+
+                        ],
       });
 
+
   })
+
+  function facebook_share(document_id, headline)
+  {
+
+    FB.init(
+    {
+      appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
+      cookie:false,
+      status:true
+    });
+     
+    FB.ui(
+    {
+      method: 'feed',
+      link: 'www.google.com',
+      picture: 'http://fbrell.com/f8.jpg',
+      name: headline,
+      caption: 'Test',
+      description: 'Using Dialogs to interact with people.'
+    }, 
+    function(response)
+    {
+      console.log(response)
+
+    });
+
+  }
+
+  function email_share(document_id, headline)
+  {
+    //setup mailto functionality 
+    var mailToUrl = ""
+
+    mailToUrl += "mailto:?to="
+
+    // Subject Text
+    mailToUrl += "&subject="
+    mailToUrl += "My thoughts on \"" + headline + "\"" 
+
+    // Body Text
+    mailToUrl += "&body="
+    mailToUrl += "What do you think of this? - %0d" + "%09" + headline
+    mailToUrl += "- ( " + document_id + " )"
+
+    // Closing Text
+    mailToUrl += "%0d" + "%0d" + "%0d"
+    mailToUrl += "Share your thoughts on Read With Me - " + '<%= ENV['domain'] %>'
+
+    window.location.href = mailToUrl
+
+  }
+
+  function delete_article(document_id)
+  {
+
+    alert(document_id)
+  }
 
 </script>

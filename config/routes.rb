@@ -19,9 +19,12 @@ Rwm9::Application.routes.draw do
 
   get 'user/info' => 'user#info'
 
-  #*********** Article Handler *********#
-  get 'articles' => 'article#index', as: 'myarticles'
+  #*********** Article Index *********#
+  get 'articles' => 'article#index', as: 'my_articles'
 
+  get 'articles/delete/:id' => 'article#delete', as: 'my_articles_delete'
+
+  #*********** Article Handler *********#
   #Render iFrame
   get 'articles/iFrame' => 'article#iFrame'
 

@@ -8,81 +8,26 @@
 <br/>
 <br/>
 
-<table id="table_id">
-  <thead>
-    <tr>
-      <th>
-        <div class="index_article_icon">
-          
-          <span class="icon-share"></span>
-          Share
-        </div>
+<% if @articles.empty? %>
 
-      </th>
+  <div class='homepage_hero'>
 
+    <table height='100%' width='100%'>
+      <td style="vertical-align:middle">
+        <center>
+          You do not have any articles in your archive yet. Please use the <%= link_to "Read With Me Bookmark tool", bookmarklet_path %> to store articles and start a discussion with your friends.
+        </center>
+      </td>
+    </table>
 
-      <th>Article Image</th>
+  </div>
 
-      <th>Headline</th>
+<% else %>
 
-      <th>Share Date</th>
+<%= render :partial =>"article/shared/article_index_table" %>  
 
-    </tr>
-  </thead>  
+<% end %>
 
-  <tbody>
-    <% @articles.each do |article| %>
-      <tr>
-        
-        <!-- Share Actions -->
-        <td>
-          <div class="cell_actions">
-            <div class="index_article_icon">
-              <center>
-
-                <span title="Post to your facebook wall" class="icon-facebook table_action_icons" onclick="facebook_share('<%= article.id %>', '<%= escape_javascript(article.headline) %>' )">
-                </span>
-
-                <span title="Email this article to your friends" class="icon-emailalt table_action_icons" onclick="email_share('<%= article.id %>', '<%= escape_javascript(article.headline) %>')">
-                </span>
-
-                <span title="Delete this article from my articles" class="icon-remove table_action_icons" onclick="delete_article(<%= article.id %>)"></span>
-              </center>
-            </div>
-
-          </div>
-
-
-        </td>
-
-        <!-- Image Thumbnail -->
-        <td>
-          <div class='cell_image'>
-            <img src="<%= article.image_url %>">
-          </div>
-        </td>        
-
-        <!-- Article Headline -->
-        <td>        
-          <div class='cell_headline'>
-         
-            <a href="/articles/show/<%= article.id %>" />
-              <%= article.headline %>
-            </a>
-          
-          </div>
-
-        </td>
-
-        <td>
-          <%= time_ago_in_words(article.created_at) %> ago
-        </td>
-
-
-      </tr>
-    <% end %>
-  </tbody>
-</table>
 
 <br/>
 <br/>
@@ -162,10 +107,25 @@
 
   }
 
-  function delete_article(document_id)
+  function delete_article(document_id, headline)
   {
+    var url = '<%= ENV['domain'] %>/articles/delete/' + document_id
+    var confirm_message = 'Are you sure you want to delete: \n'
+    
+    confirm_message += '\''
+    confirm_message += headline
+    confirm_message += '\''
 
-    alert(document_id)
+    var confirm_return = confirm(confirm_message);
+    if (confirm_return ==true)
+    {
+      window.location.assign(url)
+    }
+    else
+    {
+
+    }
+
   }
 
 </script>

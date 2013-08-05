@@ -5,16 +5,19 @@ class ArticleController < ApplicationController
       @articles = current_user.articles.all
   end
 
+  def delete
+
+      article_to_delete = Article.find(params[:id])
+      article_to_delete_headline = article_to_delete.headline
+      
+      if (article_to_delete.destroy)
+        flash.alert = '\'' + article_to_delete_headline + '\'' + ' has been deleted'
+        redirect_to :action => 'index'
+      end
+  end
+
   #Goes to iFrame view
   def iFrame
-    #puts '*******************************************************'
-
-    #response = HTTParty.get('http://www.readability.com/api/content/v1/parser?url=http://www.businessweek.com/articles/2013-07-25/jeff-bezos-doesnt-care-what-you-think-about-amazons-quarterly-earnings&token=933fe96da256bd87c9497a08fad03cbd111eee1e')
-
-    #puts response.body
-
-    #parsed_json = ActiveSupport::JSON.decode(response.body)
-    #puts parsed_json['title']
   end
 
   #Post response
@@ -83,22 +86,7 @@ class ArticleController < ApplicationController
       puts res
       if word_contains_html(res)
         if is_full_html_tag(res)
-          
-          puts 'start is this full tag ***************************************************'
-          
-          text = remove_html_tags(res)
-
-          puts 
-
-          puts res
-
-          puts '***************************************************'
-
-
-          #span_count = span_count + 1
-              
-          #span_tag = '<span id=\'' + span_count.to_s + '\' class="selectable" >' + res + ' </span>'
-          
+           
           doc_with_commenting = doc_with_commenting + res #+ ' '#span_tag
 
         elsif contains_end_html_tag(res)
@@ -149,6 +137,18 @@ class ArticleController < ApplicationController
     article_scrapped.author = parsed_json_article["author"]
     article_scrapped.image_url = parsed_json_article["lead_image_url"]
 
+
+    if parsed_json_article["lead_image_url"]
+      article_scrapped.image_url = parsed_json_article["lead_image_url"]
+      
+    else
+      if params[:image_url]
+        article_scrapped.image_url = params[:image_url]
+      end
+    end
+    # #else
+    #   #article_scrapped.image_url = readability_output.images[0]
+    # #end
 
     article_scrapped.save
     

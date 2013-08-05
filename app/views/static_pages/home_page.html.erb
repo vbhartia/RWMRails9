@@ -10,9 +10,25 @@
 		<br/>
 		<br/>
 
-		<button class="btn btn-large btn-success" onClick="window.location='<%= user_omniauth_authorize_path(:facebook)  %>'" type="button">
-			Sign Up Today!
-		</button>
+	    <% if user_signed_in? %>
+	    	
+	    	Use the 
+
+			<button class="btn btn-success" onClick="window.location='<%= bookmarklet_path %>'" type="button">
+				Read With Me Bookmark
+			</button>
+
+			to discuss new articles or see all of your articles in 
+
+			<button class="btn btn-success" onClick="window.location='<%= my_articles_path %>'" type="button">
+				My Articles
+			</button>
+
+	    <% else %>
+			<button class="btn btn-large btn-success" onClick="window.location='<%= user_omniauth_authorize_path(:facebook)  %>'" type="button">
+				Sign Up Today!
+			</button>
+		<% end %>
 
 	</center>
 </div>

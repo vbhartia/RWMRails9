@@ -12,19 +12,19 @@
     </h2>
 
     <img id = 'article_image'/>
-  
-    <p id = 'article_author'>
-    </p>    
-
-    <p id = 'article_source'>
-    </p>
 
     <div id='original_article_news_source'>
     </div>
 
-    Article Author
     <div id='article_author'>
     </div>
+
+    <br/>
+
+    <div id = 'article_source'>
+    </div>
+
+    <br/>
 
     <div id = 'article_content'>
     </div>
@@ -61,7 +61,7 @@
       <center>
 
         <% if user_signed_in? %>
-          <textarea id="overall_comment_input_field" rows="2" style="margin: 0px; width: 200px; height: 38px;"></textarea>
+          <textarea id="overall_comment_input_field" rows="2" style="margin: 0px; width: 200px; height: 38px; resize: none;"></textarea>
       
           <button onclick="comment_overall_submit()" class='btn btn-primary' type='button'>Add</button>
         
@@ -111,7 +111,7 @@
     
     <br/>   
     
-    <textarea id="article_url_to_share" rows="1" style="margin: 0px; width: 250px; height: 20px;"></textarea>   
+    <textarea id="article_url_to_share" rows="1" style="margin: 0px; width: 250px; height: 20px; resize: none;"></textarea>   
     
     <br/>
   
@@ -155,11 +155,19 @@
     //Original Article Info
     
     // Original Article URL
-    $('#url_to_original_article').val(article.original_url)
+    
+    var article_url_html = ''
+    article_url_html += '<br/>'
+    article_url_html += '<a href ="'
+    article_url_html += article.original_url + '">'
+    article_url_html += 'Original Article'
+    article_url_html += '</a>'
+
+    $('#article_source').append(article_url_html)
+    
 
     //Sharing URLs
     $('#article_url_to_share').val(article.url)
-
   }
 
 
@@ -216,7 +224,7 @@
         }
         else
         {
-          alert('Sorry, but you cannot add a comment to existing comment area')
+          alert('Sorry, but you cannot add a comment to existing comment area or to a link')
         }
 
       }  
@@ -633,12 +641,12 @@
     inline_comment_input_dialogue_html += '<div' 
     inline_comment_input_dialogue_html += ' class = \'comment_in_line_input\'>'
       
-      inline_comment_input_dialogue_html += 'Add a comment to the highlighted section'
+      inline_comment_input_dialogue_html += 'Comment on the highlighted section'
 
       inline_comment_input_dialogue_html += '<div' 
       inline_comment_input_dialogue_html += ' class = \'comment_in_line_text_area\'>'
    
-        inline_comment_input_dialogue_html += '<textarea id="comment_inline_input_field" rows="3" style="margin: 0px; width: 220px; height: 60px;">'
+        inline_comment_input_dialogue_html += '<textarea id="comment_inline_input_field" rows="3" style="margin: 0px; width: 220px; height: 60px; resize: none;">'
         inline_comment_input_dialogue_html += '</textarea>'
 
       inline_comment_input_dialogue_html += '</div>'
@@ -732,7 +740,7 @@
 
       reply_section += ' class="in_line_comment_text_field add_margin" '
 
-      reply_section += 'rows="1" style="margin: 0px;">'
+      reply_section += 'rows="1" style="margin: 0px; resize: none;">'
 
       reply_section += '</textarea>'
       reply_section += '<button onclick="comment_inline_reply_submit('

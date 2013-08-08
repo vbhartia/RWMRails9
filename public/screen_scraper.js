@@ -78,7 +78,7 @@ function Get_Article_Content()
   }
   else
   {
-      doc_url = document.location.hostname
+      doc_url = document.location.href
   }
 
   // Get the description

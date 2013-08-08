@@ -36,7 +36,8 @@ class ArticleController < ApplicationController
     parsed_json_article = ActiveSupport::JSON.decode(response.body)
 
     puts 'Readability output**************************************************'
-    puts parsed_json_article["content"]
+    puts parsed_json_article
+    puts params[:url] 
 
 
     #doc_split = parsed_json_article["content"].split(' ')

@@ -53,6 +53,7 @@ width: 550px;
 	padding: 5px;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
+	font-weight: normal;
 }
 
 /*container for text area */
@@ -62,6 +63,16 @@ width: 550px;
 }
 
 /*overall container for new comment */
+#overall_comment_input_field {
+	font-size: 12px;
+
+}
+
+#comment_inline_input_field {
+	font-size: 12px;
+	
+}
+
 .comment_inline_comment_container {
 	position: absolute;
 	border-radius: 5px;
@@ -72,6 +83,7 @@ width: 550px;
 	visibility: hidden;
 	border: 1px solid black;
 	padding: 5px;
+	font-weight: normal;
 }
 
 /*actual container for in_line_comments */
@@ -92,6 +104,7 @@ width: 550px;
 	overflow: hidden;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	font-size: 14px;
+	font-weight:normal;
 }
 
 .profile_image_in_comment {
@@ -110,6 +123,8 @@ width: 550px;
 	overflow: auto;
 	padding:2px;
 	padding-left:5px;
+	font-size: 12px;
+
 }
 
 .comment_time {

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130808201405) do
+ActiveRecord::Schema.define(:version => 20130808211345) do
 
   create_table "activities", :force => true do |t|
     t.integer  "user_id"
@@ -36,8 +36,10 @@ ActiveRecord::Schema.define(:version => 20130808201405) do
     t.text     "description"
     t.string   "author"
     t.string   "site_name"
+    t.string   "slug"
   end
 
+  add_index "articles", ["slug"], :name => "index_articles_on_slug"
   add_index "articles", ["user_id"], :name => "index_articles_on_user_id"
 
   create_table "comments", :force => true do |t|

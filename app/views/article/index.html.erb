@@ -59,6 +59,8 @@
   function facebook_share(document_id, headline)
   {
 
+
+
     FB.init(
     {
       appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
@@ -85,6 +87,9 @@
 
   function email_share(document_id, headline)
   {
+    var url = '<%= ENV['domain'] %>/articles/show/' + document_id
+
+
     //setup mailto functionality 
     var mailToUrl = ""
 
@@ -97,7 +102,7 @@
     // Body Text
     mailToUrl += "&body="
     mailToUrl += "What do you think of this? - %0d" + "%09" + headline
-    mailToUrl += "- ( " + document_id + " )"
+    mailToUrl += "- ( " + url + " )"
 
     // Closing Text
     mailToUrl += "%0d" + "%0d" + "%0d"

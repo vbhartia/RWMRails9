@@ -122,13 +122,19 @@
   article.url = ''
   article.image_url = ''
 
+  var current_user = new Object()
+
   <% if user_signed_in? %>
     var user_signed_in_status = true
     var enable_selection = true 
+    current_user.firstname = '<%= current_user.firstname %>'
+    current_user.lastname = '<%= current_user.lastname %>'
 
   <% else %>
     var user_signed_in_status = false
     var enable_selection = false 
+    current_user.firstname = ''
+    current_user.lastname = ''
 
   <% end %>
 
@@ -435,7 +441,6 @@
         }
         else
         {
-
           create_overall_comments(comment)
         }
       }
@@ -765,7 +770,25 @@
 
   function facebook_wall_post()
   {
+
+    var caption = get_first_overall_comment()
+
+    if (!caption)
+    {
+      caption = 'What do you think of this?'
+
+    }
+
+    <% if user_signed_in? %>    
+
+    var facebook_headline = current_user.firstname + "'s thougths on " + "'" + article.headline + "'"
+
+    <% else %>
+      
+      var facebook_headline = article.headline 
     
+    <% end %>
+
     FB.init(
     {
       appId:'<%= ENV['FACEBOOK_APP_ID'] %>',
@@ -776,11 +799,12 @@
     FB.ui(
     {
       method: 'feed',
-      link: article.url_to_original_article,
-      picture: 'http://fbrell.com/f8.jpg',
-      name: article.headline,
-      caption: 'Test',
-      description: 'Using Dialogs to interact with people.'
+      link: article.url,
+      picture: article.image_url,
+      name: facebook_headline,
+      caption: caption.content,
+      description: 'Read and discuss this article with my thoughts embedded in the article',
+      to: '', 
     }, 
     function(response)
     {
@@ -791,7 +815,26 @@
 
   function email_article()
   {
+    // Setup email params
+    var caption = get_first_overall_comment()
+
+    if (!caption)
+    {
+      caption = 'What do you think of this?'
+
+    }
+
+    <% if user_signed_in? %>    
+
+    var email_headline = current_user.firstname + "'s thougths on " + "'" + article.headline + "'"
+
+    <% else %>
+      
+      var email_headline = article.headline 
     
+    <% end %>
+
+
     //setup mailto functionality 
     var mailToUrl = ""
 
@@ -799,18 +842,45 @@
 
     // Subject Text
     mailToUrl += "&subject="
-    mailToUrl += "My thoughts on \"" + article.headline + "\""
+    mailToUrl += email_headline
 
     // Body Text
     mailToUrl += "&body="
+
+    mailToUrl += "%0d Hi, %0d %0d"
+
+    <% if user_signed_in? %>    
+
+      mailToUrl += current_user.firstname + " posed this question: " + "%0d" + "%09" + caption.content + "%0d" + "%0d"
+    <% end %>
+
     mailToUrl += "What do you think of this? - %0d" + "%09" + article.headline
     mailToUrl += "- ( " + article.url + " )"
 
     // Closing Text
     mailToUrl += "%0d" + "%0d" + "%0d"
-    mailToUrl += "Share your thoughts on Read With Me - " + '<%= ENV['domain'] %>'
+    mailToUrl += "Share your thoughts and start discussion using Read With Me - " + '<%= ENV['domain'] %>'
 
-    window.open(mailToUrl)
+    window.location.href = mailToUrl
   }
+
+  function get_first_overall_comment()
+  {
+    var comment_to_send
+
+    all_comments.forEach(function(comment)
+    {
+
+      if (comment.comment_type == 'overall_comment')
+      {
+        console.log(comment)
+        comment_to_send = comment
+        console.log(comment)
+      }
+    })
+
+    return comment_to_send
+  }
+
 
 </script>

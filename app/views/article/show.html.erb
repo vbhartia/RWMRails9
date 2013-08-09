@@ -57,7 +57,7 @@
       article.author = response.author
       article.headline = response.headline
 
-      article.url = '<%= ENV['domain'] %>' + '/articles/show/' + response.id
+      article.url = '<%= ENV['domain'] %>' + '/articles/show/' + response.slug
       article.image_url = response.image_url
       article.id = response.id
       article.original_url = response.original_url

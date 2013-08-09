@@ -30,13 +30,13 @@
             <div class="index_article_icon">
               <center>
 
-                <span title="Post to your facebook wall" class="icon-facebook table_action_icons" onclick="facebook_share('<%= article.id %>', '<%= escape_javascript(article.headline) %>' )">
+                <span title="Post to your facebook wall" class="icon-facebook table_action_icons" onclick="facebook_share('<%= article.slug %>', '<%= escape_javascript(article.headline) %>' )">
                 </span>
 
-                <span title="Email this article to your friends" class="icon-emailalt table_action_icons" onclick="email_share('<%= article.id %>', '<%= escape_javascript(article.headline) %>')">
+                <span title="Email this article to your friends" class="icon-emailalt table_action_icons" onclick="email_share('<%= article.slug %>', '<%= escape_javascript(article.headline) %>')">
                 </span>
 
-                <span title="Delete this article. Your discussion related to this article will be deleted as well" class="icon-remove table_action_icons" onclick="delete_article('<%= article.id %>', '<%= escape_javascript(article.headline) %>')"></span>
+                <span title="Delete this article. Your discussion related to this article will be deleted as well" class="icon-remove table_action_icons" onclick="delete_article('<%= article.slug %>', '<%= escape_javascript(article.headline) %>')"></span>
               </center>
             </div>
 
@@ -56,7 +56,7 @@
         <td>        
           <div class='cell_headline'>
          
-            <a href="/articles/show/<%= article.id %>" />
+            <a href="/articles/show/<%= article.slug %>" />
               <%= article.headline %>
             </a>
           

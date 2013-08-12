@@ -1,4 +1,10 @@
 
+<% content_for :title do %>
+
+  <%= @article.headline %> - RWM
+
+<% end %>
+
 <% content_for :head do -%>
 
   <meta property="og:image" content="<%= @article.image_url %>" />

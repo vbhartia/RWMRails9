@@ -10,9 +10,9 @@ js.src = "http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js";
 
 document.head.appendChild(js);
 
-var domain = "http://0.0.0.0:3000"
+//var domain = "http://0.0.0.0:3000"
 
-//var domain = "http://www.getreadwithme.com"
+var domain = "http://www.getreadwithme.com"
 
 var scraper_url = domain + "/screen_scraper.js?x=" + (Math.random())
 var final_article

@@ -10,12 +10,6 @@
     <h2 id = 'article_headline'>
     </h2>
 
-    <!--<img id = 'article_image'/> -->
-
-
-    <!--<div id='article_author'>
-    </div> -->
-
     <div id = 'article_source'>
     </div>
 
@@ -24,14 +18,28 @@
   
   </div>
 
+  <!-- Article Created by container --> 
+  <div id='article_created_by' class='right_section_container span4'> 
+    <strong>
+      Article originally shared by:
+    </strong>
+
+    <span class='icon-info-sign float_right' title='This is an overall discussion of this article'>
+    </span> 
+
+  </div>
+
   <!-- Overall Comment section at the top --> 
 
   <div class='right_section_container span4'>
 
     <!-- Comment Container -->
-    <center>
-      <strong>Discussion</strong>   
-    </center>
+    <strong>Overall Discussion:</strong>   
+    
+
+    <span class='icon-info-sign add_margin float_right' title='This article was first shared by the person below'>
+    </span> 
+
     <br/>
 
     <div id='first_overall_comment' class=' '>
@@ -74,11 +82,9 @@
   <!-- Share container -->
   <div class='right_section_container span4'>
 
-    <div class="center_full_width">
-      <span class="icon-share" title="Share this article and your comments"></span>
+<span class="icon-share float_right" title="Share this article and your comments"></span>
         <strong>Start a discussion with this article</strong>
       
-    </div>
     
     <br/>  
 
@@ -100,11 +106,18 @@
     
     <br/>
 
-    <strong> URL to Article</strong> <span title="Send this URL to start a discussion" class="icon-question-sign"></span>
+    <strong> URL to this Article</strong> <span title="Send this URL to start a discussion" class="icon-question-sign"></span>
     
     <br/>   
+
+      <span id='d_clip_button' class=' my_clip_button icon-clipboard-paste' onclick="copy_click()" data-clipboard-target='fe_text' data-clipboard-text='' title='Click me to copy to clipboard.'>
+
+      </span>
     
-    <textarea id="article_url_to_share" rows="1" wrap="off" style="margin: 0px; width: 250px; height: 20px; resize: none; "></textarea>   
+    <textarea id="article_url_to_share" rows="1"  wrap="off" style="margin: 0px; width: 250px; height: 20px; resize: none; "></textarea>   
+
+
+
     
     <br/>
   
@@ -147,6 +160,7 @@
   var new_comment = '';
 
 
+
   function finished_loading()
   {
     
@@ -167,6 +181,45 @@
 
     //Sharing URLs
     $('#article_url_to_share').val(article.url)
+    $("#d_clip_button").attr('data-clipboard-text', article.url);
+
+    
+    $("#d_clip_button").click(function(){
+        alert('Copied!')     
+    })
+    
+    var clip = new ZeroClipboard($("#d_clip_button"))
+
+    clip.on( 'complete', function(client, args) 
+    {
+      alert("The URL to this article has been copied to the clipboard: \n\n" + args.text );
+    } 
+    );
+
+
+    populate_article_created_by()
+  }
+
+
+
+
+  function populate_article_created_by()
+  {
+    var created_by_info =''
+
+    created_by_info += '<br/>'
+    created_by_info += '<img class="add_margin" src="'
+    created_by_info += article.creator.profile_image_url + '">'
+    
+    created_by_info += '<span class="add_margin">'
+
+    created_by_info += article.creator.firstname + ' ' + article.creator.lastname
+
+    created_by_info += '</span>'
+
+
+    $('#article_created_by').append(created_by_info)
+
   }
 
 
@@ -803,7 +856,7 @@
       picture: article.image_url,
       name: facebook_headline,
       caption: caption.content,
-      description: 'Read and discuss this article with my thoughts embedded in the article',
+      description: 'What do you think of this article',
       to: '', 
     }, 
     function(response)

@@ -1,6 +1,7 @@
 class ArticleController < ApplicationController
   before_filter :authenticate_user!, :except => [:show, :get_article]
 
+
   def index
       @articles = current_user.articles.all
   end
@@ -155,6 +156,8 @@ class ArticleController < ApplicationController
     
     # track_activity article_scrapped
     
+    article_scrapped['creator'] = article_scrapped.user
+
     respond_to do |format|
       format.json { render json: article_scrapped }
     end
@@ -233,6 +236,15 @@ class ArticleController < ApplicationController
 
   def get_article
     article = Article.find(params[:id])
+    article[:creator] = article.user
+
+    puts 'HERE********************************'
+    puts article[:creator].firstname
+
+    #respond_to do |format|
+    #  format.json { render :json => article.as_json(
+    #    :include => { :creator => article.user}) }
+    #end
 
     respond_to do |format|
       format.json { render :json => article }

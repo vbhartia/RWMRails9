@@ -9,8 +9,10 @@ gem 'devise'
 gem 'omniauth-facebook'
 gem 'simple_form'
 
-  gem "therubyracer" 
-  gem "less-rails"
+gem "therubyracer" 
+gem "less-rails"
+
+gem 'zeroclipboard-rails'
 
 # Gems used only for assets and not required
 # in production environments by default.

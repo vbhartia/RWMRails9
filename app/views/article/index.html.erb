@@ -52,14 +52,10 @@
 
                         ],
       });
-
-
   })
 
-  function facebook_share(document_id, headline)
+  function facebook_share(document_id, headline, image_url)
   {
-
-
 
     FB.init(
     {
@@ -71,11 +67,11 @@
     FB.ui(
     {
       method: 'feed',
-      link: 'www.google.com',
-      picture: 'http://fbrell.com/f8.jpg',
+      link: '<%= ENV['domain'] %>/show/'+document_id,
+      picture: image_url,
       name: headline,
-      caption: 'Test',
-      description: 'Using Dialogs to interact with people.'
+      caption: '<%= current_user.firstname %>\'s thoughts are embedded in this article',
+      description: 'What do you think of this article?'
     }, 
     function(response)
     {
@@ -97,10 +93,11 @@
 
     // Subject Text
     mailToUrl += "&subject="
-    mailToUrl += "My thoughts on \"" + headline + "\"" 
+    mailToUrl += "<%= current_user.firstname %>'s thoughts on \"" + headline + "\" %0d" 
 
     // Body Text
     mailToUrl += "&body="
+    mailToUrl += "Hi, %0d %0d"
     mailToUrl += "What do you think of this? - %0d" + "%09" + headline
     mailToUrl += "- ( " + url + " )"
 
@@ -132,5 +129,7 @@
     }
 
   }
+
+
 
 </script>

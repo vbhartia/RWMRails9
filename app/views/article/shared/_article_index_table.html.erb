@@ -30,7 +30,7 @@
             <div class="index_article_icon">
               <center>
 
-                <span title="Post to your facebook wall" class="icon-facebook table_action_icons" onclick="facebook_share('<%= article.slug %>', '<%= escape_javascript(article.headline) %>' )">
+                <span title="Post to your facebook wall" class="icon-facebook table_action_icons" onclick="facebook_share('<%= article.slug %>', '<%= escape_javascript(article.headline) %>', '<%= article.image_url %>' )">
                 </span>
 
                 <span title="Email this article to your friends" class="icon-emailalt table_action_icons" onclick="email_share('<%= article.slug %>', '<%= escape_javascript(article.headline) %>')">

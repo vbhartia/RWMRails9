@@ -24,7 +24,7 @@
       Article originally shared by:
     </strong>
 
-    <span class='icon-info-sign float_right' title='This is an overall discussion of this article'>
+    <span class='icon-info-sign float_right' title='This is the person who originally shared the article'>
     </span> 
 
   </div>
@@ -80,7 +80,7 @@
   </div> 
 
   <!-- Share container -->
-  <div class='right_section_container span4'>
+  <div id='share_container' class='right_section_container span4'>
 
 <span class="icon-share float_right" title="Share this article and your comments"></span>
         <strong>Start a discussion with this article</strong>
@@ -106,13 +106,16 @@
     
     <br/>
 
-    <strong> URL to this Article</strong> <span title="Send this URL to start a discussion" class="icon-question-sign"></span>
+    <strong> URL to this Article</strong> 
+
+      <span data-toggle="tooltip" data-placement="top" title="Send this URL to start a discussion" class="icon-question-sign"></span>
+    
     
     <br/>   
 
-      <span id='d_clip_button' class=' my_clip_button icon-clipboard-paste' onclick="copy_click()" data-clipboard-target='fe_text' data-clipboard-text='' title='Click me to copy to clipboard.'>
+        <span title="Copy URL to the clipboard." id='d_clip_button' class='add_margin my_clip_button icon-clipboard-paste' onclick="copy_click()" data-clipboard-target='fe_text' data-clipboard-text='' >
 
-      </span>
+        </span>
     
     <textarea id="article_url_to_share" rows="1"  wrap="off" style="margin: 0px; width: 250px; height: 20px; resize: none; "></textarea>   
 
@@ -127,9 +130,52 @@
 
 <div class='add_spacer_to_move_content_up span12'>
 </div>
-
+  
+<ol id="joyRideTipContent" data-joyride>
+  /* data-id needs to be the same as the parent it will attach to */
+  <li data-id="article_created_by">Tip content...</li>
+  <li data-id="first_overall_comment">Tip content...</li>
+  <li data-id="comment_1">Tip content...</li>
+  <li data-id="share_container">Tip content...</li>
+  <li> Tip content ... </li>
+</ol>
 
 <script>
+
+  function start_joyride()
+  {
+
+    $("#joyRideTipContent").joyride(
+    {
+      autoStart : true,
+      'tipLocation': 'right',
+      'nextButton': true,
+      modal:true,  
+      postStepCallback: function (index) 
+      {
+        if (index == 1) 
+        {
+          $('#comment_1').css('visibility', 'visible')
+
+        }
+
+        if (index == 2) 
+        {
+          $('#comment_1').css('visibility', 'hidden')
+
+        }
+      }
+
+    });
+  }
+
+</script>
+
+<script>
+
+
+
+  //{ position: { my: "left+15 center", at: "right center" } }
 
   var article  = new Object() 
   article.url = ''
@@ -164,6 +210,7 @@
   function finished_loading()
   {
     
+    
     console.log(article)
     //Original Article Info
     
@@ -190,6 +237,10 @@
     
     var clip = new ZeroClipboard($("#d_clip_button"))
 
+    clip.on( 'load', function(client) {
+  // alert( "movie is loaded" );
+    } );
+
     clip.on( 'complete', function(client, args) 
     {
       alert("The URL to this article has been copied to the clipboard: \n\n" + args.text );
@@ -198,6 +249,14 @@
 
 
     populate_article_created_by()
+      $( 'span' ).qtip(
+        {
+          style: {
+            classes: 'qtip-dark qtip-shadow',
+                }
+        }
+        );
+
   }
 
 
@@ -942,5 +1001,5 @@
     return comment_to_send
   }
 
-
 </script>
+

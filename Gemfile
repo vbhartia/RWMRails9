@@ -25,6 +25,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
   gem 'twitter-bootstrap-rails'
   gem "webhostinghub-glyphs-rails", "~> 0.0.8"
+  gem 'jquery-qtip2-rails'
+
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
@@ -32,6 +34,7 @@ group :assets do
 end
 
 gem 'jquery-rails'
+
 
 # Readability
 gem 'fastimage'

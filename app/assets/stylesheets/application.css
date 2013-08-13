@@ -12,6 +12,8 @@
  *= require_tree .
  *= require dataTables/jquery.dataTables
  *= require webhostinghub-glyphs
+ *= require jquery.qtip.css
+*= require joyride-2.1
  */
 
 .border {

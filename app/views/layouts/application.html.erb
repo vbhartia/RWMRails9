@@ -30,10 +30,16 @@
                 My Articles
               </a>
 
+              <%= yield(:tour) %>
+
             </ul>
           <% end %>
+
+          
+
         <ul class="nav pull-right">
           <% if user_signed_in? %>
+
             <div id="fat-menu" class="dropdown">
               <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">
 

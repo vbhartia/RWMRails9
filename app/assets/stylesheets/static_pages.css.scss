@@ -6,7 +6,7 @@
 @font-face 
 {
     font-family: 'AlgerianRegular';
-    src: url("<%= asset_path('ALGER.ttf') %>") format("truetype");
+    src: url("/ALGER.ttf") format("truetype");
   }
 
 .brand 

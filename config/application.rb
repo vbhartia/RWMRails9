@@ -60,17 +60,12 @@ module Rwm9
     # Enable the asset pipeline
     config.assets.enabled = true
         # Add the fonts path
+
+
     config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
 
     # Precompile additional assets
     config.assets.precompile += %w( .svg .eot .woff .ttf )
-
-    # Adding Webfonts to the Asset Pipeline
-    config.assets.precompile << Proc.new { |path|
-    if path =~ /\.(eot|svg|ttf|woff)\z/
-        true
-    end
-    }
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

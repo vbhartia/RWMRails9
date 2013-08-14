@@ -61,12 +61,6 @@ Rwm9::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  # Add the fonts path
-  config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
-
-  # Precompile additional assets
-  config.assets.precompile += %w( .svg .eot .woff .ttf )
-
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
@@ -75,6 +69,12 @@ Rwm9::Application.configure do
   ENV['FACEBOOK_APP_ID'] = "1388882854659824";
   ENV['FACEBOOK_SECRET'] = "c1daa6ac740a5696c382d1ce32c8bb7f";
   ENV['domain'] = "http://www.getreadwithme.com";
+
+    # Add the fonts path
+  config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+
+  # Precompile additional assets
+  config.assets.precompile += %w( .svg .eot .woff .ttf )
 
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 end

@@ -2,6 +2,20 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+@font-face 
+{
+    font-family: 'AlgerianRegular';
+    src: url("<%= asset_path('ALGER.ttf') %>") format("truetype");
+  }
+
+.brand 
+{
+    font-family: 'AlgerianRegular';
+    font-size: 18px;
+}
+
+
 $home_page_well_color:rgb(217,217,217);
 
 

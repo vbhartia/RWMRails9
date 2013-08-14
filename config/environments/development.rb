@@ -40,6 +40,12 @@ Rwm9::Application.configure do
   ENV['FACEBOOK_SECRET'] = "07d9797c0dd362dca0a4b20ade7c0209";
   ENV['domain'] = "http://0.0.0.0:3000";
 
+  # Add the fonts path
+  config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+
+  # Precompile additional assets
+  config.assets.precompile += %w( .svg .eot .woff .ttf )
+
 
   OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 end

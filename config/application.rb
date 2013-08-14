@@ -65,6 +65,13 @@ module Rwm9
     # Precompile additional assets
     config.assets.precompile += %w( .svg .eot .woff .ttf )
 
+    # Adding Webfonts to the Asset Pipeline
+    config.assets.precompile << Proc.new { |path|
+    if path =~ /\.(eot|svg|ttf|woff)\z/
+        true
+    end
+    }
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
     config.assets.initialize_on_precompile=false

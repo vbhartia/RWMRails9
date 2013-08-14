@@ -132,12 +132,55 @@
 </div>
   
 <ol id="joyRideTipContent" data-joyride>
-  /* data-id needs to be the same as the parent it will attach to */
-  <li data-id="article_created_by">Tip content...</li>
-  <li data-id="first_overall_comment">Tip content...</li>
-  <li data-id="comment_1">Tip content...</li>
-  <li data-id="share_container">Tip content...</li>
-  <li> Tip content ... </li>
+
+  <li>
+
+  </li>
+
+  <li data-id="article_created_by">
+    This is the person who originally created the article. <br/>
+    <br/>
+
+  </li>
+  
+  <li data-id="first_overall_comment">
+    This contains the overall discussion of the article.
+    <br/>
+    <br/>
+  </li>
+  
+  <li data-id="comment_1">
+    This is an inline comments. Inline comments add context to a specific part of the article. Comments are automatically revealed when you hover over the comment
+
+    <br/>
+    <br/>
+
+    You can create your own inline comment by simply highlighting text in the article. 
+
+    <br/>
+    <br/>
+    
+  </li>
+  
+  <li data-id="share_container">
+    You can share this version of the article, containing your comments with your friends.
+
+    <br/>
+    <br/>
+  
+  </li>
+  
+  <li> 
+    Thanks for trying it out! 
+
+    <br/>
+    <br/>
+      For more information, please check out the How Read With Me Works Page.
+
+    <br/>
+    <br/>
+
+  </li>
 </ol>
 
 <script>
@@ -150,7 +193,8 @@
       autoStart : true,
       'tipLocation': 'right',
       'nextButton': true,
-      modal:true,  
+      modal:true,
+      expose:true,  
       postStepCallback: function (index) 
       {
         if (index == 1) 

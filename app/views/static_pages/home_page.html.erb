@@ -2,107 +2,151 @@
   Read With Me
 <% end %>
 
-
-<div class='homepage_hero'>
-	<center>
-		<h2>
-			Read With Me
-		</h2>
-			The best way to discuss news.
-			<br/>
-
-			A simple tool that makes discussing any news articles with your friends easy
-
-			<br/>
-
-	    <% if user_signed_in? %>
-	    	
-	    	Use the 
-
-			<button class="btn btn-success" onClick="window.location='<%= bookmarklet_path %>'" type="button">
-				Read With Me Bookmark
-			</button>
-
-			to discuss new articles or see all of your articles in 
-
-			<button class="btn btn-success" onClick="window.location='<%= my_articles_path %>'" type="button">
-				My Articles
-			</button>
-
-	    <% else %>
-			<button class="btn btn-large btn-success" onClick="window.location='<%= user_omniauth_authorize_path(:facebook)  %>'" type="button">
-				Sign Up Today!
-			</button>
-		<% end %>
-
-	</center>
-</div>
-
-<div class='row'>
-	<div class='span6'>
-		
-		<h3>
-			Here's what we can offer you:
-		</h3>
-		
-		<div class="row media">
-  			<a class="pull-left" href="#">
-    			<img class="media-object homepage_image_icon" src="assets/discuss-icon.png">
-  			</a>
-			<div class="media-body">
- 				<h4 class="media-heading">
-					Highlight and comment within news articles
-				</h4>
-					Take discussing news articles with friends to a new level. Highlight and comment on specific sections of an News Article that you want your friends to focus on. Friends can reply your comments right in the article. 
-			</div>
-		</div>
-
-		<br/>
-
-		<div class="row media">
-  			<a class="pull-left" href="#">
-				<img class="media-object homepage_image_icon" src="assets/archive-icon.png">
- 
-  			</a>
-			<div class="media-body">
- 				<h4 class="media-heading">
-					Archive news articles and discussions for reading later
-				</h4>
-					Articles are automatically saved and organized via a personal dashboard.
-			</div>
-		</div>
-
-		<br/>
-
-		<div class="row media">
-  			<a class="pull-left" href="#">
-	   			<img class="media-object homepage_image_icon" src="assets/tools-icon.png">
-
-  			</a>
-			<div class="media-body">
- 				<h4 class="media-heading">
- 					Remove ads from articles
-
- 				</h4>
-					With a single click, remove all ads from a news article. 
-			</div>
-		</div>
-	</div> 
-
-	
-	<div class='span6 right_homepage_container'>
-		
-		<h3>
-			Read With Me in action:
-		</h3>
-		
+	<div class='homepage_hero'>
 		<center>
-			<iframe width="420" height="315" src="//www.youtube.com/embed/nJrFvUExMuw" frameborder="0" allowfullscreen></iframe>
+			<span class='brand'>
+				<h2>
+					Read With Me
+				</h2>
+			</span>
+
+				<h4>
+					The best way to discuss news.
+				</h4>
+			
+
+				<h5>
+					<span class='brand'>
+						Read With Me
+					</span>
+
+						Is a simple tool that makes discussing 	news articles with your friends and collegues easy
+
+				</h5>
+				<br/>	
+
+		    <% if user_signed_in? %>
+		    	
+		    	Use the 
+
+				<button class="btn btn-success" onClick="window.location='<%= bookmarklet_path %>'" type="button"> 
+					<span class='brand'>
+						Read With Me
+					</span>
+					Bookmark
+				</button>
+
+				on any news article to start a discussion with your friends. 
+				<br/>
+
+				View all of your discussions in 
+
+				<button class="btn btn-success" onClick="window.location='<%= my_articles_path %>'" type="button">
+					My Articles
+				</button>
+
+		    <% else %>
+				<button class="btn btn-large btn-success" onClick="window.location='<%= user_omniauth_authorize_path(:facebook)  %>'" type="button">
+					Sign Up Today!
+				</button>
+			<% end %>
+			<br/>
+			<br/>
 		</center>
+		<br/>
+		<br/>
+	</div>
 
-	</div> 
+	<div class='row'>
+		<div class='span6'>
+			
+			<h3>
+				Here's what we can offer you:
+			</h3>
+			
+			<div class="row media">
+	  			<a class="pull-left" href="#">
+	    			<img class="media-object homepage_image_icon" src="assets/discuss-icon.png">
+	  			</a>
+				<div class="media-body">
+	 				<h4 class="media-heading">
+						Highlight and comment within news articles
+					</h4>
+						Take discussing news articles with friends to a new level. Highlight and comment on specific sections of an News Article that you want your friends to focus on. Friends can reply your comments right in the article. 
+				</div>
+			</div>
 
-</div>
+			<br/>
+
+			<div class="row media">
+	  			<a class="pull-left" href="#">
+					<img class="media-object homepage_image_icon" src="assets/archive-icon.png">
+	 
+	  			</a>
+				<div class="media-body">
+	 				<h4 class="media-heading">
+						Archive news articles and discussions for reading later
+					</h4>
+						Articles are automatically saved and organized via a personal dashboard.
+				</div>
+			</div>
+
+			<br/>
+
+			<div class="row media">
+	  			<a class="pull-left" href="#">
+		   			<img class="media-object homepage_image_icon" src="assets/tools-icon.png">
+
+	  			</a>
+				<div class="media-body">
+	 				<h4 class="media-heading">
+	 					Remove ads from articles
+
+	 				</h4>
+						With a single click, remove all ads from a news article. 
+				</div>
+			</div>
+		</div> 
+
+		
+		<div class='span6 right_homepage_container'>
+
+				<span class='brand'>
+			<h3 style="display:inline">			
+
+					Read With Me 
+			</h3>
+					
+				</span>
+			<h3 style="display:inline">			
+
+				in action:
+			</h3>
+			
+			<br/>
+			<br/>
+			
+			<center>
+				<iframe width="450" height="315" src="//www.youtube.com/embed/GDYcmNR1BDg" frameborder="0" allowfullscreen>
+				</iframe>
+			</center>
+
+			<br/>
+
+			<center>
+				Take a 			
+					<button class="btn btn-success" onClick="window.location='<%= bookmarklet_path %>'" type="button">
+					Tour of 
+						<span class='brand'>
+							Read With Me
+						</span>
+					</button>
+			</center>
+
+		</div> 
+
+	</div>
+
 
 
 <%= render :partial =>"static_pages/shared/footer" %>

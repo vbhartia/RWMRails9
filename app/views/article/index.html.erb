@@ -2,10 +2,11 @@
 
 <% content_for :title do %>
   <%= current_user.firstname %>'s Articles
-
 <% end %>
 
-<h1>My Articles</h1>
+<span class='brand'>
+  <h1>My Articles</h1>
+</span>
 
 
   Archive of all your Read With Me articles. To add articles please use the <%= link_to "Read With Me Bookmark tool.", bookmarklet_path %>

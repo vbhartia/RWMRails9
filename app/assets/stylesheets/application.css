@@ -13,7 +13,7 @@
  *= require dataTables/jquery.dataTables
  *= require webhostinghub-glyphs
  *= require jquery.qtip.css
-*= require joyride-2.1
+ *= require joyride-2.1.css
  */
 
 .border {
@@ -29,4 +29,10 @@
 
 .nav_height {
 	height: 52px;
+}
+
+.beta {
+  font-family: 'Tangerine';
+  font-size: 18px;
+  letter-spacing:5px;
 }

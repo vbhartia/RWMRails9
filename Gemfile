@@ -26,6 +26,7 @@ group :assets do
   gem 'twitter-bootstrap-rails'
   gem "webhostinghub-glyphs-rails", "~> 0.0.8"
   gem 'jquery-qtip2-rails'
+  gem "rails-alertify"
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby

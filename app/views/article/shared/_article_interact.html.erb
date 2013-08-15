@@ -7,6 +7,10 @@
 <div id='contents' class='row'>
   <div class='span8'>
 
+  <button class="btn btn-primary" onClick='start_joyride()'>
+    See how <span class='brand'> Read With Me </span>Works
+  </button>
+
     <h2 id = 'article_headline'>
     </h2>
 
@@ -134,25 +138,47 @@
 <ol id="joyRideTipContent" data-joyride>
 
   <li>
-    Thanks for trying out Read With Me! This will give you a quick walk-through of how Read With Me works.
+    <h3>
+      <center>
+        <span class='brand'>
+          Welcome!
+        </span>
+      </center>
+    </h3>
+
+    <br/>
+
+
+    Thanks for trying <span class='brand'> Read With Me </span>! This will give you a quick walk-through of how <span class='brand'> Read With Me </span> works.
+    <br/>
+    <br/>
+  </li>
+
+  <li data-id="article_content">
+    This is a <span class='brand'>Read With Me</span> representation of the original article. All extraneous material has been removed from this version of the article - ads, links to non-related information, etc. 
+
+    <br/>
+    <br/>
+
+    In this view of the article you can highlight specific sentences and leave comments for those who read your version of the article.
+
     <br/>
     <br/>
   </li>
 
   <li data-id="article_created_by">
-    This is the person who originally created the article. <br/>
+    This is the person who originally shared the article. <br/>
     <br/>
-
   </li>
   
   <li data-id="first_overall_comment">
-    This contains the overall discussion of the article.
+    This contains an overall discussion of the article.
     <br/>
     <br/>
   </li>
   
   <li data-id="comment_1">
-    This is an inline comments. Inline comments add context to a specific part of the article. Comments are automatically revealed when you hover over the comment
+    This is an inline comments. Inline comments add context to a specific part of the article. Comments are automatically revealed when you hover over the highlighted text.
 
     <br/>
     <br/>
@@ -165,7 +191,7 @@
   </li>
   
   <li data-id="share_container">
-    You can share this version of the article, containing your comments with your friends.
+    You can share this version of the article, containing your comments, with your friends.
 
     <br/>
     <br/>
@@ -177,7 +203,7 @@
 
     <br/>
     <br/>
-    For more information, please check out the <a href='www.getreadwithme.com'> 
+    For more information, please check out the <a href='<%= ENV['domain'] %>'> 
       <span class='brand'>Read With Me </span>homepage</a>
 
     <br/>
@@ -198,44 +224,10 @@
 
   </li>
 </ol>
+  
 
 <script>
 
-  function start_joyride()
-  {
-
-    $("#joyRideTipContent").joyride(
-    {
-      autoStart : true,
-      'tipLocation': 'right',
-      'nextButton': true,
-      modal:true,
-      expose:true,  
-      postStepCallback: function (index) 
-      {
-        if (index == 2) 
-        {
-          $('#comment_1').css('visibility', 'visible')
-
-        }
-
-        if (index == 3) 
-        {
-          $('#comment_1').css('visibility', 'hidden')
-
-        }
-      }
-
-    });
-  }
-
-</script>
-
-<script>
-
-
-
-  //{ position: { my: "left+15 center", at: "right center" } }
 
   var article  = new Object() 
   article.url = ''
@@ -290,20 +282,16 @@
     $('#article_url_to_share').val(article.url)
     $("#d_clip_button").attr('data-clipboard-text', article.url);
 
-    
-    $("#d_clip_button").click(function(){
-        alert('Copied!')     
-    })
-    
     var clip = new ZeroClipboard($("#d_clip_button"))
 
-    clip.on( 'load', function(client) {
-  // alert( "movie is loaded" );
-    } );
+    clip.on( 'load', function(client) 
+    {
+     
+    });
 
     clip.on( 'complete', function(client, args) 
     {
-      alert("The URL to this article has been copied to the clipboard: \n\n" + args.text );
+      alertify.success("The URL to this article has been copied to your clipboard"); 
     } 
     );
 
@@ -311,9 +299,6 @@
     populate_article_created_by()
 
   }
-
-
-
 
   function populate_article_created_by()
   {
@@ -936,6 +921,9 @@
   function facebook_wall_post()
   {
 
+    alert('Currently disabled so we can test it before launching a beta. This will be enabled when we do go live. Emailing articles still works')
+    /*      
+
     var caption = get_first_overall_comment()
 
     if (!caption)
@@ -976,6 +964,8 @@
       console.log(response)
 
     });
+
+    */
   }
 
   function email_article()
@@ -1052,6 +1042,34 @@
     })
 
     return comment_to_send
+  }
+
+  function start_joyride()
+  {
+
+    $("#joyRideTipContent").joyride(
+    {
+      autoStart : true,
+      'tipLocation': 'right',
+      'nextButton': true,
+      modal:true,
+      expose:true,  
+      postStepCallback: function (index) 
+      {
+        if (index == 3) 
+        {
+          $('#comment_1').css('visibility', 'visible')
+
+        }
+
+        if (index == 4) 
+        {
+          $('#comment_1').css('visibility', 'hidden')
+
+        }
+      }
+
+    });
   }
 
 </script>

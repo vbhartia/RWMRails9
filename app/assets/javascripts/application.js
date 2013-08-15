@@ -19,3 +19,4 @@
 //= require zeroclipboard
 //= require jquery.qtip.js
 //= require jquery.joyride-2.1.js
+//= require alertify

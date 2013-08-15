@@ -3,18 +3,6 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 
-@font-face 
-{
-    font-family: 'AlgerianRegular';
-    src: url("/ALGER.ttf") format("truetype");
-  }
-
-.brand 
-{
-    font-family: 'AlgerianRegular';
-    font-size: 18px;
-}
-
 
 $home_page_well_color:rgb(217,217,217);
 
@@ -140,11 +128,15 @@ background-position: top center, 1px 1px, 0px 0px, top center;
 	margin-left: -5px;
   	margin-right: -20px;
   	padding-left: 20px;
-  	margin-top: 10px;
 }
 
 .padding-top {
 	padding-top: 10px;
 
+}
+
+.add_right_homepage_margin {
+  	margin-top: 10px;
+	
 }
 

@@ -1,0 +1,48 @@
+<% content_for :title do %>
+  Read With Me
+<% end %>
+
+<a id='top'></a>
+<h2> 
+	FAQ
+</h2>
+<br/>
+
+<% count = 0 %>
+<% @FAQ_array.each do |faq_item|  %>
+
+	<% count = count + 1 %>
+		
+	<a href="#<%= count %>">
+		<%= faq_item["question"] %>
+	</a>
+	<br/>
+
+
+<% end %>
+
+
+<% count = 0 %>
+<% @FAQ_array.each do |faq_item|  %>
+	<% count = count + 1 %>
+
+	<a id="<%= count %>"></a>
+		<br/>
+		<hr/>
+	
+		<strong>
+
+			<%= faq_item["question"] %>
+
+		</strong>
+	<br/>
+	<br/>
+		<%= faq_item["answer"] %>
+	<br/>
+	<br/>
+	<a href='#top'>Top</a>
+<% end %>
+
+
+
+<%= render :partial =>"static_pages/shared/footer" %>

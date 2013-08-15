@@ -13,7 +13,7 @@ Rwm9::Application.routes.draw do
   get 'talent' => "static_pages#talent", as: 'talent'
   get 'contact' => "static_pages#contact", as: 'contact'
   get 'privacy' => "static_pages#privacy", as: 'privacy'
-
+  get 'faq' => "static_pages#faq", as: 'faq'
 
   #*********** User Homepage *********#
 

@@ -65,9 +65,9 @@
 			</h3>
 			
 			<div class="row media">
-	  			<a class="pull-left" href="#">
-	    			<img class="media-object homepage_image_icon" src="assets/discuss-icon.png">
-	  			</a>
+
+	    			<img class="pull-left media-object homepage_image_icon" src="assets/discuss-icon.png">
+
 				<div class="media-body">
 	 				<h4 class="media-heading">
 						Highlight and comment within news articles
@@ -79,10 +79,8 @@
 			<br/>
 
 			<div class="row media">
-	  			<a class="pull-left" href="#">
-					<img class="media-object homepage_image_icon" src="assets/archive-icon.png">
+				<img class="pull-left media-object homepage_image_icon" src="assets/archive-icon.png">
 	 
-	  			</a>
 				<div class="media-body">
 	 				<h4 class="media-heading">
 						Archive news articles and discussions for reading later
@@ -94,10 +92,8 @@
 			<br/>
 
 			<div class="row media">
-	  			<a class="pull-left" href="#">
-		   			<img class="media-object homepage_image_icon" src="assets/tools-icon.png">
 
-	  			</a>
+		   			<img class="pull-left media-object homepage_image_icon" src="assets/tools-icon.png">
 				<div class="media-body">
 	 				<h4 class="media-heading">
 	 					Remove ads from articles
@@ -109,7 +105,7 @@
 		</div> 
 
 		
-		<div class='span6 right_homepage_container'>
+		<div class='span6 right_homepage_container add_right_homepage_margin'>
 
 				<span class='brand'>
 			<h3 style="display:inline">			
@@ -135,12 +131,13 @@
 
 			<center>
 				Take a 			
-					<button class="btn btn-success" onClick="window.location='<%= bookmarklet_path %>'" type="button">
+					<button class="btn btn-success" onClick="window.location='<%= bookmarklet_path %>'" type="button" title='See a discussion within a sample news article'>
 					Tour of 
 						<span class='brand'>
 							Read With Me
 						</span>
 					</button>
+				article.
 			</center>
 
 		</div> 

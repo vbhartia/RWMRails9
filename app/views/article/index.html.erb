@@ -9,7 +9,13 @@
 </span>
 
 
-  Archive of all your Read With Me articles. To add articles please use the <%= link_to "Read With Me Bookmark tool.", bookmarklet_path %>
+  Archive of all your Read With Me articles. To add articles please use the <%= link_to bookmarklet_path do%>
+
+                  <span class='brand'>
+                    Read With Me 
+                  </span>
+                    Bookmark
+                <% end %>
 
 <br/>
 <br/>
@@ -21,7 +27,18 @@
     <table height='100%' width='100%'>
       <td style="vertical-align:middle">
         <center>
-          You do not have any articles in your archive yet. Please use the <%= link_to "Read With Me Bookmark tool", bookmarklet_path %> to store articles and start a discussion with your friends.
+          You do not have any articles in your archive yet. Please use the 
+
+          <%= link_to bookmarklet_path do%>
+
+                  <span class='brand'>
+                    Read With Me 
+                  </span>
+                    Bookmark
+                <% end %>
+
+
+          to store articles and start a discussion with your friends.
         </center>
       </td>
     </table>
@@ -77,7 +94,7 @@
       picture: image_url,
       name: headline,
       caption: '<%= current_user.firstname %>\'s thoughts are embedded in this article',
-      description: 'What do you think of this article?'
+      description: 'What do you think of this ?'
     }, 
     function(response)
     {

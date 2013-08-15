@@ -4,7 +4,7 @@
       <th>
         <div class="index_article_icon">
           
-          <span class="icon-share"></span>
+          <span class="icon-share" title='Share this article with friends'></span>
           Share
         </div>
 
@@ -36,7 +36,8 @@
                 <span title="Email this article to your friends" class="icon-emailalt table_action_icons" onclick="email_share('<%= article.slug %>', '<%= escape_javascript(article.headline) %>')">
                 </span>
 
-                <span title="Delete this article. Your discussion related to this article will be deleted as well" class="icon-remove table_action_icons" onclick="delete_article('<%= article.slug %>', '<%= escape_javascript(article.headline) %>')"></span>
+                <span title="Delete this article. Your discussion related to this article will be deleted as well" class="icon-remove table_action_icons" onclick="delete_article('<%= article.slug %>', '<%= escape_javascript(article.headline) %>')">
+                </span>
               </center>
             </div>
 

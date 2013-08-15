@@ -5,15 +5,23 @@
 	<div class='container'>
 
 		<div class='span4 homepage_footer_left'>
-			
-			<%= link_to "Bookmarklet", bookmarklet_path %> 
-			<br/>
-			
-			<%= link_to "About", about_path %> 
+
+			<%= link_to "FAQ", faq_path %> 
 
 			<br/>
-			<%= link_to "Privacy", privacy_path %> 
+			
+			<%= link_to "About Us", about_path %> 
+
 			<br/>
+				<%= link_to "Privacy", privacy_path %> 
+			<br/>
+				<%= link_to bookmarklet_path do%>
+
+					<span class='brand'>
+						Read With Me 
+					</span>
+						Bookmark
+				<% end %>
 		</div>
 
 		<div class='span3 homepage_footer_center'>

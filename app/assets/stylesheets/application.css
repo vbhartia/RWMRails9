@@ -36,3 +36,14 @@
   font-size: 18px;
   letter-spacing:5px;
 }
+
+@font-face 
+{
+    font-family: 'AlgerianRegular';
+    src: url("/ALGER.ttf") format("truetype");
+  }
+
+.brand 
+{
+    font-family: 'AlgerianRegular';
+}

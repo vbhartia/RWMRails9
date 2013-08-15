@@ -134,7 +134,9 @@
 <ol id="joyRideTipContent" data-joyride>
 
   <li>
-
+    Thanks for trying out Read With Me! This will give you a quick walk-through of how Read With Me works.
+    <br/>
+    <br/>
   </li>
 
   <li data-id="article_created_by">
@@ -175,10 +177,24 @@
 
     <br/>
     <br/>
-      For more information, please check out the How Read With Me Works Page.
+    For more information, please check out the <a href='www.getreadwithme.com'> 
+      <span class='brand'>Read With Me </span>homepage</a>
 
     <br/>
     <br/>
+    <% if !(user_signed_in?) %>
+      
+      To create a Read With Me account, simply click here
+
+      <%= link_to (user_omniauth_authorize_path(:facebook)) do %>
+
+        here.
+      <% end %>
+
+      <br/>
+      <br/>
+
+    <% end %>
 
   </li>
 </ol>
@@ -197,13 +213,13 @@
       expose:true,  
       postStepCallback: function (index) 
       {
-        if (index == 1) 
+        if (index == 2) 
         {
           $('#comment_1').css('visibility', 'visible')
 
         }
 
-        if (index == 2) 
+        if (index == 3) 
         {
           $('#comment_1').css('visibility', 'hidden')
 

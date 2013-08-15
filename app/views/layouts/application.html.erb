@@ -42,19 +42,19 @@
         </a>
 
 
-          <% if user_signed_in? %>
-            <ul class="nav padding-top">
+        <% if user_signed_in? %>
+          <ul class="nav padding-top">
 
-              <a href="/articles" title='See all your Read With Me articles'>
-                My Articles
-              </a>
+            <a href="/articles" title='See all your Read With Me articles'>
+              My Articles
+            </a>
 
-              <%= yield(:tour) %>
 
-            </ul>
-          <% end %>
 
-          
+          </ul>
+        <% end %>
+
+        <%= yield(:tour) %>  
 
         <ul class="nav pull-right">
           <% if user_signed_in? %>

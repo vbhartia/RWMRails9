@@ -13,7 +13,7 @@
 	<% count = count + 1 %>
 		
 	<a href="#<%= count %>">
-		<%= faq_item["question"] %>
+		<%= faq_item["question"].html_safe %>
 	</a>
 	<br/>
 
@@ -31,12 +31,12 @@
 	
 		<strong>
 
-			<%= faq_item["question"] %>
+			<%= faq_item["question"].html_safe %>
 
 		</strong>
 	<br/>
 	<br/>
-		<%= faq_item["answer"] %>
+		<%= faq_item["answer"].html_safe %>
 	<br/>
 	<br/>
 	<a href='#top'>Top</a>

@@ -121,7 +121,7 @@
 
         </span>
     
-    <textarea id="article_url_to_share" rows="1"  wrap="off" style="margin: 0px; width: 250px; height: 20px; resize: none; "></textarea>   
+    <textarea id="article_url_to_share" rows="1"  wrap="off" style="margin: 0px; width: 250px; height:40px; resize: none; "></textarea>   
 
 
 
@@ -980,13 +980,13 @@
 
     else
     {
-      caption = current_user.firstname + " posed this question: " + "%0d" + "%09" + caption.content + "%0d" + "%0d" + 'What do you think of this?'
+      caption = "%09" + caption.content + "%0d" + "%0d" + 'What do you think of this?'
 
     }
 
     <% if user_signed_in? %>    
 
-    var email_headline = current_user.firstname + "'s thougths on " + "'" + article.headline + "'"
+      var email_headline = "My thougths on " + "'" + article.headline + "'"
 
     <% else %>
       
@@ -1015,7 +1015,7 @@
     
     <% end %>
 
-    mailToUrl += " - %0d" + "%09" + article.headline
+    mailToUrl += " - %0d" + article.headline
     mailToUrl += "- ( " + article.url + " )"
 
     // Closing Text

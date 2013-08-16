@@ -2,12 +2,14 @@
 ALGER.ttf: ALGER-7148ed7b24269b72dc3a3031ad1e0805.ttf
 NewsPaper.jpg: NewsPaper-edeb6bbee1d4f0894d3bf800302c83aa.jpg
 RWM_logo.png: RWM_logo-c5c9c3f387b8004a07f6cfe3c8bee1df.png
-archive-icon.png: archive-icon-8aae0af57e36eeba476defa2d0ec9304.png
-discuss-icon.png: discuss-icon-352e54a3cb73fdcd5058f8566c657a1e.png
+RWM_v1.png: RWM_v1-808d270856f45a3e234a1488fcb89edb.png
+archive-icon.png: archive-icon-9b33f1e061bbbc46a3335b4f156310e7.png
+discuss-icon.png: discuss-icon-2c753f9e541c0642461ee80dbf92e811.png
 facebook_icon.png: facebook_icon-32ef64470c8bae705b7c462e061b00bc.png
+letter.png: letter-0041b382941c6612ceeca287523591b8.png
 linkedin_icon.png: linkedin_icon-18e6c8668300a0f601fbbf27adc9bf09.png
 rails.png: rails-be8732dac73d845ac5b142c8fb5f9fb0.png
-tools-icon.png: tools-icon-df328cf8df3592b2bf5276a7699c8cae.png
+tools-icon.png: tools-icon-1456bf08376a4850bb5c2b5684e9b0c5.png
 twitter_icon.png: twitter_icon-b2845159f1fb285851a1eba17205f244.png
 application.js: application-142b0ea37f6bae8d5d7952cdfa0fc110.js
 application.css: application-505ab0f843810b7eec593427434e4362.css

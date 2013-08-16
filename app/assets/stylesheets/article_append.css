@@ -3,14 +3,17 @@
 	width: 640px;
 }
 
-p {
+p 
+{
 	width: 550px;
 }
 
-blockquote {
-word-wrap:break-word;
-width: 550px;
+blockquote 
+{
+	word-wrap:break-word;
+	width: 550px;
 }
+
 
 .right_section_container {
   background-color: rgba(230,230,230,1);

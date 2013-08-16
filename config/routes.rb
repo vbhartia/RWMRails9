@@ -5,7 +5,6 @@ Rwm9::Application.routes.draw do
   devise_for :users, path_names: {sign_in: "login", sign_out: "logout"}, controllers: {omniauth_callbacks: "omniauth_callbacks"}
 
   root :to => "static_pages#home_page"
-
   #********** Static Pages ************#
 
   get 'bookmarklet' => "static_pages#bookmarklet", as: 'bookmarklet'
@@ -15,6 +14,7 @@ Rwm9::Application.routes.draw do
   get 'privacy' => "static_pages#privacy", as: 'privacy'
   get 'faq' => "static_pages#faq", as: 'faq'
 
+  match '404', to: "static_pages#error_pages", as: 'error_page'
   #*********** User Homepage *********#
 
   get 'user/info' => 'user#info'

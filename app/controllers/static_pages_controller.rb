@@ -15,6 +15,9 @@ class StaticPagesController < ApplicationController
   end
 
   def bookmarklet
+  end
+
+  def error_pages
   end  
 
   def faq
